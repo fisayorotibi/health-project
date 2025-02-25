@@ -1,9 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, ReactNode } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-
-type Theme = 'light' | 'dark';
+import { useTheme, Theme } from '@/hooks/useTheme';
 
 interface ThemeContextType {
   theme: Theme;

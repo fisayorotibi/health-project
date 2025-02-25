@@ -212,6 +212,60 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          {/* Recent Activities & Quick Actions */}
+          <div className="space-y-5">
+            {/* Quick Actions */}
+            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
+              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+                <Heading4 className="text-gray-900 dark:text-white">Quick Actions</Heading4>
+              </div>
+              <div className="p-5 grid grid-cols-2 gap-3">
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300">
+                    <Plus className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Patient</Label>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Appointment</Label>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Record</Label>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300">
+                    <Pill className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Prescription</Label>
+                </button>
+              </div>
+            </div>
+            
+            {/* Recent Activities */}
+            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
+              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+                <Heading4 className="text-gray-900 dark:text-white">Recent Activities</Heading4>
+              </div>
+              <div className="divide-y divide-gray-200 dark:divide-dark-border">
+                {recentActivities.map((activity) => (
+                  <div key={activity.id} className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+                    <Paragraph className="font-medium text-gray-900 dark:text-white">{activity.action}</Paragraph>
+                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                      {activity.patient} • {activity.time}
+                    </SmallParagraph>
+                    <Caption className="mt-1 text-gray-500 dark:text-gray-400">by {activity.user}</Caption>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Recent Patients */}
           <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-dark-border">
@@ -252,60 +306,6 @@ export default function DashboardPage() {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Recent Activities & Quick Actions */}
-          <div className="space-y-5">
-            {/* Recent Activities */}
-            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
-                <Heading4 className="text-gray-900 dark:text-white">Recent Activities</Heading4>
-              </div>
-              <div className="divide-y divide-gray-200 dark:divide-dark-border">
-                {recentActivities.map((activity) => (
-                  <div key={activity.id} className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
-                    <Paragraph className="font-medium text-gray-900 dark:text-white">{activity.action}</Paragraph>
-                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
-                      {activity.patient} • {activity.time}
-                    </SmallParagraph>
-                    <Caption className="mt-1 text-gray-500 dark:text-gray-400">by {activity.user}</Caption>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
-                <Heading4 className="text-gray-900 dark:text-white">Quick Actions</Heading4>
-              </div>
-              <div className="p-5 grid grid-cols-2 gap-3">
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-gray-800 flex items-center justify-center text-primary-600 dark:text-gray-300">
-                    <Plus className="w-4 h-4" />
-                  </div>
-                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Patient</Label>
-                </button>
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-secondary-100 dark:bg-secondary-900/30 flex items-center justify-center text-secondary-600 dark:text-secondary-400">
-                    <Calendar className="w-4 h-4" />
-                  </div>
-                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Appointment</Label>
-                </button>
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center text-accent-600 dark:text-accent-400">
-                    <FileText className="w-4 h-4" />
-                  </div>
-                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Record</Label>
-                </button>
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-info/20 dark:bg-info/30 flex items-center justify-center text-info">
-                    <Pill className="w-4 h-4" />
-                  </div>
-                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Prescription</Label>
-                </button>
-              </div>
             </div>
           </div>
         </div>

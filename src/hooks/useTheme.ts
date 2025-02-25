@@ -2,12 +2,18 @@
 
 import { useState, useEffect } from 'react';
 
-type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'system';
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>('light');
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
   const [mounted, setMounted] = useState(false);
+
+  // Get system preference
+  const getSystemTheme = (): 'light' | 'dark' => {
+    if (typeof window === 'undefined') return 'light';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
 
   // Update theme
   const applyTheme = (theme: Theme) => {
@@ -15,8 +21,12 @@ export function useTheme() {
     
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    setResolvedTheme(theme);
+    
+    // If theme is system, use system preference
+    const resolvedTheme = theme === 'system' ? getSystemTheme() : theme;
+    
+    root.classList.add(resolvedTheme);
+    setResolvedTheme(resolvedTheme);
   };
 
   // Set theme on mount and when theme changes
@@ -26,13 +36,29 @@ export function useTheme() {
     localStorage.setItem('theme', theme);
   }, [theme, mounted]);
 
-  // Initialize theme from localStorage or default to light
+  // Listen for system theme changes if using system theme
+  useEffect(() => {
+    if (!mounted || theme !== 'system') return;
+    
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      applyTheme('system');
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [theme, mounted]);
+
+  // Initialize theme from localStorage or default to system
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
     const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
+    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
       setTheme(savedTheme);
+    } else {
+      // Default to system if no saved preference
+      setTheme('system');
     }
     setMounted(true);
   }, []);

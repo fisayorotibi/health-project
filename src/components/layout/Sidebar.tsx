@@ -110,11 +110,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
                 className={`
                   flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors
                   ${isActive 
-                    ? 'bg-primary-50 text-primary-600 dark:bg-gray-800 dark:text-gray-100' 
+                    ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100' 
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary hover:text-gray-900 dark:hover:text-white'}
                 `}
               >
-                <span className={`mr-3 ${isActive ? 'text-primary-500 dark:text-gray-300' : ''}`}>
+                <span className={`mr-3 ${isActive ? 'text-gray-700 dark:text-gray-300' : ''}`}>
                   {item.icon}
                 </span>
                 <SmallParagraph className="font-medium">{item.name}</SmallParagraph>

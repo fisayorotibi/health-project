@@ -46,25 +46,25 @@ export default function TypographyPage() {
         <section className="space-y-6">
           <Heading2>Key Principles</Heading2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Readability</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 Ensuring text is easily readable in various contexts, with appropriate contrast and sizing.
               </Paragraph>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Hierarchy</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 Clear visual hierarchy to guide users through information, making it easy to scan and understand.
               </Paragraph>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Consistency</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 Predictable type styles across the platform, creating a cohesive and professional experience.
               </Paragraph>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Accessibility</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 Meeting WCAG AA standards for text contrast and size, ensuring the platform is usable by all.
@@ -75,7 +75,7 @@ export default function TypographyPage() {
         
         <section className="space-y-6">
           <Heading2>Headings</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800 space-y-6">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border space-y-6">
             <div>
               <Heading1>Heading 1</Heading1>
               <Caption className="mt-2 text-gray-500">
@@ -126,7 +126,7 @@ export default function TypographyPage() {
         
         <section className="space-y-6">
           <Heading2>Body Text</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800 space-y-6">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border space-y-6">
             <div>
               <LargeParagraph>Large Paragraph</LargeParagraph>
               <Caption className="mt-2 text-gray-500">
@@ -162,7 +162,7 @@ export default function TypographyPage() {
         
         <section className="space-y-6">
           <Heading2>UI Elements</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800 space-y-6">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border space-y-6">
             <div>
               <Label>Form Label</Label>
               <Caption className="mt-2 text-gray-500">
@@ -197,7 +197,7 @@ export default function TypographyPage() {
         
         <section className="space-y-6">
           <Heading2>Data Display</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800 space-y-6">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border space-y-6">
             <div>
               <LargeDataDisplay>1,248</LargeDataDisplay>
               <Caption className="mt-2 text-gray-500">
@@ -230,7 +230,7 @@ export default function TypographyPage() {
         
         <section className="space-y-6">
           <Heading2>Usage Guidelines</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
             <Paragraph className="mb-4">
               To use these typography components in your React components:
             </Paragraph>

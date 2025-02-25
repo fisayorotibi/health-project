@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useThemeContext } from '@/components/ThemeProvider';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Monitor } from 'lucide-react';
 
 export function ThemeSwitch() {
   const { theme, setTheme } = useThemeContext();
@@ -30,6 +30,17 @@ export function ThemeSwitch() {
         aria-label="Dark mode"
       >
         <Moon className="w-4 h-4" />
+      </button>
+      <button
+        onClick={() => setTheme('system')}
+        className={`p-2 rounded-md ${
+          theme === 'system' 
+            ? 'bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-gray-100 shadow-sm' 
+            : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+        }`}
+        aria-label="System theme"
+      >
+        <Monitor className="w-4 h-4" />
       </button>
     </div>
   );

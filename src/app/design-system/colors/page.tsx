@@ -217,25 +217,25 @@ export default function ColorsPage() {
         <section className="space-y-6">
           <Heading2>Key Principles</Heading2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Accessibility</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 All color combinations meet WCAG AA standards for contrast, ensuring the platform is usable by all.
               </Paragraph>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Consistency</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 Colors are used consistently across the application, creating a cohesive and professional experience.
               </Paragraph>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Semantic</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 Colors have specific meanings and purposes, helping users understand the interface intuitively.
               </Paragraph>
             </div>
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
               <Heading4>Adaptability</Heading4>
               <Paragraph className="mt-2 text-gray-600 dark:text-gray-300">
                 Colors work well in both light and dark modes, providing a consistent experience regardless of preference.
@@ -269,7 +269,7 @@ export default function ColorsPage() {
         
         <section className="space-y-6">
           <Heading2>Semantic Colors</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800 space-y-8">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border space-y-8">
             <Paragraph>
               Semantic colors convey specific meanings and are used consistently across the platform to help users understand the interface.
             </Paragraph>
@@ -319,7 +319,7 @@ export default function ColorsPage() {
         
         <section className="space-y-6">
           <Heading2>Medical-Specific Colors</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800 space-y-8">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border space-y-8">
             <Paragraph>
               These specialized colors are used for medical-specific UI elements and data visualization.
             </Paragraph>
@@ -338,7 +338,7 @@ export default function ColorsPage() {
         
         <section className="space-y-6">
           <Heading2>Usage Guidelines</Heading2>
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800">
+          <div className="bg-white dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
             <Paragraph className="mb-4">
               To use these colors in your components, you can use Tailwind CSS classes:
             </Paragraph>
