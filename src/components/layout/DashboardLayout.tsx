@@ -39,6 +39,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const searchParams = useSearchParams();
   const profileDropdownRef = useRef<HTMLDivElement>(null);
   const [userStatus, setUserStatus] = useState<'online' | 'away' | 'busy'>('online');
+  const isLightTheme = resolvedTheme === 'light';
 
   useEffect(() => {
     setIsMounted(true);
@@ -110,8 +111,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   // Profile dropdown component
   const ProfileDropdown = () => {
-    const isDark = resolvedTheme === 'dark';
-    
     return (
       <div
         className="origin-top-right absolute right-0 mt-2 w-80 rounded-lg shadow-lg bg-white dark:bg-dark-surface ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-hidden"
@@ -253,10 +252,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-700 dark:text-gray-300">Dark Mode</span>
             <button
-              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              onClick={() => setTheme(isLightTheme ? 'dark' : 'light')}
               className="p-1.5 rounded-md bg-gray-100 dark:bg-dark-surface-secondary"
             >
-              {isDark ? (
+              {!isLightTheme ? (
                 <Sun className="h-4 w-4 text-amber-500" />
               ) : (
                 <Moon className="h-4 w-4 text-gray-500" />
