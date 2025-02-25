@@ -113,25 +113,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return (
       <div
         key={`profile-dropdown-${resolvedTheme}`}
-        className="origin-top-right absolute right-0 mt-2 w-80 rounded-lg shadow-lg bg-white dark:bg-dark-surface ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-hidden"
+        className="origin-top-right absolute right-0 mt-2 w-72 rounded-xl shadow-lg bg-white dark:bg-dark-surface focus:outline-none z-50 overflow-hidden transition-all duration-200"
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="user-menu"
       >
-        {/* Profile header */}
+        {/* Profile header - simplified and elegant */}
+        <div className="px-5 pt-5 pb-4">
+          <div className="flex items-center">
         <div className="relative">
-          {/* Background gradient */}
-          <div className="h-20 bg-gradient-to-r from-primary-600 to-primary-400 dark:from-primary-800 dark:to-primary-600"></div>
-          
-          {/* User avatar and info */}
-          <div className="px-4 pb-4">
-            <div className="flex items-end -mt-10">
-              <div className="relative">
-                <div className="h-16 w-16 rounded-full border-4 border-white dark:border-dark-surface bg-white dark:bg-dark-surface-secondary flex items-center justify-center overflow-hidden">
+              <div className="h-14 w-14 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center overflow-hidden ring-2 ring-gray-100 dark:ring-gray-700">
                   {/* Replace with actual avatar if available */}
-                  <User className="h-8 w-8 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+                <User className="h-7 w-7 text-gray-400 dark:text-gray-500" aria-hidden="true" />
                 </div>
-                <div className={`absolute bottom-0 right-0 h-4 w-4 rounded-full border-2 border-white dark:border-dark-surface ${
+              <div className={`absolute bottom-0.5 right-0.5 h-3 w-3 rounded-full ring-2 ring-white dark:ring-dark-surface ${
                   userStatus === 'online' ? 'bg-green-500' : 
                   userStatus === 'away' ? 'bg-yellow-500' : 'bg-red-500'
                 }`}></div>
@@ -140,123 +135,107 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <p className="text-base font-medium text-gray-900 dark:text-white">Dr. Sarah Chen</p>
                 <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
                   Cardiologist
-                  <span className="mx-1">•</span>
+                <span className="mx-1.5">•</span>
                   <span className="text-xs flex items-center">
-                    {userStatus === 'online' ? (
-                      <>
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-500 mr-1"></span>
-                        Online
-                      </>
-                    ) : userStatus === 'away' ? (
-                      <>
-                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-500 mr-1"></span>
-                        Away
-                      </>
-                    ) : (
-                      <>
-                        <span className="h-1.5 w-1.5 rounded-full bg-red-500 mr-1"></span>
-                        Busy
-                      </>
-                    )}
+                  {userStatus === 'online' ? 'Online' : userStatus === 'away' ? 'Away' : 'Busy'}
                   </span>
                 </p>
-              </div>
             </div>
           </div>
         </div>
         
-        {/* Status selector */}
-        <div className="px-4 py-2 border-b border-gray-200 dark:border-dark-border">
+        {/* Status selector - simplified */}
+        <div className="px-5 py-3 bg-gray-50 dark:bg-gray-800/30">
           <div className="flex space-x-2">
             <button 
               onClick={() => toggleStatus('online')}
-              className={`flex-1 py-1.5 px-2 rounded-md text-xs font-medium ${
+              className={`flex-1 py-1.5 px-2 rounded-md text-xs font-medium transition-all duration-150 ${
                 userStatus === 'online' 
-                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' 
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary'
+                  ? 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-sm' 
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-white/80 dark:hover:bg-gray-800/50'
               }`}
             >
               <div className="flex items-center justify-center">
-                <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
+                <div className="h-1.5 w-1.5 rounded-full bg-green-500 mr-1.5"></div>
                 Online
               </div>
             </button>
             <button 
               onClick={() => toggleStatus('away')}
-              className={`flex-1 py-1.5 px-2 rounded-md text-xs font-medium ${
+              className={`flex-1 py-1.5 px-2 rounded-md text-xs font-medium transition-all duration-150 ${
                 userStatus === 'away' 
-                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' 
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary'
+                  ? 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-sm' 
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-white/80 dark:hover:bg-gray-800/50'
               }`}
             >
               <div className="flex items-center justify-center">
-                <Clock className="h-3.5 w-3.5 mr-1.5" />
+                <div className="h-1.5 w-1.5 rounded-full bg-yellow-500 mr-1.5"></div>
                 Away
               </div>
             </button>
             <button 
               onClick={() => toggleStatus('busy')}
-              className={`flex-1 py-1.5 px-2 rounded-md text-xs font-medium ${
+              className={`flex-1 py-1.5 px-2 rounded-md text-xs font-medium transition-all duration-150 ${
                 userStatus === 'busy' 
-                  ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' 
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary'
+                  ? 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-sm' 
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-white/80 dark:hover:bg-gray-800/50'
               }`}
             >
               <div className="flex items-center justify-center">
-                <AlertCircle className="h-3.5 w-3.5 mr-1.5" />
+                <div className="h-1.5 w-1.5 rounded-full bg-red-500 mr-1.5"></div>
                 Busy
               </div>
             </button>
           </div>
         </div>
         
-        {/* Quick actions */}
-        <div className="px-4 py-3 border-b border-gray-200 dark:border-dark-border">
-          <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">QUICK ACTIONS</p>
-          <div className="grid grid-cols-3 gap-2">
+        {/* Quick actions - simplified and elegant */}
+        <div className="px-5 py-4">
+          <p className="text-xs font-medium text-gray-400 dark:text-gray-500 mb-3 tracking-wider">QUICK ACCESS</p>
+          <div className="grid grid-cols-3 gap-3">
             <Link
               href="/schedule"
-              className="flex flex-col items-center p-2 rounded-md hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+              className="flex flex-col items-center p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-150"
               onClick={() => setIsProfileOpen(false)}
             >
-              <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-1">
-                <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <div className="h-9 w-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-1.5">
+                <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </div>
-              <span className="text-xs text-gray-700 dark:text-gray-300">Schedule</span>
+              <span className="text-xs text-gray-600 dark:text-gray-400">Schedule</span>
             </Link>
             <Link
               href="/messages"
-              className="flex flex-col items-center p-2 rounded-md hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+              className="flex flex-col items-center p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-150"
               onClick={() => setIsProfileOpen(false)}
             >
-              <div className="h-8 w-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-1">
-                <MessageSquare className="h-4 w-4 text-green-600 dark:text-green-400" />
+              <div className="h-9 w-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-1.5">
+                <MessageSquare className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </div>
-              <span className="text-xs text-gray-700 dark:text-gray-300">Messages</span>
+              <span className="text-xs text-gray-600 dark:text-gray-400">Messages</span>
             </Link>
             <Link
               href="/patients"
-              className="flex flex-col items-center p-2 rounded-md hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+              className="flex flex-col items-center p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-150"
               onClick={() => setIsProfileOpen(false)}
             >
-              <div className="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-1">
-                <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+              <div className="h-9 w-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-1.5">
+                <FileText className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </div>
-              <span className="text-xs text-gray-700 dark:text-gray-300">Patients</span>
+              <span className="text-xs text-gray-600 dark:text-gray-400">Patients</span>
             </Link>
           </div>
         </div>
         
-        {/* Theme toggle */}
-        <div className="px-4 py-2 border-b border-gray-200 dark:border-dark-border">
+        {/* Theme toggle - simplified */}
+        <div className="px-5 py-3 bg-gray-50 dark:bg-gray-800/30">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-700 dark:text-gray-300">Dark Mode</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">Dark Mode</span>
             <button
               onClick={() => setTheme(isLightTheme ? 'dark' : 'light')}
-              className="p-1.5 rounded-md bg-gray-100 dark:bg-dark-surface-secondary"
+              className="p-1.5 rounded-md bg-white dark:bg-gray-800 shadow-sm transition-all duration-150"
             >
               {!isLightTheme ? (
-                <Sun className="h-4 w-4 text-amber-500" />
+                <Sun className="h-4 w-4 text-gray-500" />
               ) : (
                 <Moon className="h-4 w-4 text-gray-500" />
               )}
@@ -264,15 +243,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </div>
         
-        {/* Menu items */}
-        <div className="py-1" role="none">
+        {/* Menu items - simplified */}
+        <div className="px-2 py-2" role="none">
           <Link
             href="/profile"
-            className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+            className="flex items-center px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-150"
             role="menuitem"
             onClick={() => setIsProfileOpen(false)}
           >
-            <User className="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+            <User className="mr-3 h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
             Your Profile
           </Link>
           <button
@@ -280,29 +259,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               openSettingsModal();
               setIsProfileOpen(false);
             }}
-            className="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+            className="flex w-full items-center px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-150"
             role="menuitem"
           >
-            <SettingsIcon className="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+            <SettingsIcon className="mr-3 h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
             Settings
             <span className="ml-auto text-xs text-gray-400 dark:text-gray-500">⌘S</span>
           </button>
           <Link
             href="/help"
-            className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+            className="flex items-center px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-150"
             role="menuitem"
             onClick={() => setIsProfileOpen(false)}
           >
-            <HelpCircle className="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+            <HelpCircle className="mr-3 h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
             Help & Support
           </Link>
           <Link
             href="/logout"
-            className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+            className="flex items-center px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-150"
             role="menuitem"
             onClick={() => setIsProfileOpen(false)}
           >
-            <LogOut className="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+            <LogOut className="mr-3 h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
             Sign out
           </Link>
         </div>
@@ -393,7 +372,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <div>
                     <button
                       type="button"
-                      className="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                      className="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 dark:focus:ring-gray-700 transition-all duration-150"
                       id="user-menu"
                       aria-expanded={isProfileOpen}
                       aria-haspopup="true"
@@ -401,10 +380,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     >
                       <span className="sr-only">Open user menu</span>
                       <div className="relative">
-                        <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                          <User className="h-5 w-5 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+                        <div className="h-9 w-9 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center shadow-sm">
+                          <User className="h-5 w-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
                         </div>
-                        <div className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-white dark:border-dark-surface ${
+                        <div className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-1 ring-white dark:ring-dark-surface ${
                           userStatus === 'online' ? 'bg-green-500' : 
                           userStatus === 'away' ? 'bg-yellow-500' : 'bg-red-500'
                         }`}></div>
