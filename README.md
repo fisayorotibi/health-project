@@ -11,6 +11,14 @@ A digital health records platform tailored for the Nigerian market, designed to 
 - **User-Friendly Interface**: Intuitive design for medical practitioners with varying tech skills
 - **Mobile Responsive**: Works on both desktop and mobile devices
 
+## Documentation
+
+For detailed project specifications and requirements, please refer to our documentation:
+
+- [Product Requirements Document (PRD)](./docs/PRD.md) - Comprehensive specification of features, requirements, and implementation roadmap
+
+Additional documentation can be found in the [docs](./docs) directory.
+
 ## Target Audience
 
 - Middle and upper-class patients in Nigeria
@@ -34,7 +42,7 @@ A digital health records platform tailored for the Nigerian market, designed to 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/lavender.git
+   git clone https://github.com/fisayorotibi/health-project.git
    cd lavender
    ```
 
@@ -78,6 +86,9 @@ src/
 ├── hooks/                  # Custom React hooks
 ├── types/                  # TypeScript type definitions
 └── ...
+docs/                       # Project documentation
+├── PRD.md                  # Product Requirements Document
+└── README.md               # Documentation guide
 ```
 
 ## Technology Stack
