@@ -112,10 +112,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                     <div className="w-8 h-8 rounded-full bg-primary-500 dark:bg-gray-700 flex items-center justify-center text-white">
                       <User className="h-4 w-4" />
                     </div>
-                    <div className="hidden md:flex items-center">
-                      <SmallParagraph className="font-medium">Dr. John Doe</SmallParagraph>
-                      <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${profileDropdownOpen ? 'rotate-180' : ''}`} />
-                    </div>
                   </button>
                   
                   {/* Profile Dropdown Menu */}
