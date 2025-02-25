@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
       <div className="fixed left-0 top-0 z-40 p-4">
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-md bg-primary dark:bg-gray-700 text-white"
+          className="p-2 rounded-md text-gray-500 dark:text-gray-400"
           aria-label="Open sidebar"
         >
           <Menu className="w-5 h-5" />
@@ -80,9 +80,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
   return (
     <div className={`
       ${isMobile ? 'fixed inset-0 z-50 bg-white dark:bg-dark-surface' : 'hidden md:flex'}
-      flex-col w-64 h-screen bg-white dark:bg-dark-surface border-r border-gray-200 dark:border-dark-border
+      flex-col w-64 h-screen bg-white dark:bg-dark-surface
     `}>
-      <div className="flex items-center justify-between py-3.5 px-4 border-b border-gray-200 dark:border-dark-border">
+      <div className="flex items-center justify-between py-3.5 px-4">
         <div className="flex items-center space-x-3">
           {/* Stylized logo placeholder */}
           <div className="relative">

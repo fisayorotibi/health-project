@@ -352,7 +352,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           onClick={toggleSidebar}
         ></div>
         <div className="fixed inset-y-0 left-0 flex max-w-xs w-full">
-          <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-dark-surface shadow-xl">
+          <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-dark-surface">
             <div className="absolute top-0 right-0 -mr-12 pt-2">
               <button
                 className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
