@@ -421,6 +421,193 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
+
+        <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
+          <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
+            <div className="flex items-center justify-between">
+              <div>
+                <Heading4 className="text-gray-900 dark:text-white">Activity Stream</Heading4>
+                <SmallParagraph className="text-gray-500 dark:text-gray-400">Recent patients and clinical activities</SmallParagraph>
+              </div>
+              <div className="flex items-center space-x-3">
+                <button className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                  All
+                </button>
+                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  Patients
+                </button>
+                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  Activities
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
+            {/* Time marker - Today */}
+            <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
+              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Today</Label>
+            </div>
+            
+            {/* Patient entry with related activity */}
+            <div className="p-0">
+              <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+                <div className="flex items-start">
+                  <div className="relative">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
+                      {recentPatients[0].name.charAt(0)}
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                      <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"></div>
+                    </div>
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <div className="flex items-center justify-between">
+                      <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[0].name}</Paragraph>
+                      <div className="flex items-center">
+                        <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                          {recentPatients[0].status}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-1">
+                      <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                        {recentPatients[0].age} years • {recentPatients[0].reason}
+                      </SmallParagraph>
+                      <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                        <Clock className="w-3 h-3 mr-1" /> {recentPatients[0].time}
+                      </Caption>
+                    </div>
+                    
+                    {/* Related activity */}
+                    <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                      <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                        <span className="font-medium">{recentActivities[0].action}</span> • {recentActivities[0].time}
+                      </SmallParagraph>
+                      <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[0].user}</Caption>
+                    </div>
+                    
+                    {/* Quick actions */}
+                    <div className="mt-3 flex space-x-2">
+                      <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                        <FileText className="w-3 h-3 mr-1" /> View Record
+                      </button>
+                      <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                        <Calendar className="w-3 h-3 mr-1" /> Schedule
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Activity entry */}
+            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+              <div className="flex items-start">
+                <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center justify-between">
+                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentActivities[1].action}</Paragraph>
+                    <Caption className="text-gray-500 dark:text-gray-400">{recentActivities[1].time}</Caption>
+                  </div>
+                  <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                    Patient: <span className="text-gray-700 dark:text-gray-300">{recentActivities[1].patient}</span>
+                  </SmallParagraph>
+                  <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[1].user}</Caption>
+                  
+                  {/* Quick action */}
+                  <div className="mt-2">
+                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <ArrowUpRight className="w-3 h-3 mr-1" /> View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Patient entry */}
+            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+              <div className="flex items-start">
+                <div className="relative">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
+                    {recentPatients[1].name.charAt(0)}
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                    <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"></div>
+                  </div>
+                </div>
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center justify-between">
+                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[1].name}</Paragraph>
+                    <div className="flex items-center">
+                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                        {recentPatients[1].status}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                      {recentPatients[1].age} years • {recentPatients[1].reason}
+                    </SmallParagraph>
+                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[1].time}
+                    </Caption>
+                  </div>
+                  
+                  {/* Quick actions */}
+                  <div className="mt-3 flex space-x-2">
+                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <FileText className="w-3 h-3 mr-1" /> View Record
+                    </button>
+                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <Calendar className="w-3 h-3 mr-1" /> Schedule
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Time marker - Yesterday */}
+            <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
+              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Yesterday</Label>
+            </div>
+            
+            {/* Activity entry */}
+            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+              <div className="flex items-start">
+                <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center justify-between">
+                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentActivities[3].action}</Paragraph>
+                    <Caption className="text-gray-500 dark:text-gray-400">{recentActivities[3].time}</Caption>
+                  </div>
+                  <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                    Patient: <span className="text-gray-700 dark:text-gray-300">{recentActivities[3].patient}</span>
+                  </SmallParagraph>
+                  <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[3].user}</Caption>
+                  
+                  {/* Quick action */}
+                  <div className="mt-2">
+                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <ArrowUpRight className="w-3 h-3 mr-1" /> View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* View more button */}
+            <div className="p-4 flex justify-center">
+              <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                View more activities <ChevronRight className="w-4 h-4 ml-1" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   );
