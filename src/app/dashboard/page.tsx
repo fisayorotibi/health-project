@@ -1,0 +1,315 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { 
+  Users, 
+  Calendar, 
+  FileText, 
+  Pill, 
+  TrendingUp, 
+  Clock,
+  AlertCircle,
+  ChevronRight,
+  Plus,
+  ArrowUpRight
+} from 'lucide-react';
+import {
+  Heading1,
+  Heading4,
+  Paragraph,
+  SmallParagraph,
+  Label,
+  Caption,
+  LargeDataDisplay
+} from '@/components/ui/typography';
+
+// Dynamically import components that use browser APIs with no SSR
+const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-dark-background">
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-primary-500 flex items-center justify-center">
+          <span className="text-white text-2xl font-bold">L</span>
+        </div>
+        <Heading1 className="mt-4 text-gray-900 dark:text-white">Lavender Health Records</Heading1>
+        <Paragraph className="mt-2 text-gray-500 dark:text-gray-400">Loading dashboard...</Paragraph>
+      </div>
+    </div>
+  )
+});
+
+export default function DashboardPage() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Sample data for dashboard
+  const stats = [
+    {
+      title: 'Total Patients',
+      value: '1,248',
+      icon: <Users className="w-5 h-5 text-primary-500" />,
+      change: '+12% from last month',
+      positive: true,
+    },
+    {
+      title: 'Appointments Today',
+      value: '24',
+      icon: <Calendar className="w-5 h-5 text-secondary-500" />,
+      change: '4 pending',
+      positive: true,
+    },
+    {
+      title: 'Pending Lab Results',
+      value: '7',
+      icon: <FileText className="w-5 h-5 text-accent-500" />,
+      change: '2 urgent',
+      positive: false,
+    },
+    {
+      title: 'Prescriptions This Week',
+      value: '56',
+      icon: <Pill className="w-5 h-5 text-info" />,
+      change: '+8% from last week',
+      positive: true,
+    },
+  ];
+
+  // Sample recent patients
+  const recentPatients = [
+    {
+      id: '1',
+      name: 'Aisha Mohammed',
+      age: 34,
+      reason: 'Follow-up consultation',
+      time: '09:00 AM',
+      status: 'Checked In',
+    },
+    {
+      id: '2',
+      name: 'Emmanuel Okonkwo',
+      age: 45,
+      reason: 'Chest pain',
+      time: '09:30 AM',
+      status: 'Waiting',
+    },
+    {
+      id: '3',
+      name: 'Ngozi Eze',
+      age: 28,
+      reason: 'Prenatal checkup',
+      time: '10:00 AM',
+      status: 'Scheduled',
+    },
+    {
+      id: '4',
+      name: 'Oluwaseun Adeyemi',
+      age: 52,
+      reason: 'Diabetes management',
+      time: '10:30 AM',
+      status: 'Scheduled',
+    },
+    {
+      id: '5',
+      name: 'Chinedu Obi',
+      age: 41,
+      reason: 'Hypertension follow-up',
+      time: '11:00 AM',
+      status: 'Scheduled',
+    },
+  ];
+
+  // Sample recent activities
+  const recentActivities = [
+    {
+      id: '1',
+      action: 'Updated medical record',
+      patient: 'Aisha Mohammed',
+      time: '15 minutes ago',
+      user: 'Dr. John Doe',
+    },
+    {
+      id: '2',
+      action: 'Created new prescription',
+      patient: 'Emmanuel Okonkwo',
+      time: '45 minutes ago',
+      user: 'Dr. John Doe',
+    },
+    {
+      id: '3',
+      action: 'Added lab results',
+      patient: 'Ngozi Eze',
+      time: '1 hour ago',
+      user: 'Lab Technician',
+    },
+    {
+      id: '4',
+      action: 'Scheduled appointment',
+      patient: 'Oluwaseun Adeyemi',
+      time: '2 hours ago',
+      user: 'Receptionist',
+    },
+  ];
+
+  // Prevent hydration errors by only rendering client-specific content after mounting
+  if (!isMounted) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-dark-background">
+        <div className="flex flex-col items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-primary-500 flex items-center justify-center">
+            <span className="text-white text-2xl font-bold">L</span>
+          </div>
+          <Heading1 className="mt-4 text-gray-900 dark:text-white">Lavender Health Records</Heading1>
+          <Paragraph className="mt-2 text-gray-500 dark:text-gray-400">Loading dashboard...</Paragraph>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <DashboardLayout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <Heading1 className="text-gray-900 dark:text-white">Dashboard</Heading1>
+          <Caption className="text-gray-500 dark:text-gray-400">
+            {new Date().toLocaleDateString('en-NG', { 
+              weekday: 'long', 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </Caption>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, index) => (
+            <div 
+              key={index} 
+              className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border p-5 transition-all hover:shadow-md"
+            >
+              <div className="flex items-center justify-between">
+                <div className="p-2 rounded-md bg-gray-50 dark:bg-dark-surface-secondary">
+                  {stat.icon}
+                </div>
+                <Caption 
+                  className={`flex items-center ${
+                    stat.positive ? 'text-green-500' : 'text-red-500'
+                  }`}
+                >
+                  {stat.positive ? <TrendingUp className="w-3 h-3 mr-1" /> : <AlertCircle className="w-3 h-3 mr-1" />}
+                  {stat.change}
+                </Caption>
+              </div>
+              <LargeDataDisplay className="mt-4 text-gray-900 dark:text-white">{stat.value}</LargeDataDisplay>
+              <Label className="mt-1 text-gray-500 dark:text-gray-400">{stat.title}</Label>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          {/* Recent Patients */}
+          <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+              <Heading4 className="text-gray-900 dark:text-white">Recent Patients</Heading4>
+              <button className="text-primary-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-gray-300 text-sm font-medium flex items-center">
+                View all <ChevronRight className="w-4 h-4 ml-1" />
+              </button>
+            </div>
+            <div className="divide-y divide-gray-200 dark:divide-dark-border">
+              {recentPatients.map((patient) => (
+                <div key={patient.id} className="p-5 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className="w-10 h-10 rounded-full bg-primary-100 dark:bg-gray-800 flex items-center justify-center text-primary-600 dark:text-gray-300 font-medium">
+                        {patient.name.charAt(0)}
+                      </div>
+                      <div className="ml-3">
+                        <Paragraph className="font-medium text-gray-900 dark:text-white">{patient.name}</Paragraph>
+                        <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                          {patient.age} years • {patient.reason}
+                        </SmallParagraph>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <div className={`text-xs font-medium px-2 py-1 rounded-full ${
+                        patient.status === 'Checked In' 
+                          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
+                          : patient.status === 'Waiting' 
+                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                          : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400'
+                      }`}>
+                        {patient.status}
+                      </div>
+                      <Caption className="mt-1 text-gray-500 dark:text-gray-400 flex items-center">
+                        <Clock className="w-3 h-3 mr-1" /> {patient.time}
+                      </Caption>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recent Activities & Quick Actions */}
+          <div className="space-y-5">
+            {/* Recent Activities */}
+            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
+              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+                <Heading4 className="text-gray-900 dark:text-white">Recent Activities</Heading4>
+              </div>
+              <div className="divide-y divide-gray-200 dark:divide-dark-border">
+                {recentActivities.map((activity) => (
+                  <div key={activity.id} className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+                    <Paragraph className="font-medium text-gray-900 dark:text-white">{activity.action}</Paragraph>
+                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                      {activity.patient} • {activity.time}
+                    </SmallParagraph>
+                    <Caption className="mt-1 text-gray-500 dark:text-gray-400">by {activity.user}</Caption>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
+              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+                <Heading4 className="text-gray-900 dark:text-white">Quick Actions</Heading4>
+              </div>
+              <div className="p-5 grid grid-cols-2 gap-3">
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-gray-800 flex items-center justify-center text-primary-600 dark:text-gray-300">
+                    <Plus className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Patient</Label>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-secondary-100 dark:bg-secondary-900/30 flex items-center justify-center text-secondary-600 dark:text-secondary-400">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Appointment</Label>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center text-accent-600 dark:text-accent-400">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Record</Label>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-info/20 dark:bg-info/30 flex items-center justify-center text-info">
+                    <Pill className="w-4 h-4" />
+                  </div>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Prescription</Label>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+} 
