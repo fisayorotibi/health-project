@@ -204,11 +204,11 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors flex items-center ${
                 focusMode 
                   ? isLightTheme 
-                    ? 'bg-primary-100 text-primary-700 border border-primary-300' 
-                    : 'bg-primary-500/20 text-primary-300 border border-primary-500/30'
+                    ? 'bg-primary-100 text-primary-700 shadow-sm' 
+                    : 'bg-primary-500/20 text-primary-300 shadow-sm'
                   : isLightTheme 
-                    ? 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50' 
-                    : 'bg-[#1E1E1E] text-gray-400 border border-[#333333] hover:bg-[#242424]'
+                    ? 'bg-white text-gray-600 shadow-sm hover:bg-gray-50' 
+                  : 'bg-[#1E1E1E] text-gray-400 shadow-sm hover:bg-[#242424]'
               }`}
               aria-label={focusMode ? "Disable focus mode" : "Enable focus mode"}
             >
@@ -235,14 +235,14 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                   isLightTheme 
                     ? 'text-gray-600 bg-white' 
                     : 'text-gray-400 dark:text-gray-500 bg-[#1A1A1A]'
-                } px-3 py-1.5 rounded-full border ${
+                } px-3 py-1.5 rounded-full shadow-sm ${
                   expandedNotifications 
                     ? isLightTheme 
-                      ? 'border-primary-300 text-primary-700' 
-                      : 'border-primary-500/50 text-primary-400'
+                      ? 'bg-primary-50 text-primary-700' 
+                      : 'bg-primary-500/10 text-primary-400'
                     : isLightTheme 
-                      ? 'border-gray-200 hover:border-gray-300' 
-                      : 'border-[#2A2A2A] hover:border-[#3A3A3A]'
+                      ? 'hover:bg-gray-50' 
+                    : 'hover:bg-[#242424]'
                 }`}
               >
                 <Bell className="w-3.5 h-3.5 mr-1.5" />
@@ -259,9 +259,9 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
           <form onSubmit={handleSearch} className="relative">
             <div className={`flex items-center ${
               isLightTheme 
-                ? 'bg-white border-gray-200' 
-                : 'bg-[#1E1E1E] dark:bg-[#1E1E1E] border-[#333333] dark:border-[#333333]'
-            } rounded-lg overflow-hidden border focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500/30 transition-all`}>
+                ? 'bg-white' 
+                : 'bg-[#1E1E1E] dark:bg-[#1E1E1E]'
+            } rounded-lg overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-primary-500/30 transition-all`}>
               <div className={`flex items-center pl-4 ${isLightTheme ? 'text-gray-500' : 'text-gray-400'}`}>
                 <Search className="w-4 h-4" />
               </div>
@@ -280,9 +280,9 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
               <div className="hidden md:flex items-center mr-2">
                 <kbd className={`px-1.5 py-0.5 text-xs ${
                   isLightTheme 
-                    ? 'text-gray-500 bg-gray-100 border-gray-200' 
-                    : 'text-gray-500 bg-[#252525] border-[#333333]'
-                } rounded border`}>⌘K</kbd>
+                    ? 'text-gray-500 bg-gray-100' 
+                    : 'text-gray-500 bg-[#252525]'
+                } rounded shadow-sm`}>⌘K</kbd>
               </div>
               <button
                 type="button"
@@ -307,9 +307,9 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
               key={index}
               className={`px-3 py-1.5 ${
                 isLightTheme 
-                  ? 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200' 
-                  : 'bg-[#1E1E1E] hover:bg-[#242424] text-gray-300 border-[#333333]'
-              } rounded-lg text-sm border transition-colors flex items-center`}
+                  ? 'bg-white hover:bg-gray-50 text-gray-700 shadow-sm' 
+                  : 'bg-[#1E1E1E] hover:bg-[#242424] text-gray-300 shadow-sm'
+              } rounded-lg text-sm transition-colors flex items-center`}
             >
               <span className="text-primary-500 mr-1.5">{action.icon}</span>
               <span>{action.label}</span>
@@ -321,13 +321,13 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
         {hasNotifications && (expandedNotifications || focusMode) && (
           <div className={`mt-6 ${
             isLightTheme 
-              ? 'bg-white rounded-lg border border-gray-200 shadow-sm' 
-              : 'bg-[#1A1A1A] rounded-lg border border-[#2A2A2A]'
+              ? 'bg-white rounded-lg shadow-md' 
+              : 'bg-[#1A1A1A] rounded-lg shadow-md'
           } overflow-hidden`}>
             <div className={`flex items-center justify-between px-4 py-3 ${
               isLightTheme 
-                ? 'border-b border-gray-200' 
-                : 'border-b border-[#2A2A2A]'
+                ? 'bg-gray-50' 
+                : 'bg-[#222222]'
             }`}>
               <div className="flex items-center">
                 {focusMode ? (
