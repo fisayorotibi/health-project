@@ -218,75 +218,104 @@ export default function DashboardPage() {
           onSearch={handleSearch}
         />
 
-        {/* Stats Grid - Redesigned as a grouped card */}
+        {/* Combined Stats & Quick Actions Card */}
         <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
-          <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary">
-            <Heading4 className="text-gray-900 dark:text-white">Key Metrics</Heading4>
-            <SmallParagraph className="text-gray-500 dark:text-gray-400">Overview of your practice performance</SmallParagraph>
-          </div>
-          <div className="p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stats.map((stat, index) => (
-              <div 
-                key={index} 
-                className="relative overflow-hidden bg-gray-50 dark:bg-dark-surface-secondary rounded-lg group"
-              >
-                <div className="p-4">
-                  {/* Header with icon and status */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300">
-                      {stat.icon}
-                    </div>
-                    
-                    <div className={`px-2 py-1 rounded-full text-xs font-medium flex items-center ${
-                      stat.positive 
-                        ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' 
-                        : stat.change.includes('urgent')
-                          ? 'bg-gray-100 dark:bg-gray-800 text-red-600 dark:text-red-400'
-                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
-                    }`}>
-                      {stat.positive 
-                        ? <TrendingUp className="w-3 h-3 mr-1.5 text-gray-500 dark:text-gray-400" /> 
-                        : <AlertCircle className="w-3 h-3 mr-1.5 text-red-500 dark:text-red-400" />
-                      }
-                      {stat.change}
-                    </div>
-                  </div>
-                  
-                  {/* Main stat value */}
-                  <div className="mb-1">
-                    <LargeDataDisplay className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
-                      {stat.value}
-                    </LargeDataDisplay>
-                  </div>
-                  
-                  {/* Title and description */}
-                  <div>
-                    <Label className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                      {stat.title}
-                    </Label>
-                    <SmallParagraph className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                      {stat.description}
-                    </SmallParagraph>
-                  </div>
-                  
-                  {/* Keeping the animated gradient bar */}
-                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-200/0 via-gray-200/0 to-gray-200/0 group-hover:from-gray-300/30 group-hover:via-gray-400/40 group-hover:to-gray-300/0 dark:group-hover:from-gray-700/30 dark:group-hover:via-gray-600/40 dark:group-hover:to-gray-700/0 transition-all duration-300"></div>
-                </div>
+          {/* Card Header */}
+          <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
+            <div className="flex items-center justify-between">
+              <div>
+                <Heading4 className="text-gray-900 dark:text-white">Practice Dashboard</Heading4>
+                <SmallParagraph className="text-gray-500 dark:text-gray-400">Key metrics and frequent actions</SmallParagraph>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-          {/* Recent Activities & Quick Actions */}
-          <div className="space-y-5">
-            {/* Quick Actions */}
-            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
-              <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary">
-                <Heading4 className="text-gray-900 dark:text-white">Quick Actions</Heading4>
-                <SmallParagraph className="text-gray-500 dark:text-gray-400">Frequently used workflows</SmallParagraph>
+              <div className="flex items-center space-x-2">
+                <button className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                  Today
+                </button>
+                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  This Week
+                </button>
+                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  This Month
+                </button>
               </div>
-              <div className="p-5 grid grid-cols-2 gap-3">
+            </div>
+          </div>
+          
+          <div className="p-5">
+            {/* Stats Grid Section */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Key Metrics</Label>
+                <div className="h-px bg-gray-100 dark:bg-gray-800 flex-grow mx-4"></div>
+                <button className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                  View Details <ChevronRight className="w-3 h-3 ml-1" />
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {stats.map((stat, index) => (
+                  <div 
+                    key={index} 
+                    className="relative overflow-hidden bg-gray-50 dark:bg-dark-surface-secondary rounded-lg group"
+                  >
+                    <div className="p-4">
+                      {/* Header with icon and status */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300">
+                          {stat.icon}
+                        </div>
+                        
+                        <div className={`px-2 py-1 rounded-full text-xs font-medium flex items-center ${
+                          stat.positive 
+                            ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' 
+                            : stat.change.includes('urgent')
+                              ? 'bg-gray-100 dark:bg-gray-800 text-red-600 dark:text-red-400'
+                              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                        }`}>
+                          {stat.positive 
+                            ? <TrendingUp className="w-3 h-3 mr-1.5 text-gray-500 dark:text-gray-400" /> 
+                            : <AlertCircle className="w-3 h-3 mr-1.5 text-red-500 dark:text-red-400" />
+                          }
+                          {stat.change}
+                        </div>
+                      </div>
+                      
+                      {/* Main stat value */}
+                      <div className="mb-1">
+                        <LargeDataDisplay className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
+                          {stat.value}
+                        </LargeDataDisplay>
+                      </div>
+                      
+                      {/* Title and description */}
+                      <div>
+                        <Label className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                          {stat.title}
+                        </Label>
+                        <SmallParagraph className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                          {stat.description}
+                        </SmallParagraph>
+                      </div>
+                      
+                      {/* Keeping the animated gradient bar */}
+                      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-200/0 via-gray-200/0 to-gray-200/0 group-hover:from-gray-300/30 group-hover:via-gray-400/40 group-hover:to-gray-300/0 dark:group-hover:from-gray-700/30 dark:group-hover:via-gray-600/40 dark:group-hover:to-gray-700/0 transition-all duration-300"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Quick Actions Section */}
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quick Actions</Label>
+                <div className="h-px bg-gray-100 dark:bg-gray-800 flex-grow mx-4"></div>
+                <button className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                  All Actions <ChevronRight className="w-3 h-3 ml-1" />
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Plus className="w-4 h-4" />
@@ -317,28 +346,30 @@ export default function DashboardPage() {
                 </button>
               </div>
             </div>
-            
-            {/* Recent Activities */}
-            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
-              <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary">
-                <Heading4 className="text-gray-900 dark:text-white">Recent Activities</Heading4>
-              </div>
-              <div>
-                {recentActivities.map((activity, index) => (
-                  <div 
-                    key={activity.id} 
-                    className={`p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors ${
-                      index !== recentActivities.length - 1 ? 'border-b border-gray-100 dark:border-gray-800/50' : ''
-                    }`}
-                  >
-                    <Paragraph className="font-medium text-gray-900 dark:text-white">{activity.action}</Paragraph>
-                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
-                      {activity.patient} • {activity.time}
-                    </SmallParagraph>
-                    <Caption className="mt-1 text-gray-500 dark:text-gray-400">by {activity.user}</Caption>
-                  </div>
-                ))}
-              </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          {/* Recent Activities */}
+          <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
+            <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary">
+              <Heading4 className="text-gray-900 dark:text-white">Recent Activities</Heading4>
+            </div>
+            <div>
+              {recentActivities.map((activity, index) => (
+                <div 
+                  key={activity.id} 
+                  className={`p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors ${
+                    index !== recentActivities.length - 1 ? 'border-b border-gray-100 dark:border-gray-800/50' : ''
+                  }`}
+                >
+                  <Paragraph className="font-medium text-gray-900 dark:text-white">{activity.action}</Paragraph>
+                  <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                    {activity.patient} • {activity.time}
+                  </SmallParagraph>
+                  <Caption className="mt-1 text-gray-500 dark:text-gray-400">by {activity.user}</Caption>
+                </div>
+              ))}
             </div>
           </div>
 
