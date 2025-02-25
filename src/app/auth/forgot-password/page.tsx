@@ -53,7 +53,7 @@ export default function ForgotPasswordPage() {
     <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-white dark:bg-dark-background">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center mb-8">
-          <div className="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center mr-3">
+          <div className="w-12 h-12 rounded-lg bg-gray-700 flex items-center justify-center mr-3">
             <span className="text-white text-2xl font-bold">L</span>
           </div>
           <div>
@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                      className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                       placeholder="you@example.com"
                     />
                   </div>
@@ -99,7 +99,7 @@ export default function ForgotPasswordPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     {isLoading ? 'Sending...' : 'Send reset instructions'}
                   </button>
@@ -120,7 +120,7 @@ export default function ForgotPasswordPage() {
                 <button
                   type="button"
                   onClick={() => setIsSubmitted(false)}
-                  className="text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 font-medium"
+                  className="text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 font-medium"
                 >
                   try again
                 </button>
@@ -131,7 +131,7 @@ export default function ForgotPasswordPage() {
           <div className="mt-6 text-center">
             <Link
               href="/auth"
-              className="inline-flex items-center text-sm text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 font-medium"
+              className="inline-flex items-center text-sm text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 font-medium"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to sign in

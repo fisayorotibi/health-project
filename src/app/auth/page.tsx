@@ -35,68 +35,68 @@ export default function AuthPage() {
   return (
     <div className="flex min-h-screen flex-col md:flex-row bg-white dark:bg-dark-background">
       {/* Left side - Branding and information */}
-      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/20 dark:to-purple-950/40 relative overflow-hidden">
-        <div className="absolute inset-0 bg-purple-500/5 dark:bg-purple-800/10"></div>
+      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-900/20 dark:to-gray-950/40 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gray-500/5 dark:bg-gray-800/10"></div>
         <div className="relative z-10 flex flex-col justify-between w-full p-12">
           <div>
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center mr-3">
+              <div className="w-10 h-10 rounded-lg bg-gray-700 flex items-center justify-center mr-3">
                 <span className="text-white text-xl font-bold">L</span>
               </div>
               <div>
-                <span className="text-purple-900 dark:text-purple-100 text-xl font-semibold tracking-tight">LAVENDER</span>
-                <span className="ml-1 text-xs text-purple-700 dark:text-purple-300 uppercase tracking-wider font-medium">Health</span>
+                <span className="text-gray-900 dark:text-gray-100 text-xl font-semibold tracking-tight">LAVENDER</span>
+                <span className="ml-1 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider font-medium">Health</span>
               </div>
             </div>
           </div>
           
           <div className="space-y-6 max-w-md">
-            <Heading1 className="text-purple-900 dark:text-purple-50">Secure Health Records for Nigerian Healthcare</Heading1>
-            <Paragraph className="text-purple-800 dark:text-purple-200">
+            <Heading1 className="text-gray-900 dark:text-gray-50">Secure Health Records for Nigerian Healthcare</Heading1>
+            <Paragraph className="text-gray-800 dark:text-gray-200">
               Lavender provides a secure, reliable platform for managing patient records, prescriptions, and medical data - even when offline.
             </Paragraph>
             
             <div className="space-y-4 pt-4">
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-800/30 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-purple-600 dark:text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800/30 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <Heading4 className="text-purple-900 dark:text-purple-100">Secure & Compliant</Heading4>
-                  <SmallParagraph className="text-purple-700 dark:text-purple-300">End-to-end encryption for all patient data</SmallParagraph>
+                  <Heading4 className="text-gray-900 dark:text-gray-100">Secure & Compliant</Heading4>
+                  <SmallParagraph className="text-gray-700 dark:text-gray-300">End-to-end encryption for all patient data</SmallParagraph>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-800/30 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-purple-600 dark:text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800/30 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <Heading4 className="text-purple-900 dark:text-purple-100">Works Offline</Heading4>
-                  <SmallParagraph className="text-purple-700 dark:text-purple-300">Continue working during internet outages</SmallParagraph>
+                  <Heading4 className="text-gray-900 dark:text-gray-100">Works Offline</Heading4>
+                  <SmallParagraph className="text-gray-700 dark:text-gray-300">Continue working during internet outages</SmallParagraph>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-800/30 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-purple-600 dark:text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800/30 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <Heading4 className="text-purple-900 dark:text-purple-100">Complete Solution</Heading4>
-                  <SmallParagraph className="text-purple-700 dark:text-purple-300">Manage records, prescriptions, and appointments</SmallParagraph>
+                  <Heading4 className="text-gray-900 dark:text-gray-100">Complete Solution</Heading4>
+                  <SmallParagraph className="text-gray-700 dark:text-gray-300">Manage records, prescriptions, and appointments</SmallParagraph>
                 </div>
               </div>
             </div>
           </div>
           
           <div className="pt-8">
-            <SmallParagraph className="text-purple-700 dark:text-purple-300">
+            <SmallParagraph className="text-gray-700 dark:text-gray-300">
               © {new Date().getFullYear()} Lavender Health. All rights reserved.
             </SmallParagraph>
           </div>
@@ -104,12 +104,12 @@ export default function AuthPage() {
       </div>
       
       {/* Right side - Authentication forms */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
-        <div className="w-full max-w-md">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 overflow-y-auto max-h-screen">
+        <div className="w-full max-w-md my-4">
           {/* Mobile logo */}
-          <div className="flex md:hidden items-center justify-center mb-8">
-            <div className="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center mr-3">
-              <span className="text-white text-2xl font-bold">L</span>
+          <div className="flex md:hidden items-center justify-center mb-6">
+            <div className="w-10 h-10 rounded-lg bg-gray-700 flex items-center justify-center mr-3">
+              <span className="text-white text-xl font-bold">L</span>
             </div>
             <div>
               <span className="text-gray-900 dark:text-white text-xl font-semibold tracking-tight">LAVENDER</span>
@@ -118,12 +118,12 @@ export default function AuthPage() {
           </div>
           
           {/* Tab navigation */}
-          <div className="flex space-x-4 border-b border-gray-200 dark:border-gray-800 mb-8">
+          <div className="flex space-x-4 border-b border-gray-200 dark:border-gray-800 mb-6">
             <button
               onClick={() => setActiveTab('login')}
-              className={`pb-4 px-2 text-sm font-medium ${
+              className={`pb-3 px-2 text-sm font-medium ${
                 activeTab === 'login'
-                  ? 'text-purple-600 dark:text-purple-400 border-b-2 border-purple-600 dark:border-purple-400'
+                  ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >
@@ -131,9 +131,9 @@ export default function AuthPage() {
             </button>
             <button
               onClick={() => setActiveTab('signup')}
-              className={`pb-4 px-2 text-sm font-medium ${
+              className={`pb-3 px-2 text-sm font-medium ${
                 activeTab === 'signup'
-                  ? 'text-purple-600 dark:text-purple-400 border-b-2 border-purple-600 dark:border-purple-400'
+                  ? 'text-gray-700 dark:text-gray-300 border-b-2 border-gray-700 dark:border-gray-400'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >
