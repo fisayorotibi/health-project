@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
   // Prevent hydration errors by only rendering client-specific content after mounting
   if (!isMounted) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-dark-background">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center">
           <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
             <span className="text-gray-700 dark:text-gray-300 text-2xl font-bold">L</span>
@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-white dark:bg-dark-background">
+    <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-white dark:bg-gray-900">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center mb-8">
           <div className="w-12 h-12 rounded-lg bg-gray-700 flex items-center justify-center mr-3">

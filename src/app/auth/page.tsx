@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Heading1, Heading4, Paragraph, SmallParagraph } from '@/components/ui/typography';
-import { LoginForm } from '@/components/auth/LoginForm';
-import { SignupForm } from '@/components/auth/SignupForm';
+import { LoginForm } from '../../components/auth/LoginForm';
+import { SignupForm } from '../../components/auth/SignupForm';
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
@@ -20,7 +20,7 @@ export default function AuthPage() {
   // Prevent hydration errors by only rendering client-specific content after mounting
   if (!isMounted) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-dark-background">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center">
           <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
             <span className="text-gray-700 dark:text-gray-300 text-2xl font-bold">L</span>
@@ -33,7 +33,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col md:flex-row bg-white dark:bg-dark-background">
+    <div className="flex min-h-screen flex-col md:flex-row bg-white dark:bg-gray-900">
       {/* Left side - Branding and information */}
       <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-900/20 dark:to-gray-950/40 relative overflow-hidden">
         <div className="absolute inset-0 bg-gray-500/5 dark:bg-gray-800/10"></div>
