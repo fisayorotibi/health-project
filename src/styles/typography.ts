@@ -14,8 +14,8 @@
 
 // Font families
 export const fontFamilies = {
-  sans: 'var(--font-geist-sans)', // Primary font for UI and content
-  mono: 'var(--font-geist-mono)', // For code, data, and technical information
+  sans: 'var(--font-inter)', // Primary font for UI and content
+  mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace', // For code, data, and technical information
 };
 
 // Type scale (in pixels, will be converted to rem)

@@ -28,9 +28,10 @@ const getTypographyClasses = (variant: VariantType): string => {
   // Get font family class
   let fontFamilyClass = '';
   if (variantStyles.fontFamily) {
-    if (variantStyles.fontFamily.includes('--font-geist-mono')) {
+    if (variantStyles.fontFamily.includes('ui-monospace') || 
+        variantStyles.fontFamily.includes('SFMono')) {
       fontFamilyClass = 'font-mono';
-    } else if (variantStyles.fontFamily.includes('--font-geist-sans')) {
+    } else if (variantStyles.fontFamily.includes('--font-inter')) {
       fontFamilyClass = 'font-sans';
     }
   }
