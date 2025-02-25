@@ -223,25 +223,25 @@ export default function DashboardPage() {
           {stats.map((stat, index) => (
             <div 
               key={index} 
-              className="relative overflow-hidden bg-white dark:bg-dark-surface rounded-xl shadow-sm transition-all duration-200 hover:shadow-md hover:translate-y-[-1px] group"
+              className="relative overflow-hidden bg-white dark:bg-dark-surface rounded-xl shadow-md group"
             >
-              {/* Subtle gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 to-white dark:from-dark-surface-secondary/20 dark:to-dark-surface opacity-80"></div>
+              {/* Subtle gradient background - simplified */}
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-white dark:from-dark-surface-secondary/10 dark:to-dark-surface opacity-70"></div>
               
               {/* Content */}
               <div className="relative p-6 flex flex-col h-full">
-                {/* Icon and status indicator row */}
+                {/* Icon and status indicator row - simplified animations */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 transition-all duration-200 group-hover:bg-gray-200 dark:group-hover:bg-gray-800/80">
+                  <div className="p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300">
                     {stat.icon}
                   </div>
                   
-                  <div className={`px-2.5 py-1 rounded-full text-xs font-medium flex items-center transition-all duration-200 ${
+                  <div className={`px-2.5 py-1 rounded-full text-xs font-medium flex items-center ${
                     stat.positive 
-                      ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 group-hover:bg-gray-200 dark:group-hover:bg-gray-700' 
+                      ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' 
                       : stat.change.includes('urgent')
-                        ? 'bg-gray-100 dark:bg-gray-800 text-red-600 dark:text-red-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 group-hover:bg-gray-200 dark:group-hover:bg-gray-700'
+                        ? 'bg-gray-100 dark:bg-gray-800 text-red-600 dark:text-red-400'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
                   }`}>
                     {stat.positive 
                       ? <TrendingUp className="w-3 h-3 mr-1.5 text-gray-500 dark:text-gray-400" /> 
@@ -251,8 +251,8 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 
-                {/* Main stat value */}
-                <div className="mb-1.5 transition-all duration-200 group-hover:translate-x-0.5">
+                {/* Main stat value - removed translation effect */}
+                <div className="mb-1.5">
                   <LargeDataDisplay className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                     {stat.value}
                   </LargeDataDisplay>
@@ -268,7 +268,7 @@ export default function DashboardPage() {
                   </SmallParagraph>
                 </div>
                 
-                {/* Subtle hover effect indicator - keeping the animated gradient bar */}
+                {/* Keeping only the animated gradient bar */}
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-200/0 via-gray-200/0 to-gray-200/0 group-hover:from-gray-300/30 group-hover:via-gray-400/40 group-hover:to-gray-300/0 dark:group-hover:from-gray-700/30 dark:group-hover:via-gray-600/40 dark:group-hover:to-gray-700/0 transition-all duration-300"></div>
               </div>
             </div>
@@ -279,51 +279,56 @@ export default function DashboardPage() {
           {/* Recent Activities & Quick Actions */}
           <div className="space-y-5">
             {/* Quick Actions */}
-            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
+              <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary">
                 <Heading4 className="text-gray-900 dark:text-white">Quick Actions</Heading4>
                 <SmallParagraph className="text-gray-500 dark:text-gray-400">Frequently used workflows</SmallParagraph>
               </div>
               <div className="p-5 grid grid-cols-2 gap-3">
                 <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center text-green-600 dark:text-green-400">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Plus className="w-4 h-4" />
                   </div>
-                  <Label className="mt-2 text-gray-700 dark:text-gray-300">Register Patient</Label>
-                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Add new patient record</SmallParagraph>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Patient</Label>
+                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Create patient record</SmallParagraph>
                 </button>
                 <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Calendar className="w-4 h-4" />
                   </div>
-                  <Label className="mt-2 text-gray-700 dark:text-gray-300">Schedule Visit</Label>
-                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Book new appointment</SmallParagraph>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">Schedule</Label>
+                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Book appointment</SmallParagraph>
                 </button>
                 <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <FileText className="w-4 h-4" />
                   </div>
-                  <Label className="mt-2 text-gray-700 dark:text-gray-300">Create Record</Label>
-                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Document patient visit</SmallParagraph>
+                  <Label className="mt-2 text-gray-700 dark:text-gray-300">New Record</Label>
+                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Document visit</SmallParagraph>
                 </button>
                 <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center text-orange-600 dark:text-orange-400">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Pill className="w-4 h-4" />
                   </div>
                   <Label className="mt-2 text-gray-700 dark:text-gray-300">Prescribe</Label>
-                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Create new prescription</SmallParagraph>
+                  <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Create prescription</SmallParagraph>
                 </button>
               </div>
             </div>
             
             {/* Recent Activities */}
-            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
-              <div className="px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+            <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
+              <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary">
                 <Heading4 className="text-gray-900 dark:text-white">Recent Activities</Heading4>
               </div>
-              <div className="divide-y divide-gray-200 dark:divide-dark-border">
-                {recentActivities.map((activity) => (
-                  <div key={activity.id} className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+              <div>
+                {recentActivities.map((activity, index) => (
+                  <div 
+                    key={activity.id} 
+                    className={`p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors ${
+                      index !== recentActivities.length - 1 ? 'border-b border-gray-100 dark:border-gray-800/50' : ''
+                    }`}
+                  >
                     <Paragraph className="font-medium text-gray-900 dark:text-white">{activity.action}</Paragraph>
                     <SmallParagraph className="text-gray-500 dark:text-gray-400">
                       {activity.patient} • {activity.time}
@@ -336,16 +341,21 @@ export default function DashboardPage() {
           </div>
 
           {/* Recent Patients */}
-          <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-dark-border">
+          <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary">
               <Heading4 className="text-gray-900 dark:text-white">Recent Patients</Heading4>
               <button className="text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 text-sm font-medium flex items-center">
                 View all <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </div>
-            <div className="divide-y divide-gray-200 dark:divide-dark-border">
-              {recentPatients.map((patient) => (
-                <div key={patient.id} className="p-5 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+            <div>
+              {recentPatients.map((patient, index) => (
+                <div 
+                  key={patient.id} 
+                  className={`p-5 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors ${
+                    index !== recentPatients.length - 1 ? 'border-b border-gray-100 dark:border-gray-800/50' : ''
+                  }`}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
