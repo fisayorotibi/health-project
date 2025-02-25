@@ -358,13 +358,13 @@ export default function DashboardPage() {
               </div>
               <div className="flex items-center space-x-3">
                 <button className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                  All
+                  Today
                 </button>
                 <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   This Week
                 </button>
                 <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  Archive
+                  All
                 </button>
               </div>
             </div>
