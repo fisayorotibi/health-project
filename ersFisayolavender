@@ -1,0 +1,4 @@
+warning: in the working copy of 'next.config.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/medical-records/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/patients/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/prescriptions/page.tsx', LF will be replaced by CRLF the next time Git touches it

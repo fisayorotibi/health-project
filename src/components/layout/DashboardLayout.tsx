@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { 
@@ -9,7 +9,8 @@ import {
   User, 
   LogOut, 
   Settings as SettingsIcon,
-  ChevronDown
+  ChevronDown,
+  Hexagon
 } from 'lucide-react';
 import Link from 'next/link';
 import { useTheme } from '@/hooks/useTheme';
@@ -27,6 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const { theme } = useTheme();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -41,6 +43,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     // Close sidebar on mobile when route changes
     setIsSidebarOpen(false);
   }, [pathname]);
+
+  // Handle click outside of profile dropdown
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    }
+
+    // Add event listener when dropdown is open
+    if (isProfileOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    // Clean up the event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isProfileOpen]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -60,10 +81,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-gray-200 dark:bg-gray-800">
         <div className="flex flex-col items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
-            <span className="text-gray-700 dark:text-gray-300 text-2xl font-bold">L</span>
+          <div className="relative">
+            <div className="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-600 dark:to-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+              <Hexagon className="w-10 h-10 text-gray-200 absolute" strokeWidth={1.5} />
+              <span className="text-gray-100 font-bold text-2xl relative z-10">L</span>
+              <div className="absolute inset-0 bg-gradient-to-tr from-gray-500/10 to-transparent opacity-60"></div>
+            </div>
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full border-2 border-white dark:border-dark-surface"></div>
           </div>
-          <h1 className="mt-4 text-xl font-bold text-gray-900 dark:text-white">Loading...</h1>
+          <div className="mt-4 flex flex-col items-center">
+            <div className="flex items-baseline">
+              <span className="text-gray-900 dark:text-white text-xl font-semibold tracking-tight">LAVENDER</span>
+              <span className="ml-1 text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
+            </div>
+            <div className="h-[2px] w-24 bg-gradient-to-r from-gray-300 via-gray-300 to-transparent dark:from-gray-700 dark:via-gray-700 mt-1"></div>
+          </div>
+          <p className="mt-4 text-gray-500 dark:text-gray-400">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -130,7 +163,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </button>
 
                 {/* Profile dropdown */}
-                <div className="ml-3 relative">
+                <div className="ml-3 relative" ref={profileDropdownRef}>
                   <div>
                     <button
                       type="button"
@@ -150,7 +183,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   {/* Dropdown menu */}
                   {isProfileOpen && (
                     <div
-                      className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-dark-surface ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-dark-surface ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                       role="menu"
                       aria-orientation="vertical"
                       aria-labelledby="user-menu"

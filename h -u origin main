@@ -1,0 +1,4 @@
+[33m3447cb5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Tone down unnecessary color usage across the platform
+[33m98723c3[m Update globals.css to use Inter font
+[33mab92f3a[m Change font family to Inter across the entire platform
+[33m2d99b94[m Replace profile section with modern promo banner in sidebar
