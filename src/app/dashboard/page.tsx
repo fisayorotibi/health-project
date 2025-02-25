@@ -358,13 +358,13 @@ export default function DashboardPage() {
               </div>
               <div className="flex items-center space-x-3">
                 <button className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                  Today
+                  All
                 </button>
                 <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   This Week
                 </button>
                 <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  All
+                  Archive
                 </button>
               </div>
             </div>
@@ -458,7 +458,7 @@ export default function DashboardPage() {
                       {recentPatients[1].age} years • {recentPatients[1].reason}
                     </SmallParagraph>
                     <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[1].time} <span className="ml-1 font-medium text-yellow-600 dark:text-yellow-400">(Now)</span>
+                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[1].time}
                     </Caption>
                   </div>
                   
@@ -508,7 +508,7 @@ export default function DashboardPage() {
                       {recentPatients[2].age} years • {recentPatients[2].reason}
                     </SmallParagraph>
                     <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[2].time} <span className="ml-1 font-medium text-blue-600 dark:text-blue-400">(Today)</span>
+                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[2].time}
                     </Caption>
                   </div>
                   
@@ -558,7 +558,7 @@ export default function DashboardPage() {
                       {recentPatients[3].age} years • {recentPatients[3].reason}
                     </SmallParagraph>
                     <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[3].time} <span className="ml-1 font-medium text-blue-600 dark:text-blue-400">(Today)</span>
+                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[3].time}
                     </Caption>
                   </div>
                   
@@ -588,7 +588,28 @@ export default function DashboardPage() {
               <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Other Recent Activities</Label>
             </div>
             
-            {/* Other Patient */}
+            {/* View more button */}
+            <div className="p-4 flex justify-center">
+              <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                View more activities <ChevronRight className="w-4 h-4 ml-1" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* This Week Section */}
+        <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden mt-6">
+          <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
+            <div className="flex items-center justify-between">
+              <div>
+                <Heading4 className="text-gray-900 dark:text-white">This Week</Heading4>
+                <SmallParagraph className="text-gray-500 dark:text-gray-400">Recent patient activities from this week</SmallParagraph>
+              </div>
+            </div>
+          </div>
+
+          <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
+            {/* Other Patient - Moved from Yesterday */}
             <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
               <div className="flex items-start">
                 <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
@@ -614,7 +635,7 @@ export default function DashboardPage() {
             {/* View more button */}
             <div className="p-4 flex justify-center">
               <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
-                View more activities <ChevronRight className="w-4 h-4 ml-1" />
+                View more weekly activities <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </div>
           </div>
