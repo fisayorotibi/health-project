@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { 
   Menu, 
-  Bell, 
   User, 
   LogOut, 
   Settings as SettingsIcon,
@@ -373,7 +372,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main content */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top navigation */}
-        <div className="bg-white dark:bg-dark-surface shadow-sm z-10 border-b border-gray-200 dark:border-dark-border">
+        <div className="z-10">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex">
@@ -389,16 +388,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
               </div>
               <div className="flex items-center">
-                <button
-                  type="button"
-                  className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary focus:outline-none"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <Bell className="h-6 w-6" aria-hidden="true" />
-                </button>
-
                 {/* Profile dropdown */}
-                <div className="ml-3 relative" ref={profileDropdownRef}>
+                <div className="relative" ref={profileDropdownRef}>
                   <div>
                     <button
                       type="button"
