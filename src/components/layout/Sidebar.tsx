@@ -86,18 +86,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
         <div className="flex items-center space-x-3">
           {/* Stylized logo placeholder */}
           <div className="relative">
-            <div className="w-9 h-9 bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-600 dark:to-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
-              <Hexagon className="w-5 h-5 text-gray-200 absolute" strokeWidth={1.5} />
-              <span className="text-gray-100 font-bold text-sm relative z-10">L</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-600 dark:to-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+              <Hexagon className="w-4.5 h-4.5 text-gray-200 absolute" strokeWidth={1.5} />
+              <span className="text-gray-100 font-bold text-xs relative z-10">L</span>
               <div className="absolute inset-0 bg-gradient-to-tr from-gray-500/10 to-transparent opacity-60"></div>
             </div>
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-200 dark:bg-gray-700 rounded-full border-2 border-white dark:border-dark-surface"></div>
           </div>
           
           {/* Stylized brand name */}
           <div className="flex flex-col">
             <div className="flex items-baseline">
-              <span className="text-gray-900 dark:text-white text-lg font-semibold tracking-tight">LAVENDER</span>
+              <span className="text-gray-900 dark:text-white text-sm font-semibold tracking-tight">LAVENDER</span>
               <span className="ml-1 text-[8px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
             </div>
             <div className="h-[2px] w-full bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700"></div>

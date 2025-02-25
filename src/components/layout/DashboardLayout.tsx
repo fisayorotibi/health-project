@@ -27,6 +27,7 @@ import { useThemeContext } from '@/components/ThemeProvider';
 const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
 // Import the SettingsModal component with proper typing
 const SettingsModal = dynamic(() => import('../ui/SettingsModal').then(mod => mod.SettingsModal), { ssr: false });
+const Breadcrumb = dynamic(() => import('../ui/Breadcrumb'), { ssr: false });
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMounted, setIsMounted] = useState(false);
@@ -126,19 +127,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   {/* Replace with actual avatar if available */}
                 <User className="h-7 w-7 text-gray-400 dark:text-gray-500" aria-hidden="true" />
                 </div>
-              <div className={`absolute bottom-0.5 right-0.5 h-3 w-3 rounded-full ring-2 ring-white dark:ring-dark-surface ${
-                  userStatus === 'online' ? 'bg-green-500' : 
-                  userStatus === 'away' ? 'bg-yellow-500' : 'bg-red-500'
-                }`}></div>
               </div>
               <div className="ml-4">
                 <p className="text-base font-medium text-gray-900 dark:text-white">Dr. Sarah Chen</p>
                 <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
                   Cardiologist
-                <span className="mx-1.5">•</span>
-                  <span className="text-xs flex items-center">
-                  {userStatus === 'online' ? 'Online' : userStatus === 'away' ? 'Away' : 'Busy'}
-                  </span>
                 </p>
             </div>
           </div>
@@ -300,11 +293,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="text-gray-100 font-bold text-2xl relative z-10">L</span>
               <div className="absolute inset-0 bg-gradient-to-tr from-gray-500/10 to-transparent opacity-60"></div>
             </div>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full border-2 border-white dark:border-dark-surface"></div>
           </div>
           <div className="mt-4 flex flex-col items-center">
             <div className="flex items-baseline">
-              <span className="text-gray-900 dark:text-white text-xl font-semibold tracking-tight">LAVENDER</span>
+              <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight">LAVENDER</span>
               <span className="ml-1 text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
             </div>
             <div className="h-[2px] w-24 bg-gradient-to-r from-gray-300 via-gray-300 to-transparent dark:from-gray-700 dark:via-gray-700 mt-1"></div>
@@ -365,6 +357,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Menu className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
+                {/* Breadcrumb navigation */}
+                <div className="flex items-center ml-2">
+                  <Breadcrumb 
+                    items={[
+                      { label: 'Dashboard', href: '/dashboard' },
+                      { label: 'Home', href: '/dashboard/home', isCurrent: true }
+                    ]} 
+                  />
+                </div>
               </div>
               <div className="flex items-center">
                 {/* Profile dropdown */}
@@ -383,10 +384,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <div className="h-9 w-9 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center shadow-sm">
                           <User className="h-5 w-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
                         </div>
-                        <div className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-1 ring-white dark:ring-dark-surface ${
-                          userStatus === 'online' ? 'bg-green-500' : 
-                          userStatus === 'away' ? 'bg-yellow-500' : 'bg-red-500'
-                        }`}></div>
                       </div>
                     </button>
                   </div>
