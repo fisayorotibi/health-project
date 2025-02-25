@@ -7,11 +7,16 @@
   --foreground: #171717;
   
   /* Scrollbar variables - Light mode */
-  --scrollbar-track: #f3f4f6;
-  --scrollbar-thumb: #d9d6fe;
-  --scrollbar-thumb-hover: #bdb4fe;
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #d1d1d1;
+  --scrollbar-thumb-hover: #b1b1b1;
   --scrollbar-width: 8px;
   --scrollbar-border-radius: 4px;
+  
+  /* Dark mode scrollbar - enhanced with brand colors */
+  --scrollbar-track-dark: #1e1e2e;
+  --scrollbar-thumb-dark: #7C66DC;
+  --scrollbar-thumb-hover-dark: #9B8AFB;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,9 +25,9 @@
     --foreground: #f5f5f5;
     
     /* Scrollbar variables - Dark mode */
-    --scrollbar-track: #1e1e1e;
-    --scrollbar-thumb: #5943be;
-    --scrollbar-thumb-hover: #6e56db;
+    --scrollbar-track: var(--scrollbar-track-dark);
+    --scrollbar-thumb: var(--scrollbar-thumb-dark);
+    --scrollbar-thumb-hover: var(--scrollbar-thumb-hover-dark);
   }
 }
 
@@ -62,8 +67,10 @@ body {
   }
 
   /* For Edge and IE */
-  body {
-    -ms-overflow-style: none;
+  @supports (-ms-overflow-style: none) {
+    html {
+      -ms-overflow-style: none;
+    }
   }
 
   /* Thin scrollbar for specific containers */
@@ -74,6 +81,8 @@ body {
 
   /* Hide scrollbar but keep functionality */
   .hide-scrollbar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
     display: none;
   }
   
@@ -81,4 +90,18 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* Dark mode overrides */
+.dark {
+  --scrollbar-track: var(--scrollbar-track-dark);
+  --scrollbar-thumb: var(--scrollbar-thumb-dark);
+  --scrollbar-thumb-hover: var(--scrollbar-thumb-hover-dark);
+}
+
+/* Webkit scrollbar styles with transitions */
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--scrollbar-border-radius);
+  transition: background-color 0.2s ease;
 }

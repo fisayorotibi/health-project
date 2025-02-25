@@ -3,80 +3,117 @@
 import React from 'react';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { Heading4, Paragraph } from '@/components/ui/typography';
+import { useThemeContext } from '@/components/ThemeProvider';
+import { Sun, Moon } from 'lucide-react';
 
 /**
  * Example component demonstrating the ScrollArea usage with different configurations
  */
-export const ScrollExample = () => {
+export function ScrollExample() {
+  const { theme, setTheme, resolvedTheme } = useThemeContext();
+  
+  const isDarkMode = resolvedTheme === 'dark';
+  
+  // Sample text for scrolling
+  const paragraphs = Array(10).fill(
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nunc quis nisl. Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nunc quis nisl.'
+  );
+
   return (
-    <div className="space-y-8 p-6">
-      <div>
-        <Heading4 className="mb-4">Default Scrollbar</Heading4>
-        <ScrollArea className="border border-gray-200 dark:border-gray-800 rounded-lg p-4" maxHeight="200px">
-          <div className="space-y-4">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <Paragraph key={i} className="pb-2">
-                This is a paragraph of text that demonstrates the default scrollbar styling.
-                It has our custom premium scrollbar that adapts to the current theme.
-              </Paragraph>
-            ))}
-          </div>
+    <div className="space-y-8">
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
+          className="flex items-center gap-2 px-3 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        >
+          {isDarkMode ? (
+            <>
+              <Sun className="w-4 h-4" />
+              <span>Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon className="w-4 h-4" />
+              <span>Dark Mode</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Default Scrollbar */}
+      <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+        <Heading4 className="mb-2">Default Scrollbar</Heading4>
+        <Paragraph className="text-gray-500 dark:text-gray-400 mb-4">
+          Standard scrollbar with brand colors in dark mode.
+        </Paragraph>
+        <ScrollArea 
+          maxHeight={200} 
+          className="p-4 bg-gray-50 dark:bg-gray-900 rounded-md"
+        >
+          {paragraphs.map((text, i) => (
+            <Paragraph key={i} className="mb-4">
+              {text}
+            </Paragraph>
+          ))}
         </ScrollArea>
       </div>
 
-      <div>
-        <Heading4 className="mb-4">Thin Scrollbar</Heading4>
+      {/* Thin Scrollbar */}
+      <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+        <Heading4 className="mb-2">Thin Scrollbar</Heading4>
+        <Paragraph className="text-gray-500 dark:text-gray-400 mb-4">
+          A thinner scrollbar variant for a more subtle appearance.
+        </Paragraph>
         <ScrollArea 
+          maxHeight={200} 
           thin 
-          className="border border-gray-200 dark:border-gray-800 rounded-lg p-4" 
-          maxHeight="200px"
+          className="p-4 bg-gray-50 dark:bg-gray-900 rounded-md"
         >
-          <div className="space-y-4">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <Paragraph key={i} className="pb-2">
-                This example uses the thin scrollbar variant, which is more subtle
-                and takes up less space while still being easy to use.
-              </Paragraph>
-            ))}
-          </div>
+          {paragraphs.map((text, i) => (
+            <Paragraph key={i} className="mb-4">
+              {text}
+            </Paragraph>
+          ))}
         </ScrollArea>
       </div>
 
-      <div>
-        <Heading4 className="mb-4">Hidden Scrollbar (Visible on Hover)</Heading4>
+      {/* Hidden Scrollbar (Visible on Hover) */}
+      <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+        <Heading4 className="mb-2">Hidden Scrollbar (Visible on Hover)</Heading4>
+        <Paragraph className="text-gray-500 dark:text-gray-400 mb-4">
+          Scrollbar is hidden until you hover over the content area.
+        </Paragraph>
         <ScrollArea 
+          maxHeight={200} 
           showOnHover 
-          className="border border-gray-200 dark:border-gray-800 rounded-lg p-4" 
-          maxHeight="200px"
+          className="p-4 bg-gray-50 dark:bg-gray-900 rounded-md"
         >
-          <div className="space-y-4">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <Paragraph key={i} className="pb-2">
-                This example hides the scrollbar until you hover over the content area.
-                It provides a clean look while still allowing for scrolling functionality.
-              </Paragraph>
-            ))}
-          </div>
+          {paragraphs.map((text, i) => (
+            <Paragraph key={i} className="mb-4">
+              {text}
+            </Paragraph>
+          ))}
         </ScrollArea>
       </div>
 
-      <div>
-        <Heading4 className="mb-4">Completely Hidden Scrollbar</Heading4>
+      {/* Completely Hidden Scrollbar */}
+      <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+        <Heading4 className="mb-2">Completely Hidden Scrollbar</Heading4>
+        <Paragraph className="text-gray-500 dark:text-gray-400 mb-4">
+          Scrollbar is completely hidden but content is still scrollable.
+        </Paragraph>
         <ScrollArea 
+          maxHeight={200} 
           hideScrollbar 
-          className="border border-gray-200 dark:border-gray-800 rounded-lg p-4" 
-          maxHeight="200px"
+          className="p-4 bg-gray-50 dark:bg-gray-900 rounded-md"
         >
-          <div className="space-y-4">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <Paragraph key={i} className="pb-2">
-                This example completely hides the scrollbar while still allowing scrolling.
-                This is useful for touch interfaces or when you want a very clean look.
-              </Paragraph>
-            ))}
-          </div>
+          {paragraphs.map((text, i) => (
+            <Paragraph key={i} className="mb-4">
+              {text}
+            </Paragraph>
+          ))}
         </ScrollArea>
       </div>
     </div>
   );
-}; 
+} 
