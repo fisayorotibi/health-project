@@ -54,7 +54,7 @@ export default function DashboardPage() {
     {
       title: 'Active Patients',
       value: '1,248',
-      icon: <Users className="w-5 h-5 text-primary-600 dark:text-primary-400" />,
+      icon: <Users className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '+12% from last month',
       positive: true,
       description: 'Total registered patients in your care'
@@ -62,7 +62,7 @@ export default function DashboardPage() {
     {
       title: 'Today\'s Schedule',
       value: '24',
-      icon: <Calendar className="w-5 h-5 text-primary-600 dark:text-primary-400" />,
+      icon: <Calendar className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '4 pending confirmations',
       positive: true,
       description: 'Appointments scheduled for today'
@@ -70,7 +70,7 @@ export default function DashboardPage() {
     {
       title: 'Pending Results',
       value: '7',
-      icon: <FileText className="w-5 h-5 text-primary-600 dark:text-primary-400" />,
+      icon: <FileText className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '2 marked urgent',
       positive: false,
       description: 'Lab results awaiting review'
@@ -78,7 +78,7 @@ export default function DashboardPage() {
     {
       title: 'Active Prescriptions',
       value: '56',
-      icon: <Pill className="w-5 h-5 text-primary-600 dark:text-primary-400" />,
+      icon: <Pill className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '8 renewals needed',
       positive: true,
       description: 'Current active medication orders'
@@ -223,34 +223,31 @@ export default function DashboardPage() {
           {stats.map((stat, index) => (
             <div 
               key={index} 
-              className="relative overflow-hidden bg-white dark:bg-dark-surface rounded-xl shadow-sm transition-all duration-300 hover:shadow-md hover:translate-y-[-2px] group"
+              className="relative overflow-hidden bg-white dark:bg-dark-surface rounded-xl shadow-sm transition-all duration-200 hover:shadow hover:bg-gray-50 dark:hover:bg-dark-surface/80 group"
             >
-              {/* Subtle gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 to-white dark:from-dark-surface-secondary/30 dark:to-dark-surface opacity-80"></div>
-              
               {/* Content */}
               <div className="relative p-6 flex flex-col h-full">
                 {/* Icon and status indicator row */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-2.5 rounded-lg bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 transition-all duration-300 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/30">
+                  <div className="p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                     {stat.icon}
                   </div>
                   
-                  <div className={`px-2.5 py-1 rounded-full text-xs font-medium flex items-center transition-all duration-300 ${
+                  <div className={`px-2.5 py-1 rounded-full text-xs font-medium flex items-center ${
                     stat.positive 
-                      ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 group-hover:bg-green-100 dark:group-hover:bg-green-900/30' 
-                      : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 group-hover:bg-red-100 dark:group-hover:bg-red-900/30'
+                      ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' 
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
                   }`}>
                     {stat.positive 
                       ? <TrendingUp className="w-3 h-3 mr-1.5" /> 
-                      : <AlertCircle className="w-3 h-3 mr-1.5" />
+                      : <AlertCircle className="w-3 h-3 mr-1.5 text-gray-500 dark:text-gray-500" />
                     }
                     {stat.change}
                   </div>
                 </div>
                 
                 {/* Main stat value */}
-                <div className="mb-1.5 transition-all duration-300 group-hover:translate-x-0.5">
+                <div className="mb-1.5">
                   <LargeDataDisplay className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                     {stat.value}
                   </LargeDataDisplay>
@@ -265,9 +262,6 @@ export default function DashboardPage() {
                     {stat.description}
                   </SmallParagraph>
                 </div>
-                
-                {/* Subtle hover effect indicator */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary-400/0 via-primary-400/0 to-primary-400/0 group-hover:from-primary-400/20 group-hover:via-primary-500/30 group-hover:to-primary-400/0 transition-all duration-300"></div>
               </div>
             </div>
           ))}
