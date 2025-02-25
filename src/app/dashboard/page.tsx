@@ -253,17 +253,17 @@ export default function DashboardPage() {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {stats.map((stat, index) => (
-                  <div 
-                    key={index} 
+          {stats.map((stat, index) => (
+            <div 
+              key={index} 
                     className="relative overflow-hidden bg-gray-50 dark:bg-dark-surface-secondary rounded-lg group"
                   >
                     <div className="p-4">
                       {/* Header with icon and status */}
                       <div className="flex items-center justify-between mb-3">
                         <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300">
-                          {stat.icon}
-                        </div>
+                  {stat.icon}
+                </div>
                         
                         <div className={`px-2 py-1 rounded-full text-xs font-medium flex items-center ${
                           stat.positive 
@@ -276,7 +276,7 @@ export default function DashboardPage() {
                             ? <TrendingUp className="w-3 h-3 mr-1.5 text-gray-500 dark:text-gray-400" /> 
                             : <AlertCircle className="w-3 h-3 mr-1.5 text-red-500 dark:text-red-400" />
                           }
-                          {stat.change}
+                  {stat.change}
                         </div>
                       </div>
                       
@@ -303,8 +303,8 @@ export default function DashboardPage() {
                   </div>
                 ))}
               </div>
-            </div>
-            
+        </div>
+
             {/* Quick Actions Section */}
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -346,40 +346,37 @@ export default function DashboardPage() {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-
+              </div>
+            </div>
+            
         <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
           <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
             <div className="flex items-center justify-between">
               <div>
-                <Heading4 className="text-gray-900 dark:text-white">Patient Journey Stream</Heading4>
+                <Heading4 className="text-gray-900 dark:text-white">Activity Stream</Heading4>
                 <SmallParagraph className="text-gray-500 dark:text-gray-400">Upcoming appointments and patient activities</SmallParagraph>
               </div>
               <div className="flex items-center space-x-3">
                 <button className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                  Today
+                </button>
+                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  This Week
+                </button>
+                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   All
-                </button>
-                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  Appointments
-                </button>
-                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  Activities
                 </button>
               </div>
             </div>
           </div>
-          
+
           <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
-            {/* Time marker - Upcoming */}
+            {/* Completed Appointments Section */}
             <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
-              <div className="flex items-center justify-between">
-                <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Upcoming Appointments</Label>
-                <Caption className="text-gray-500 dark:text-gray-400">Next 24 hours</Caption>
-              </div>
+              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Completed Appointments</Label>
             </div>
             
-            {/* Upcoming Appointment with Patient Context */}
+            {/* Checked In Patient - Now shown as completed */}
             <div className="p-0">
               <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
                 <div className="flex items-start">
@@ -387,16 +384,16 @@ export default function DashboardPage() {
                     <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                       {recentPatients[0].name.charAt(0)}
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                      <Calendar className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                      <div className="w-2 h-2 rounded-full bg-green-500 dark:bg-green-400"></div>
                     </div>
                   </div>
                   <div className="ml-3 flex-1">
                     <div className="flex items-center justify-between">
                       <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[0].name}</Paragraph>
                       <div className="flex items-center">
-                        <div className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
-                          In 30 minutes
+                        <div className="text-xs font-medium px-2 py-1 rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                          Completed
                         </div>
                       </div>
                     </div>
@@ -409,10 +406,10 @@ export default function DashboardPage() {
                       </Caption>
                     </div>
                     
-                    {/* Patient context - recent activity */}
+                    {/* Related activity */}
                     <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
                       <SmallParagraph className="text-gray-700 dark:text-gray-300">
-                        <span className="font-medium">Last visit:</span> Updated medical record • {recentActivities[0].time}
+                        <span className="font-medium">{recentActivities[0].action}</span> • {recentActivities[0].time}
                       </SmallParagraph>
                       <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[0].user}</Caption>
                     </div>
@@ -420,10 +417,10 @@ export default function DashboardPage() {
                     {/* Quick actions */}
                     <div className="mt-3 flex space-x-2">
                       <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                        <FileText className="w-3 h-3 mr-1" /> Prepare Notes
+                        <FileText className="w-3 h-3 mr-1" /> View Record
                       </button>
                       <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                        <Calendar className="w-3 h-3 mr-1" /> Reschedule
+                        <Calendar className="w-3 h-3 mr-1" /> Schedule Follow-up
                       </button>
                     </div>
                   </div>
@@ -431,80 +428,27 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            {/* Another Upcoming Appointment */}
-            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
-              <div className="flex items-start">
-                <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
-                    {recentPatients[2].name.charAt(0)}
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                    <Calendar className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-                  </div>
-                </div>
-                <div className="ml-3 flex-1">
-                  <div className="flex items-center justify-between">
-                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[2].name}</Paragraph>
-                    <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
-                        In 1 hour
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
-                      {recentPatients[2].age} years • {recentPatients[2].reason}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[2].time}
-                    </Caption>
-                  </div>
-                  
-                  {/* Patient context - recent activity */}
-                  <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                    <SmallParagraph className="text-gray-700 dark:text-gray-300">
-                      <span className="font-medium">Last visit:</span> Added lab results • {recentActivities[2].time}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[2].user}</Caption>
-                  </div>
-                  
-                  {/* Quick actions */}
-                  <div className="mt-3 flex space-x-2">
-                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <FileText className="w-3 h-3 mr-1" /> Prepare Notes
-                    </button>
-                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <Calendar className="w-3 h-3 mr-1" /> Reschedule
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Time marker - Recent Patient Journeys */}
+            {/* Upcoming Appointments Section */}
             <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
-              <div className="flex items-center justify-between">
-                <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Recent Patient Journeys</Label>
-                <Caption className="text-gray-500 dark:text-gray-400">Last 24 hours</Caption>
-              </div>
+              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Upcoming Appointments</Label>
             </div>
             
-            {/* Patient with Multiple Activities */}
+            {/* Waiting Patient */}
             <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
               <div className="flex items-start">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                     {recentPatients[1].name.charAt(0)}
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                    <div className="w-2 h-2 rounded-full bg-green-500 dark:bg-green-400"></div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                    <div className="w-2 h-2 rounded-full bg-yellow-500 dark:bg-yellow-400"></div>
                   </div>
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
                     <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[1].name}</Paragraph>
                     <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
                         {recentPatients[1].status}
                       </div>
                     </div>
@@ -514,49 +458,66 @@ export default function DashboardPage() {
                       {recentPatients[1].age} years • {recentPatients[1].reason}
                     </SmallParagraph>
                     <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" /> Last seen: 45 minutes ago
+                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[1].time} <span className="ml-1 font-medium text-yellow-600 dark:text-yellow-400">(Now)</span>
                     </Caption>
                   </div>
                   
-                  {/* Activity Timeline */}
-                  <div className="mt-3 space-y-3">
-                    {/* Activity 1 */}
-                    <div className="pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                      <div className="flex items-center justify-between">
-                        <SmallParagraph className="text-gray-700 dark:text-gray-300 font-medium">
-                          Created new prescription
-                        </SmallParagraph>
-                        <Caption className="text-gray-500 dark:text-gray-400">45 minutes ago</Caption>
-                      </div>
-                      <Caption className="text-gray-500 dark:text-gray-400">by Dr. John Doe</Caption>
-                      <div className="mt-1">
-                        <button className="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                          <ArrowUpRight className="w-2.5 h-2.5 mr-1" /> View Prescription
-                        </button>
+                  {/* Related activity */}
+                  <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                    <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                      <span className="font-medium">{recentActivities[1].action}</span> • {recentActivities[1].time}
+                    </SmallParagraph>
+                    <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[1].user}</Caption>
+                  </div>
+                  
+                  {/* Quick actions */}
+                  <div className="mt-3 flex space-x-2">
+                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <FileText className="w-3 h-3 mr-1" /> View Record
+                    </button>
+                    <button className="text-xs px-3 py-1 rounded bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors flex items-center">
+                      <Calendar className="w-3 h-3 mr-1" /> Start Visit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Scheduled Patient */}
+            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+              <div className="flex items-start">
+                <div className="relative">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
+                    {recentPatients[2].name.charAt(0)}
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                    <div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"></div>
+                  </div>
+                </div>
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center justify-between">
+                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[2].name}</Paragraph>
+                    <div className="flex items-center">
+                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                        {recentPatients[2].status}
                       </div>
                     </div>
-                    
-                    {/* Activity 2 */}
-                    <div className="pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                      <div className="flex items-center justify-between">
-                        <SmallParagraph className="text-gray-700 dark:text-gray-300 font-medium">
-                          Vital signs recorded
-                        </SmallParagraph>
-                        <Caption className="text-gray-500 dark:text-gray-400">50 minutes ago</Caption>
-                      </div>
-                      <Caption className="text-gray-500 dark:text-gray-400">by Nurse Williams</Caption>
-                      <div className="mt-1 flex flex-wrap gap-2">
-                        <div className="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
-                          BP: 120/80
-                        </div>
-                        <div className="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
-                          HR: 72
-                        </div>
-                        <div className="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
-                          Temp: 36.8°C
-                        </div>
-                      </div>
-                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                      {recentPatients[2].age} years • {recentPatients[2].reason}
+                    </SmallParagraph>
+                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[2].time} <span className="ml-1 font-medium text-blue-600 dark:text-blue-400">(Today)</span>
+                    </Caption>
+                  </div>
+                  
+                  {/* Related activity */}
+                  <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                    <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                      <span className="font-medium">{recentActivities[2].action}</span> • {recentActivities[2].time}
+                    </SmallParagraph>
+                    <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[2].user}</Caption>
                   </div>
                   
                   {/* Quick actions */}
@@ -565,49 +526,48 @@ export default function DashboardPage() {
                       <FileText className="w-3 h-3 mr-1" /> View Record
                     </button>
                     <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <Calendar className="w-3 h-3 mr-1" /> Schedule Follow-up
+                      <Calendar className="w-3 h-3 mr-1" /> Reschedule
                     </button>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Another Patient with Activity */}
+            {/* More Scheduled Patients */}
             <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
               <div className="flex items-start">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                     {recentPatients[3].name.charAt(0)}
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                    <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"></div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                    <div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"></div>
                   </div>
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
                     <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[3].name}</Paragraph>
-                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" /> Last seen: 2 hours ago
-                    </Caption>
-                  </div>
-                  <SmallParagraph className="text-gray-500 dark:text-gray-400 mt-1">
-                    {recentPatients[3].age} years • {recentPatients[3].reason}
-                  </SmallParagraph>
-                  
-                  {/* Activity */}
-                  <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                    <div className="flex items-center justify-between">
-                      <SmallParagraph className="text-gray-700 dark:text-gray-300 font-medium">
-                        Scheduled appointment
-                      </SmallParagraph>
-                      <Caption className="text-gray-500 dark:text-gray-400">2 hours ago</Caption>
-                    </div>
-                    <Caption className="text-gray-500 dark:text-gray-400">by Receptionist</Caption>
-                    <div className="mt-1">
-                      <div className="text-xs px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300">
-                        Next appointment: {recentPatients[3].time} tomorrow
+                    <div className="flex items-center">
+                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                        {recentPatients[3].status}
                       </div>
                     </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                      {recentPatients[3].age} years • {recentPatients[3].reason}
+                    </SmallParagraph>
+                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                      <Clock className="w-3 h-3 mr-1" /> {recentPatients[3].time} <span className="ml-1 font-medium text-blue-600 dark:text-blue-400">(Today)</span>
+                    </Caption>
+                  </div>
+                  
+                  {/* Related activity */}
+                  <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                    <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                      <span className="font-medium">{recentActivities[3].action}</span> • {recentActivities[3].time}
+                    </SmallParagraph>
+                    <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[3].user}</Caption>
                   </div>
                   
                   {/* Quick actions */}
@@ -616,40 +576,45 @@ export default function DashboardPage() {
                       <FileText className="w-3 h-3 mr-1" /> View Record
                     </button>
                     <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <Calendar className="w-3 h-3 mr-1" /> Modify Appointment
+                      <Calendar className="w-3 h-3 mr-1" /> Confirm
                     </button>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Time marker - Earlier This Week */}
+            {/* Other Recent Activities Section */}
             <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
-              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Earlier This Week</Label>
+              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Other Recent Activities</Label>
             </div>
             
-            {/* Collapsed Patient Entries */}
+            {/* Other Patient */}
             <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium text-xs">
-                    {recentPatients[4].name.charAt(0)}
-                  </div>
-                  <div className="ml-3">
-                    <SmallParagraph className="font-medium text-gray-900 dark:text-white">{recentPatients[4].name}</SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400">2 activities • 3 days ago</Caption>
-                  </div>
+              <div className="flex items-start">
+                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
+                  {recentPatients[4].name.charAt(0)}
                 </div>
-                <button className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                  Expand
-                </button>
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center justify-between">
+                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[4].name}</Paragraph>
+                    <Caption className="text-gray-500 dark:text-gray-400">Yesterday</Caption>
+                  </div>
+                  <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                    {recentPatients[4].age} years • Last visit: Hypertension follow-up
+                  </SmallParagraph>
+                  
+                  {/* Expandable section indicator */}
+                  <button className="mt-2 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                    View patient history <ChevronRight className="w-3 h-3 ml-1" />
+                  </button>
+                </div>
               </div>
             </div>
             
             {/* View more button */}
             <div className="p-4 flex justify-center">
               <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
-                View more patient journeys <ChevronRight className="w-4 h-4 ml-1" />
+                View more activities <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </div>
           </div>
