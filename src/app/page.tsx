@@ -10,8 +10,8 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true);
-    // Redirect to dashboard
-    router.push('/dashboard');
+    // Redirect to auth page instead of dashboard
+    router.push('/auth');
   }, [router]);
 
   // Prevent hydration errors by only rendering client-specific content after mounting
@@ -36,7 +36,7 @@ export default function Home() {
           <span className="text-white text-2xl font-bold">L</span>
         </div>
         <Heading1 className="mt-4">Lavender Health Records</Heading1>
-        <Paragraph className="mt-2 text-gray-500">Redirecting to dashboard...</Paragraph>
+        <Paragraph className="mt-2 text-gray-500">Redirecting to login...</Paragraph>
       </div>
     </div>
   );

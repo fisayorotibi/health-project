@@ -20,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body
         className={`${inter.variable} antialiased bg-white dark:bg-dark-background text-gray-900 dark:text-dark-text-primary`}
         suppressHydrationWarning
