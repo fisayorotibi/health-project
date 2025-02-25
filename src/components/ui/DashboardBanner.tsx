@@ -110,6 +110,17 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
     }
   };
 
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    // Call onSearch immediately when the query changes
+    if (onSearch) {
+      onSearch(query);
+    }
+  };
+
   // Toggle voice listening (placeholder for actual implementation)
   const toggleListening = () => {
     setIsListening(!isListening);
@@ -162,8 +173,8 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
       key={`banner-${resolvedTheme}`}
       className={`relative mb-8 overflow-hidden rounded-xl ${
       isLightTheme 
-        ? 'bg-gradient-to-br from-sky-50 to-white text-gray-800' 
-        : 'bg-[#121212] dark:bg-[#121212] text-white'
+        ? 'bg-gradient-to-br from-sky-50 to-white text-gray-800 border border-gray-200' 
+        : 'bg-[#121212] dark:bg-[#121212] text-white border border-gray-900'
     } z-0 transition-colors duration-300 ease-in-out ${
       focusMode ? 'shadow-lg ring-1 ring-primary-500/20' : ''
     }`}>
@@ -231,11 +242,11 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
             {hasNotifications && (
               <button 
                 onClick={() => setExpandedNotifications(!expandedNotifications)}
-                className={`relative flex items-center ${
+                className={`relative flex items-center justify-center ${
                   isLightTheme 
                     ? 'text-gray-600 bg-white' 
                     : 'text-gray-400 dark:text-gray-500 bg-[#1A1A1A]'
-                } px-3 py-1.5 rounded-full shadow-sm ${
+                } w-8 h-8 rounded-full shadow-sm ${
                   expandedNotifications 
                     ? isLightTheme 
                       ? 'bg-primary-50 text-primary-700' 
@@ -244,12 +255,14 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                       ? 'hover:bg-gray-50' 
                     : 'hover:bg-[#242424]'
                 }`}
+                aria-label="Notifications"
               >
-                <Bell className="w-3.5 h-3.5 mr-1.5" />
-                <Caption>{insights.length}</Caption>
-                {urgentCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                )}
+                <div className="relative">
+                  <Bell className="w-3.5 h-3.5" />
+                  {urgentCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                  )}
+                </div>
               </button>
             )}
           </div>
@@ -269,7 +282,7 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                 ref={searchInputRef}
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearchChange}
                 placeholder="Search patients, records, or prescriptions..."
                 className={`w-full py-3 px-3 bg-transparent ${
                   isLightTheme 

@@ -35,7 +35,7 @@ export default function AuthPage() {
   return (
     <div className="flex min-h-screen flex-col md:flex-row bg-white dark:bg-gray-900">
       {/* Left side - Branding and information */}
-      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800/20 dark:to-gray-950/40 relative overflow-hidden">
+      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-gray-500/5 dark:bg-gray-800/10"></div>
         <div className="relative z-10 flex flex-col justify-between w-full p-12">
           <div>
@@ -44,7 +44,7 @@ export default function AuthPage() {
                 <span className="text-white text-xl font-bold">L</span>
               </div>
               <div>
-                <span className="text-gray-900 dark:text-gray-100 text-xl font-semibold tracking-tight">LAVENDER</span>
+                <span className="text-gray-900 dark:text-gray-100 text-base font-semibold tracking-tight">LAVENDER</span>
                 <span className="ml-1 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider font-medium">Health</span>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function AuthPage() {
               <span className="text-white text-xl font-bold">L</span>
             </div>
             <div>
-              <span className="text-gray-900 dark:text-white text-xl font-semibold tracking-tight">LAVENDER</span>
+              <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight">LAVENDER</span>
               <span className="ml-1 text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
             </div>
           </div>

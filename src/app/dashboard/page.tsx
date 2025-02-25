@@ -44,6 +44,7 @@ const DashboardBanner = dynamic(() => import('@/components/ui/DashboardBanner'),
 
 export default function DashboardPage() {
   const [isMounted, setIsMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState<'today' | 'week' | 'all'>('today');
 
   useEffect(() => {
     setIsMounted(true);
@@ -183,10 +184,8 @@ export default function DashboardPage() {
     }
   ];
 
-  // Handle search from banner
   const handleSearch = (query: string) => {
-    console.log('Searching for:', query);
-    // Implement actual search functionality here
+    // Search functionality is now handled in the DashboardBanner component
   };
 
   // Prevent hydration errors by only rendering client-specific content after mounting
@@ -207,10 +206,6 @@ export default function DashboardPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <Heading1 className="text-gray-900 dark:text-white">Dashboard</Heading1>
-        </div>
-
         {/* Dashboard Banner */}
         <DashboardBanner 
           userName="Dr. Adeyemi"
@@ -226,17 +221,6 @@ export default function DashboardPage() {
               <div>
                 <Heading4 className="text-gray-900 dark:text-white">Practice Dashboard</Heading4>
                 <SmallParagraph className="text-gray-500 dark:text-gray-400">Key metrics and frequent actions</SmallParagraph>
-              </div>
-              <div className="flex items-center space-x-2">
-                <button className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                  Today
-                </button>
-                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  This Week
-                </button>
-                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  This Month
-                </button>
               </div>
             </div>
           </div>
@@ -357,13 +341,34 @@ export default function DashboardPage() {
                 <SmallParagraph className="text-gray-500 dark:text-gray-400">Upcoming appointments and patient activities</SmallParagraph>
               </div>
               <div className="flex items-center space-x-3">
-                <button className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <button 
+                  onClick={() => setActiveTab('today')}
+                  className={`text-xs px-3 py-1.5 rounded-md ${
+                    activeTab === 'today' 
+                      ? 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700' 
+                      : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  } transition-colors`}
+                >
                   Today
                 </button>
-                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <button 
+                  onClick={() => setActiveTab('week')}
+                  className={`text-xs px-3 py-1.5 rounded-md ${
+                    activeTab === 'week' 
+                      ? 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700' 
+                      : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  } transition-colors`}
+                >
                   This Week
                 </button>
-                <button className="text-xs px-3 py-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <button 
+                  onClick={() => setActiveTab('all')}
+                  className={`text-xs px-3 py-1.5 rounded-md ${
+                    activeTab === 'all' 
+                      ? 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700' 
+                      : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  } transition-colors`}
+                >
                   All
                 </button>
               </div>
@@ -583,11 +588,6 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            {/* Other Recent Activities Section */}
-            <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
-              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Other Recent Activities</Label>
-            </div>
-            
             {/* View more button */}
             <div className="p-4 flex justify-center">
               <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
@@ -597,49 +597,51 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* This Week Section */}
-        <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden mt-6">
-          <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <Heading4 className="text-gray-900 dark:text-white">This Week</Heading4>
-                <SmallParagraph className="text-gray-500 dark:text-gray-400">Recent patient activities from this week</SmallParagraph>
+        {/* This Week Section - Only show when not on Today tab */}
+        {activeTab !== 'today' && (
+          <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden mt-6">
+            <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Heading4 className="text-gray-900 dark:text-white">This Week</Heading4>
+                  <SmallParagraph className="text-gray-500 dark:text-gray-400">Recent patient activities from this week</SmallParagraph>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
-            {/* Other Patient - Moved from Yesterday */}
-            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
-              <div className="flex items-start">
-                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
-                  {recentPatients[4].name.charAt(0)}
-                </div>
-                <div className="ml-3 flex-1">
-                  <div className="flex items-center justify-between">
-                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[4].name}</Paragraph>
-                    <Caption className="text-gray-500 dark:text-gray-400">Yesterday</Caption>
+            <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
+              {/* Other Patient - Moved from Yesterday */}
+              <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+                <div className="flex items-start">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
+                    {recentPatients[4].name.charAt(0)}
                   </div>
-                  <SmallParagraph className="text-gray-500 dark:text-gray-400">
-                    {recentPatients[4].age} years • Last visit: Hypertension follow-up
-                  </SmallParagraph>
-                  
-                  {/* Expandable section indicator */}
-                  <button className="mt-2 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
-                    View patient history <ChevronRight className="w-3 h-3 ml-1" />
-                  </button>
+                  <div className="ml-3 flex-1">
+                    <div className="flex items-center justify-between">
+                      <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[4].name}</Paragraph>
+                      <Caption className="text-gray-500 dark:text-gray-400">Yesterday</Caption>
+                    </div>
+                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                      {recentPatients[4].age} years • Last visit: Hypertension follow-up
+                    </SmallParagraph>
+                    
+                    {/* Expandable section indicator */}
+                    <button className="mt-2 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                      View patient history <ChevronRight className="w-3 h-3 ml-1" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            {/* View more button */}
-            <div className="p-4 flex justify-center">
-              <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
-                View more weekly activities <ChevronRight className="w-4 h-4 ml-1" />
-              </button>
+              
+              {/* View more button */}
+              <div className="p-4 flex justify-center">
+                <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                  View more weekly activities <ChevronRight className="w-4 h-4 ml-1" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </DashboardLayout>
   );

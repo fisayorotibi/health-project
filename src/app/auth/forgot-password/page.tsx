@@ -57,7 +57,7 @@ export default function ForgotPasswordPage() {
             <span className="text-white text-2xl font-bold">L</span>
           </div>
           <div>
-            <span className="text-gray-900 dark:text-white text-xl font-semibold tracking-tight">LAVENDER</span>
+            <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight">LAVENDER</span>
             <span className="ml-1 text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
           </div>
         </div>
