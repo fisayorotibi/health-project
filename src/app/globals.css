@@ -14,7 +14,7 @@
   --scrollbar-border-radius: 4px;
   
   /* Dark mode scrollbar - enhanced with brand colors */
-  --scrollbar-track-dark: #1e1e2e;
+  --scrollbar-track-dark: #333333;
   --scrollbar-thumb-dark: #444444;
   --scrollbar-thumb-hover-dark: #666666;
 }
