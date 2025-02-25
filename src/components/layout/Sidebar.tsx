@@ -126,37 +126,35 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
 
       {/* Premium Promo Banner */}
       <div className="p-4 border-t border-gray-200 dark:border-dark-border">
-        <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-primary-500 to-primary-700 dark:from-primary-700 dark:to-primary-900 p-4 shadow-md transition-all hover:shadow-lg group">
+        <div className="relative overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800 p-4 shadow-sm transition-all hover:shadow-md group">
           {/* Sparkle effect in top right */}
-          <div className="absolute top-2 right-2 text-white opacity-70">
+          <div className="absolute top-2 right-2 text-gray-400 dark:text-gray-500 opacity-70">
             <Sparkles className="w-4 h-4" />
           </div>
           
           {/* Content */}
           <div className="flex flex-col space-y-2">
             <div className="flex items-center space-x-2">
-              <div className="bg-white dark:bg-gray-800 rounded-full p-1">
-                <Sparkles className="w-3 h-3 text-primary-500 dark:text-primary-400" />
+              <div className="bg-gray-200 dark:bg-gray-700 rounded-full p-1">
+                <Sparkles className="w-3 h-3 text-gray-700 dark:text-gray-300" />
               </div>
-              <SmallParagraph className="font-semibold text-white">Lavender Pro</SmallParagraph>
+              <SmallParagraph className="font-semibold text-gray-900 dark:text-gray-100">Lavender Pro</SmallParagraph>
             </div>
             
-            <Paragraph className="text-sm text-white/90">
+            <Paragraph className="text-sm text-gray-700 dark:text-gray-300">
               Unlock advanced analytics and AI-powered insights.
             </Paragraph>
             
             <Link 
               href="/upgrade"
-              className="mt-2 flex items-center text-xs font-medium text-white group-hover:underline"
+              className="mt-2 flex items-center text-xs font-medium text-gray-900 dark:text-gray-200 group-hover:underline"
             >
               <span>Upgrade now</span>
               <ArrowRight className="ml-1 w-3 h-3 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
           
-          {/* Decorative elements */}
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/10 blur-xl"></div>
-          <div className="absolute -top-10 -left-10 w-20 h-20 rounded-full bg-white/10 blur-xl"></div>
+          {/* Decorative elements - removed colorful blur elements */}
         </div>
       </div>
     </div>

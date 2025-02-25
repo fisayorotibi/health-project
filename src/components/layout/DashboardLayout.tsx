@@ -93,13 +93,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-dark-border rounded-md bg-gray-50 dark:bg-dark-surface-secondary text-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-gray-600 focus:border-transparent"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-dark-border rounded-md bg-gray-50 dark:bg-dark-surface-secondary text-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 focus:border-transparent"
                   />
                 </div>
               </div>
 
               <div className="flex items-center space-x-4">
-                <button className="p-1 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-gray-600">
+                <button className="p-1 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600">
                   <span className="sr-only">View notifications</span>
                   <Bell className="h-5 w-5" />
                 </button>
@@ -109,7 +109,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                     className="flex items-center space-x-2 focus:outline-none"
                     onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                   >
-                    <div className="w-8 h-8 rounded-full bg-primary-500 dark:bg-gray-700 flex items-center justify-center text-white">
+                    <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300">
                       <User className="h-4 w-4" />
                     </div>
                   </button>

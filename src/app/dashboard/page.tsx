@@ -30,8 +30,8 @@ const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayou
   loading: () => (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-dark-background">
       <div className="flex flex-col items-center justify-center">
-        <div className="w-16 h-16 rounded-full bg-primary-500 flex items-center justify-center">
-          <span className="text-white text-2xl font-bold">L</span>
+        <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+          <span className="text-gray-700 dark:text-gray-300 text-2xl font-bold">L</span>
         </div>
         <Heading1 className="mt-4 text-gray-900 dark:text-white">Lavender Health Records</Heading1>
         <Paragraph className="mt-2 text-gray-500 dark:text-gray-400">Loading dashboard...</Paragraph>
@@ -52,28 +52,28 @@ export default function DashboardPage() {
     {
       title: 'Total Patients',
       value: '1,248',
-      icon: <Users className="w-5 h-5 text-primary-500" />,
+      icon: <Users className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '+12% from last month',
       positive: true,
     },
     {
       title: 'Appointments Today',
       value: '24',
-      icon: <Calendar className="w-5 h-5 text-secondary-500" />,
+      icon: <Calendar className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '4 pending',
       positive: true,
     },
     {
       title: 'Pending Lab Results',
       value: '7',
-      icon: <FileText className="w-5 h-5 text-accent-500" />,
+      icon: <FileText className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '2 urgent',
       positive: false,
     },
     {
       title: 'Prescriptions This Week',
       value: '56',
-      icon: <Pill className="w-5 h-5 text-info" />,
+      icon: <Pill className="w-5 h-5 text-gray-700 dark:text-gray-300" />,
       change: '+8% from last week',
       positive: true,
     },
@@ -160,8 +160,8 @@ export default function DashboardPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-dark-background">
         <div className="flex flex-col items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-primary-500 flex items-center justify-center">
-            <span className="text-white text-2xl font-bold">L</span>
+          <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+            <span className="text-gray-700 dark:text-gray-300 text-2xl font-bold">L</span>
           </div>
           <Heading1 className="mt-4 text-gray-900 dark:text-white">Lavender Health Records</Heading1>
           <Paragraph className="mt-2 text-gray-500 dark:text-gray-400">Loading dashboard...</Paragraph>
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                 </div>
                 <Caption 
                   className={`flex items-center ${
-                    stat.positive ? 'text-green-500' : 'text-red-500'
+                    stat.positive ? 'text-gray-700 dark:text-gray-300' : 'text-gray-700 dark:text-gray-300'
                   }`}
                 >
                   {stat.positive ? <TrendingUp className="w-3 h-3 mr-1" /> : <AlertCircle className="w-3 h-3 mr-1" />}
@@ -216,7 +216,7 @@ export default function DashboardPage() {
           <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-lg shadow-sm border border-gray-200 dark:border-dark-border overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-dark-border">
               <Heading4 className="text-gray-900 dark:text-white">Recent Patients</Heading4>
-              <button className="text-primary-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-gray-300 text-sm font-medium flex items-center">
+              <button className="text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 text-sm font-medium flex items-center">
                 View all <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </div>
@@ -225,7 +225,7 @@ export default function DashboardPage() {
                 <div key={patient.id} className="p-5 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <div className="w-10 h-10 rounded-full bg-primary-100 dark:bg-gray-800 flex items-center justify-center text-primary-600 dark:text-gray-300 font-medium">
+                      <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                         {patient.name.charAt(0)}
                       </div>
                       <div className="ml-3">
@@ -238,9 +238,9 @@ export default function DashboardPage() {
                     <div className="flex flex-col items-end">
                       <div className={`text-xs font-medium px-2 py-1 rounded-full ${
                         patient.status === 'Checked In' 
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
+                          ? 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300' 
                           : patient.status === 'Waiting' 
-                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                          ? 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
                           : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400'
                       }`}>
                         {patient.status}
