@@ -23,8 +23,8 @@ export default function ScrollbarExamplePage() {
           <div>
             <h4 className="font-medium text-gray-900 dark:text-white mb-2">Enhanced Dark Mode Palette</h4>
             <Paragraph className="text-gray-600 dark:text-gray-400">
-              The dark mode scrollbar uses our primary brand color (lavender) for the thumb, creating a visually
-              distinctive element that stands out against the dark background. The scrollbar track uses a deep
+              The dark mode scrollbar uses a dark grey color (#444444) for the thumb, creating a subtle
+              element that integrates well with the dark background. The scrollbar track uses a deep
               blue-gray (#1e1e2e) that complements our dark mode interface while providing sufficient contrast.
             </Paragraph>
           </div>
@@ -43,7 +43,7 @@ export default function ScrollbarExamplePage() {
 
 /* Dark mode */
 --scrollbar-track: #1e1e2e;
---scrollbar-thumb: #7C66DC;`}
+--scrollbar-thumb: #444444;`}
               </code>
             </pre>
           </div>

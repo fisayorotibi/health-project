@@ -15,8 +15,8 @@
   
   /* Dark mode scrollbar - enhanced with brand colors */
   --scrollbar-track-dark: #1e1e2e;
-  --scrollbar-thumb-dark: #7C66DC;
-  --scrollbar-thumb-hover-dark: #9B8AFB;
+  --scrollbar-thumb-dark: #444444;
+  --scrollbar-thumb-hover-dark: #666666;
 }
 
 @media (prefers-color-scheme: dark) {
