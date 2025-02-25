@@ -51,6 +51,11 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
   const { resolvedTheme } = useThemeContext();
   const isLightTheme = resolvedTheme === 'light';
   
+  // Force re-render when theme changes
+  useEffect(() => {
+    // This empty effect will cause the component to re-evaluate when resolvedTheme changes
+  }, [resolvedTheme]);
+  
   // Update time every minute
   useEffect(() => {
     const timer = setInterval(() => {
@@ -153,25 +158,27 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
   const hasNotifications = insights.length > 0;
 
   return (
-    <div className={`relative mb-8 overflow-hidden rounded-xl ${
+    <div 
+      key={`banner-${resolvedTheme}`}
+      className={`relative mb-8 overflow-hidden rounded-xl ${
       isLightTheme 
         ? 'bg-gradient-to-br from-sky-50 to-white text-gray-800' 
         : 'bg-[#121212] dark:bg-[#121212] text-white'
-    } z-0 transition-all duration-300 ${
+    } z-0 transition-colors duration-300 ease-in-out ${
       focusMode ? 'shadow-lg ring-1 ring-primary-500/20' : ''
     }`}>
       {/* Subtle gradient background */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-10">
+      <div className="absolute top-0 left-0 w-full h-full opacity-10 transition-colors duration-300 ease-in-out">
         <div className={`absolute top-0 left-1/4 w-64 h-64 rounded-full ${
           isLightTheme 
             ? 'bg-blue-400 blur-3xl' 
             : 'bg-primary-500 dark:bg-primary-600 blur-3xl'
-        } transform -translate-y-1/2`}></div>
+        } transform -translate-y-1/2 transition-colors duration-300 ease-in-out`}></div>
         <div className={`absolute bottom-0 right-1/4 w-64 h-64 rounded-full ${
           isLightTheme 
             ? 'bg-blue-400 blur-3xl' 
             : 'bg-primary-500 dark:bg-primary-600 blur-3xl'
-        } transform translate-y-1/2`}></div>
+        } transform translate-y-1/2 transition-colors duration-300 ease-in-out`}></div>
       </div>
       
       {/* Subtle noise texture overlay */}

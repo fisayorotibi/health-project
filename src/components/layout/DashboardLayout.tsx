@@ -22,7 +22,7 @@ import {
   Sun
 } from 'lucide-react';
 import Link from 'next/link';
-import { useTheme } from '@/hooks/useTheme';
+import { useThemeContext } from '@/components/ThemeProvider';
 
 // Dynamically import components that use browser APIs with no SSR
 const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useThemeContext();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const profileDropdownRef = useRef<HTMLDivElement>(null);
@@ -113,6 +113,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const ProfileDropdown = () => {
     return (
       <div
+        key={`profile-dropdown-${resolvedTheme}`}
         className="origin-top-right absolute right-0 mt-2 w-80 rounded-lg shadow-lg bg-white dark:bg-dark-surface ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-hidden"
         role="menu"
         aria-orientation="vertical"
