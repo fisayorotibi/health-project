@@ -108,8 +108,8 @@ export default function ForgotPasswordPage() {
             </>
           ) : (
             <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900/30">
-                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 dark:bg-gray-800/30">
+                <CheckCircle className="h-6 w-6 text-gray-700 dark:text-gray-400" />
               </div>
               <Heading4 className="mt-4 text-gray-900 dark:text-white">Check your email</Heading4>
               <SmallParagraph className="mt-2 text-gray-500 dark:text-gray-400">

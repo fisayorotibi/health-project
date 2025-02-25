@@ -113,7 +113,7 @@ export function SignupForm({ onComplete }: SignupFormProps) {
   const passwordStrength = (): { strength: 'weak' | 'medium' | 'strong'; color: string; score: number } => {
     if (!password) return { strength: 'weak', color: 'bg-gray-200 dark:bg-gray-700', score: 0 };
     
-    if (password.length < 8) return { strength: 'weak', color: 'bg-gray-400 dark:bg-gray-600', score: 1 };
+    if (password.length < 8) return { strength: 'weak', color: 'bg-gray-300 dark:bg-gray-600', score: 1 };
     
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
@@ -134,10 +134,11 @@ export function SignupForm({ onComplete }: SignupFormProps) {
     if (score >= 4) strength = 'strong';
     else if (score >= 2) strength = 'medium';
     
+    // Refined grey palette for password strength
     const color = 
       strength === 'strong' ? 'bg-gray-800 dark:bg-gray-300' :
-      strength === 'medium' ? 'bg-gray-600 dark:bg-gray-500' :
-      'bg-gray-400 dark:bg-gray-600';
+      strength === 'medium' ? 'bg-gray-500 dark:bg-gray-400' :
+      'bg-gray-300 dark:bg-gray-600';
       
     return { strength, color, score };
   };
@@ -157,8 +158,8 @@ export function SignupForm({ onComplete }: SignupFormProps) {
     const { strength } = passwordStrength();
     
     if (strength === 'strong') return <ShieldCheck className="h-5 w-5 text-gray-800 dark:text-gray-300" />;
-    if (strength === 'medium') return <Shield className="h-5 w-5 text-gray-600 dark:text-gray-400" />;
-    return <ShieldAlert className="h-5 w-5 text-gray-400 dark:text-gray-500" />;
+    if (strength === 'medium') return <Shield className="h-5 w-5 text-gray-500 dark:text-gray-400" />;
+    return <ShieldAlert className="h-5 w-5 text-gray-300 dark:text-gray-600" />;
   };
 
   const renderRoleSpecificFields = () => {
@@ -298,15 +299,15 @@ export function SignupForm({ onComplete }: SignupFormProps) {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Password
-                </label>
+                Password
+              </label>
                 {password && (
                   <span className="text-xs font-medium flex items-center gap-1">
                     {getPasswordIcon()}
                     <span className={`
                       ${passwordStrength().strength === 'strong' ? 'text-gray-800 dark:text-gray-300' : ''}
-                      ${passwordStrength().strength === 'medium' ? 'text-gray-600 dark:text-gray-400' : ''}
-                      ${passwordStrength().strength === 'weak' ? 'text-gray-500 dark:text-gray-500' : ''}
+                      ${passwordStrength().strength === 'medium' ? 'text-gray-500 dark:text-gray-400' : ''}
+                      ${passwordStrength().strength === 'weak' ? 'text-gray-400 dark:text-gray-500' : ''}
                     `}>
                       {getPasswordFeedback()}
                     </span>
@@ -334,7 +335,7 @@ export function SignupForm({ onComplete }: SignupFormProps) {
                     setPasswordFocused(false);
                   }}
                   className={`block w-full pl-9 pr-9 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm transition-all duration-200 ${
-                    password && passwordStrength().strength === 'weak' ? 'border-gray-400 dark:border-gray-600' :
+                    password && passwordStrength().strength === 'weak' ? 'border-gray-300 dark:border-gray-600' :
                     password && passwordStrength().strength === 'medium' ? 'border-gray-500 dark:border-gray-500' :
                     password && passwordStrength().strength === 'strong' ? 'border-gray-700 dark:border-gray-400' :
                     'border-gray-300 dark:border-gray-700'
@@ -356,26 +357,26 @@ export function SignupForm({ onComplete }: SignupFormProps) {
               
               {/* Enhanced password feedback */}
               <div className={`mt-2 space-y-2 transition-all duration-300 ${passwordFocused || (password && passwordStrength().strength === 'weak') ? 'opacity-100 max-h-80' : 'opacity-0 max-h-0 overflow-hidden'}`}>
-                {/* Password strength indicator */}
-                {password && (
+              {/* Password strength indicator */}
+              {password && (
                   <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-gray-500 dark:text-gray-400">Password strength:</span>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">Password strength:</span>
                       <span className={`text-xs font-medium capitalize
                         ${passwordStrength().strength === 'strong' ? 'text-gray-800 dark:text-gray-300' : ''}
-                        ${passwordStrength().strength === 'medium' ? 'text-gray-600 dark:text-gray-400' : ''}
-                        ${passwordStrength().strength === 'weak' ? 'text-gray-500 dark:text-gray-500' : ''}
+                        ${passwordStrength().strength === 'medium' ? 'text-gray-500 dark:text-gray-400' : ''}
+                        ${passwordStrength().strength === 'weak' ? 'text-gray-400 dark:text-gray-500' : ''}
                       `}>
-                        {passwordStrength().strength}
-                      </span>
-                    </div>
+                      {passwordStrength().strength}
+                    </span>
+                  </div>
                     <div className="h-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full ${passwordStrength().color} rounded-full transition-all duration-300`} 
-                        style={{ 
+                    <div 
+                      className={`h-full ${passwordStrength().color} rounded-full transition-all duration-300`} 
+                      style={{ 
                           width: `${Math.min(100, (passwordStrength().score / 5) * 100)}%`
-                        }}
-                      ></div>
+                      }}
+                    ></div>
                     </div>
                   </div>
                 )}
@@ -424,7 +425,7 @@ export function SignupForm({ onComplete }: SignupFormProps) {
                       </span>
                     </li>
                   </ul>
-                </div>
+            </div>
 
                 {/* Password tips */}
                 <div className="text-xs text-gray-500 dark:text-gray-400 italic">
@@ -531,17 +532,17 @@ export function SignupForm({ onComplete }: SignupFormProps) {
                   type="checkbox"
                   checked={agreeToTerms}
                   onChange={(e) => setAgreeToTerms(e.target.checked)}
-                  className="h-4 w-4 text-gray-900 focus:ring-gray-500 border-gray-300 dark:border-gray-700 rounded"
+                  className="h-4 w-4 text-gray-800 focus:ring-gray-500 border-gray-300 dark:border-gray-700 rounded"
                 />
               </div>
               <div className="ml-3 text-sm">
-                <label htmlFor="terms" className="text-gray-700 dark:text-gray-300">
+                <label htmlFor="terms" className="text-gray-800 dark:text-gray-300">
                   I agree to the{' '}
-                  <a href="#" className="text-gray-900 dark:text-white hover:text-gray-500 dark:hover:text-gray-300">
+                  <a href="#" className="text-gray-800 dark:text-gray-300 hover:text-gray-600 dark:hover:text-gray-400">
                     Terms of Service
                   </a>{' '}
                   and{' '}
-                  <a href="#" className="text-gray-900 dark:text-white hover:text-gray-500 dark:hover:text-gray-300">
+                  <a href="#" className="text-gray-800 dark:text-gray-300 hover:text-gray-600 dark:hover:text-gray-400">
                     Privacy Policy
                   </a>
                 </label>
@@ -563,7 +564,7 @@ export function SignupForm({ onComplete }: SignupFormProps) {
           <button
             type="submit"
             disabled={isLoading || (step === 3 && !agreeToTerms)}
-            className={`${step === 1 && 'w-full'} inline-flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-xs font-medium text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200`}
+            className={`${step === 1 && 'w-full'} inline-flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200`}
           >
             {isLoading ? 'Processing...' : 
              step === 3 ? 'Create Account' : 
