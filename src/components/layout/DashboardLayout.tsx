@@ -7,7 +7,7 @@ import {
   Menu, 
   User, 
   LogOut, 
-  Settings as SettingsIcon,
+  Settings,
   ChevronDown,
   Hexagon,
   Calendar,
@@ -18,7 +18,8 @@ import {
   CheckCircle,
   AlertCircle,
   Moon,
-  Sun
+  Sun,
+  Bell
 } from 'lucide-react';
 import Link from 'next/link';
 import { useThemeContext } from '@/components/ThemeProvider';
@@ -32,6 +33,7 @@ const Breadcrumb = dynamic(() => import('../ui/Breadcrumb'), { ssr: false });
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMounted, setIsMounted] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const { theme, setTheme, resolvedTheme } = useThemeContext();
@@ -48,12 +50,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     if (searchParams?.get('settings') === 'open') {
       setSettingsModalOpen(true);
     }
+
+    // Load sidebar collapsed state from localStorage if available
+    const savedCollapsedState = localStorage.getItem('sidebarCollapsed');
+    if (savedCollapsedState) {
+      setIsSidebarCollapsed(savedCollapsedState === 'true');
+    }
   }, [searchParams]);
 
   useEffect(() => {
     // Close sidebar on mobile when route changes
     setIsSidebarOpen(false);
   }, [pathname]);
+
+  // Save sidebar collapsed state to localStorage when it changes
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem('sidebarCollapsed', isSidebarCollapsed.toString());
+    }
+  }, [isSidebarCollapsed, isMounted]);
 
   // Handle click outside of profile dropdown
   useEffect(() => {
@@ -92,6 +107,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const toggleSidebarCollapse = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
   };
 
   const toggleProfile = () => {
@@ -255,7 +274,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             className="flex w-full items-center px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-150"
             role="menuitem"
           >
-            <SettingsIcon className="mr-3 h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+            <Settings className="mr-3 h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
             Settings
             <span className="ml-auto text-xs text-gray-400 dark:text-gray-500">⌘S</span>
           </button>
@@ -311,7 +330,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="flex h-screen bg-gray-100 dark:bg-dark-background">
       {/* Sidebar for desktop */}
       <div className="hidden md:flex">
-        <Sidebar isMobile={false} isOpen={true} toggleSidebar={toggleSidebar} />
+        <Sidebar 
+          isMobile={false} 
+          isOpen={true} 
+          toggleSidebar={toggleSidebar}
+          isCollapsed={isSidebarCollapsed}
+          toggleCollapse={toggleSidebarCollapse}
+        />
       </div>
 
       {/* Mobile sidebar */}
@@ -341,63 +366,113 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div className={`flex flex-col flex-1 overflow-hidden transition-all duration-300 ease-in-out`}>
         {/* Top navigation */}
         <div className="z-10">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <div className="flex">
-                <div className="flex-shrink-0 flex items-center md:hidden">
+          <header className="bg-white dark:bg-dark-surface shadow-sm">
+            <div className="flex justify-between items-center py-4 px-4 sm:px-6 md:px-8">
+              {/* Mobile menu button */}
+              <div className="md:hidden flex items-center">
                   <button
-                    type="button"
-                    className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary focus:outline-none"
                     onClick={toggleSidebar}
+                  className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary focus:outline-none"
+                  aria-label="Open sidebar"
                   >
-                    <span className="sr-only">Open sidebar</span>
-                    <Menu className="h-6 w-6" aria-hidden="true" />
+                  <Menu className="h-5 w-5" />
                   </button>
                 </div>
-                {/* Breadcrumb navigation */}
-                <div className="flex items-center ml-2">
-                  <Breadcrumb 
-                    items={[
-                      { label: 'Dashboard', href: '/dashboard' },
-                      { label: 'Home', href: '/dashboard/home', isCurrent: true }
-                    ]} 
-                  />
-                </div>
+              
+              {/* Breadcrumb and page title */}
+              <div className="flex-1 flex items-center min-w-0 ml-3 md:ml-0">
+                <Breadcrumb items={[
+                  { label: 'Dashboard', href: '/dashboard' },
+                  { label: 'Home', href: '/dashboard', isCurrent: true }
+                ]} />
               </div>
-              <div className="flex items-center">
+              
+              {/* Right side actions */}
+              <div className="flex items-center space-x-3">
+                {/* Theme toggle */}
+                <button
+                  onClick={() => setTheme(isLightTheme ? 'dark' : 'light')}
+                  className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary focus:outline-none"
+                  aria-label={isLightTheme ? 'Switch to dark mode' : 'Switch to light mode'}
+                >
+                  {isLightTheme ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+                </button>
+                
+                {/* Settings button */}
+                <button
+                  onClick={() => setSettingsModalOpen(true)}
+                  className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary focus:outline-none"
+                  aria-label="Open settings"
+                >
+                  <Settings className="h-5 w-5" />
+                </button>
+                
+                {/* Notifications */}
+                <button
+                  className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary focus:outline-none relative"
+                  aria-label="View notifications"
+                >
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-red-500"></span>
+                </button>
+                
                 {/* Profile dropdown */}
                 <div className="relative" ref={profileDropdownRef}>
-                  <div>
                     <button
-                      type="button"
-                      className="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 dark:focus:ring-gray-700 transition-all duration-150"
-                      id="user-menu"
-                      aria-expanded={isProfileOpen}
-                      aria-haspopup="true"
                       onClick={toggleProfile}
+                    className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-dark-surface-secondary focus:outline-none"
+                    aria-label="Open user menu"
                     >
-                      <span className="sr-only">Open user menu</span>
                       <div className="relative">
-                        <div className="h-9 w-9 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center shadow-sm">
-                          <User className="h-5 w-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                      <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300 overflow-hidden">
+                        <User className="h-5 w-5" />
+                      </div>
+                      <div className={`absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white dark:border-dark-surface
+                        ${userStatus === 'online' ? 'bg-green-500' : userStatus === 'away' ? 'bg-yellow-500' : 'bg-red-500'}`}>
                         </div>
                       </div>
+                    <div className="hidden md:block text-left">
+                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100">Dr. Sarah Chen</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">Cardiologist</div>
+                    </div>
                     </button>
-                  </div>
-
-                  {/* Dropdown menu */}
-                  {isProfileOpen && <ProfileDropdown />}
+                  
+                  {/* Profile dropdown menu */}
+                  {isProfileOpen && (
+                    <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-dark-surface ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+                      <div className="py-1">
+                        <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary">
+                          Your Profile
+                        </Link>
+                        <button 
+                          className="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary"
+                          onClick={() => {
+                            setUserStatus(userStatus === 'online' ? 'away' : userStatus === 'away' ? 'busy' : 'online');
+                            setIsProfileOpen(false);
+                          }}
+                        >
+                          Set as {userStatus === 'online' ? 'Away' : userStatus === 'away' ? 'Busy' : 'Online'}
+                        </button>
+                        <Link href="/settings" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary">
+                          Settings
+                        </Link>
+                        <Link href="/logout" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary">
+                          Sign out
+                        </Link>
                 </div>
               </div>
+                  )}
             </div>
           </div>
+            </div>
+          </header>
         </div>
 
         {/* Main content area */}
-        <main className="flex-1 overflow-auto bg-gray-100 dark:bg-dark-background">
+        <main className="flex-1 overflow-y-auto">
           <div className="py-10">
             <div className="max-w-7xl mx-auto px-8 sm:px-12 md:px-16">
               {children}
