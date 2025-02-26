@@ -5,7 +5,6 @@ import {
   Mic, 
   Search, 
   ArrowRight, 
-  Clock, 
   Sparkles, 
   Command, 
   Bell, 
@@ -93,7 +92,7 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
     return 'Good Evening';
   };
 
-  // Format time in 12-hour format
+  // Format time in 12-hour format (keeping for potential future use)
   const getFormattedTime = () => {
     return currentTime.toLocaleTimeString('en-US', {
       hour: 'numeric',
@@ -173,22 +172,22 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
       key={`banner-${resolvedTheme}`}
       className={`relative mb-8 overflow-hidden rounded-xl ${
       isLightTheme 
-        ? 'bg-gradient-to-br from-sky-50 to-white text-gray-800 border border-gray-200' 
+        ? 'bg-gradient-to-br from-gray-50 to-white text-gray-800 border border-gray-200' 
         : 'bg-[#121212] dark:bg-[#121212] text-white border border-gray-900'
     } z-0 transition-colors duration-300 ease-in-out ${
-      focusMode ? 'shadow-lg ring-1 ring-primary-500/20' : ''
+      focusMode ? 'shadow-lg ring-1 ring-gray-500/20' : ''
     }`}>
       {/* Subtle gradient background */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10 transition-colors duration-300 ease-in-out">
         <div className={`absolute top-0 left-1/4 w-64 h-64 rounded-full ${
           isLightTheme 
-            ? 'bg-blue-400 blur-3xl' 
-            : 'bg-primary-500 dark:bg-primary-600 blur-3xl'
+            ? 'bg-gray-400 blur-3xl' 
+            : 'bg-gray-500 dark:bg-gray-600 blur-3xl'
         } transform -translate-y-1/2 transition-colors duration-300 ease-in-out`}></div>
         <div className={`absolute bottom-0 right-1/4 w-64 h-64 rounded-full ${
           isLightTheme 
-            ? 'bg-blue-400 blur-3xl' 
-            : 'bg-primary-500 dark:bg-primary-600 blur-3xl'
+            ? 'bg-gray-400 blur-3xl' 
+            : 'bg-gray-500 dark:bg-gray-600 blur-3xl'
         } transform translate-y-1/2 transition-colors duration-300 ease-in-out`}></div>
       </div>
       
@@ -205,7 +204,7 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                 </Paragraph>
               </div>
               <SmallParagraph className={`${isLightTheme ? 'text-gray-600' : 'text-gray-500'} mt-1 flex items-center`}>
-                {getTodayDate()} <span className="mx-2">•</span> <Clock className="w-3.5 h-3.5 mr-1.5" /> {getFormattedTime()}
+                {getTodayDate()}
               </SmallParagraph>
             </div>
             
@@ -407,7 +406,13 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                               : 'bg-[#242424] hover:bg-[#2A2A2A] border border-[#333333]'
                           } rounded-lg px-4 py-3 transition-colors group`}
                         >
-                          <div className="w-2 h-2 rounded-full mr-3 flex-shrink-0 bg-red-500 animate-pulse"></div>
+                          <div className={`absolute w-2 h-2 rounded-full ${
+                            insight.priority === 'urgent' 
+                              ? 'bg-red-500' 
+                              : insight.priority === 'high' 
+                                ? 'bg-amber-500' 
+                                : 'bg-gray-500'
+                          }`}></div>
                           <SmallParagraph className={`${
                             isLightTheme ? 'text-gray-800' : 'text-gray-200'
                           } flex-1`}>{insight.text}</SmallParagraph>
@@ -467,9 +472,12 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                               : 'bg-[#242424] hover:bg-[#2A2A2A] border border-[#333333]'
                           } rounded-lg px-4 py-2.5 transition-colors group`}
                         >
-                          <div className={`w-2 h-2 rounded-full mr-3 flex-shrink-0 ${
-                            insight.priority === 'urgent' ? 'bg-red-500 animate-pulse' : 
-                            insight.priority === 'high' ? 'bg-amber-500' : 'bg-blue-500'
+                          <div className={`absolute w-2 h-2 rounded-full ${
+                            insight.priority === 'urgent' 
+                              ? 'bg-red-500' 
+                              : insight.priority === 'high' 
+                                ? 'bg-amber-500' 
+                                : 'bg-gray-500'
                           }`}></div>
                           <SmallParagraph className={`${
                             isLightTheme ? 'text-gray-800' : 'text-gray-200'
@@ -510,9 +518,12 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                               : 'bg-[#242424] hover:bg-[#2A2A2A] border border-[#333333]'
                           } rounded-lg px-4 py-2.5 transition-colors group`}
                         >
-                          <div className={`w-2 h-2 rounded-full mr-3 flex-shrink-0 ${
-                            insight.priority === 'urgent' ? 'bg-red-500 animate-pulse' : 
-                            insight.priority === 'high' ? 'bg-amber-500' : 'bg-blue-500'
+                          <div className={`absolute w-2 h-2 rounded-full ${
+                            insight.priority === 'urgent' 
+                              ? 'bg-red-500' 
+                              : insight.priority === 'high' 
+                                ? 'bg-amber-500' 
+                                : 'bg-gray-500'
                           }`}></div>
                           <SmallParagraph className={`${
                             isLightTheme ? 'text-gray-800' : 'text-gray-200'
@@ -553,9 +564,12 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                               : 'bg-[#242424] hover:bg-[#2A2A2A] border border-[#333333]'
                           } rounded-lg px-4 py-2.5 transition-colors group`}
                         >
-                          <div className={`w-2 h-2 rounded-full mr-3 flex-shrink-0 ${
-                            insight.priority === 'urgent' ? 'bg-red-500 animate-pulse' : 
-                            insight.priority === 'high' ? 'bg-amber-500' : 'bg-blue-500'
+                          <div className={`absolute w-2 h-2 rounded-full ${
+                            insight.priority === 'urgent' 
+                              ? 'bg-red-500' 
+                              : insight.priority === 'high' 
+                                ? 'bg-amber-500' 
+                                : 'bg-gray-500'
                           }`}></div>
                           <SmallParagraph className={`${
                             isLightTheme ? 'text-gray-800' : 'text-gray-200'
@@ -589,9 +603,12 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                               : 'bg-[#242424] hover:bg-[#2A2A2A] border border-[#333333]'
                           } rounded-lg px-4 py-2.5 transition-colors group`}
                         >
-                          <div className={`w-2 h-2 rounded-full mr-3 flex-shrink-0 ${
-                            insight.priority === 'urgent' ? 'bg-red-500 animate-pulse' : 
-                            insight.priority === 'high' ? 'bg-amber-500' : 'bg-blue-500'
+                          <div className={`absolute w-2 h-2 rounded-full ${
+                            insight.priority === 'urgent' 
+                              ? 'bg-red-500' 
+                              : insight.priority === 'high' 
+                                ? 'bg-amber-500' 
+                                : 'bg-gray-500'
                           }`}></div>
                           <SmallParagraph className={`${
                             isLightTheme ? 'text-gray-800' : 'text-gray-200'

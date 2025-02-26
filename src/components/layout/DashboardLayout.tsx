@@ -398,8 +398,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Main content area */}
         <main className="flex-1 overflow-auto bg-gray-100 dark:bg-dark-background">
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="py-10">
+            <div className="max-w-7xl mx-auto px-8 sm:px-12 md:px-16">
               {children}
             </div>
           </div>
