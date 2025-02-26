@@ -1,3 +1,12 @@
+/**
+ * File: README.md
+ * Created: [Original creation date]
+ * Changes: 
+ * - Added documentation about file header comments practice to the Contributing section
+ * - Added information about the backend implementation
+ * - Updated database information to SQLite instead of PostgreSQL
+ */
+
 # Lavender Health Records Platform
 
 A digital health records platform tailored for the Nigerian market, designed to securely store and manage patient medical records, lab results, and prescriptions following a Software-as-a-Service (SaaS) business model.
@@ -94,10 +103,55 @@ docs/                       # Project documentation
 ## Technology Stack
 
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS
-- **State Management**: React Context API
-- **Data Storage**: IndexedDB (local), RESTful API (remote)
+- **Backend**: Next.js API Routes with Prisma ORM
+- **Database**: SQLite (development), PostgreSQL (production)
+- **State Management**: React Context API, Custom Hooks
+- **Data Storage**: IndexedDB (local), SQLite/PostgreSQL (remote)
+- **Authentication**: JWT-based authentication
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
+
+## Backend Architecture
+
+The application uses a Next.js API Routes backend with the following components:
+
+- **Database**: SQLite (development) / PostgreSQL (production) with Prisma ORM for type-safe database access
+- **Authentication**: JWT-based authentication with secure password hashing
+- **API Routes**: RESTful API endpoints for all CRUD operations
+- **Middleware**: Request authentication and validation
+- **Offline Sync**: Seamless synchronization between local and remote data
+
+### API Endpoints
+
+- **Authentication**
+  - `POST /api/auth/register` - Register a new user
+  - `POST /api/auth/login` - Authenticate a user
+
+- **Patients**
+  - `GET /api/patients` - Get all patients
+  - `POST /api/patients` - Create a new patient
+  - `GET /api/patients/:id` - Get a specific patient
+  - `PUT /api/patients/:id` - Update a patient
+  - `DELETE /api/patients/:id` - Delete a patient
+
+- **Medical Records**
+  - `GET /api/patients/:id/medical-records` - Get all medical records for a patient
+  - `POST /api/patients/:id/medical-records` - Create a new medical record
+  - `PUT /api/medical-records/:id` - Update a medical record
+  - `DELETE /api/medical-records/:id` - Delete a medical record
+
+- **Prescriptions**
+  - `GET /api/patients/:id/prescriptions` - Get all prescriptions for a patient
+  - `POST /api/patients/:id/prescriptions` - Create a new prescription
+  - `PUT /api/prescriptions/:id` - Update a prescription
+  - `DELETE /api/prescriptions/:id` - Delete a prescription
+
+### Data Security
+
+- **End-to-End Encryption**: Sensitive patient data is encrypted on the client before being sent to the server
+- **JWT Authentication**: Secure token-based authentication for API access
+- **Password Hashing**: Secure password storage using bcrypt
+- **HTTPS**: All API requests are made over HTTPS
 
 ## Deployment
 
@@ -106,6 +160,21 @@ The application can be deployed to any hosting service that supports Next.js app
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+### Code Documentation Standards
+
+All files in this codebase must include a header comment that documents changes made to the file. This applies to both new files and updates to existing files. For detailed guidelines, please refer to [CONTRIBUTING.md](./src/CONTRIBUTING.md).
+
+Example of a file header comment:
+```
+/**
+ * File: example.tsx
+ * Created: 2023-06-15
+ * Changes: 
+ * - 2023-06-15: Initial implementation
+ * - 2023-07-20: Added new feature X
+ */
+```
 
 ## License
 

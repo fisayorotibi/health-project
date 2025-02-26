@@ -1,0 +1,12 @@
+warning: in the working copy of 'src/app/auth/forgot-password/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/auth/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/app/dashboard/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/auth/LoginForm.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/auth/SignupForm.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/ui/DashboardBanner.tsx', LF will be replaced by CRLF the next time Git touches it
+src/app/auth/forgot-password/page.tsx
+src/app/auth/page.tsx
+src/app/dashboard/page.tsx
+src/components/auth/LoginForm.tsx
+src/components/auth/SignupForm.tsx
+src/components/ui/DashboardBanner.tsx

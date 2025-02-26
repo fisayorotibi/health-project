@@ -69,8 +69,8 @@ export const semantic = {
     light: '#10B981', // Green
     dark: '#34D399',
     bg: {
-      light: '#ECFDF5',
-      dark: '#1E1E1E', // Changed to pure dark gray with no tint
+      light: '#F5F5F5', // Pure light gray
+      dark: '#1E1E1E', // Pure dark gray
     },
   },
   // Warning - For alerts, warnings, and cautionary messages
@@ -78,8 +78,8 @@ export const semantic = {
     light: '#F59E0B', // Amber
     dark: '#FBBF24',
     bg: {
-      light: '#FFFBEB',
-      dark: '#242424', // Changed to pure dark gray with no tint
+      light: '#F5F5F5', // Pure light gray
+      dark: '#242424', // Pure dark gray
     },
   },
   // Danger - For errors, destructive actions, and critical alerts
@@ -87,8 +87,8 @@ export const semantic = {
     light: '#EF4444', // Red
     dark: '#F87171',
     bg: {
-      light: '#FEF2F2',
-      dark: '#2A2A2A', // Changed to pure dark gray with no tint
+      light: '#F5F5F5', // Pure light gray
+      dark: '#2A2A2A', // Pure dark gray
     },
   },
   // Info - For informational messages and help text
@@ -96,8 +96,8 @@ export const semantic = {
     light: '#3B82F6', // Blue
     dark: '#60A5FA',
     bg: {
-      light: '#EFF6FF',
-      dark: '#1F1F1F', // Changed to pure dark gray with no tint
+      light: '#F5F5F5', // Pure light gray
+      dark: '#1F1F1F', // Pure dark gray
     },
   },
 };
@@ -109,27 +109,27 @@ export const neutral = {
     // Background colors
     background: {
       primary: '#FFFFFF', // Main background
-      secondary: '#F9FAFB', // Secondary background
-      tertiary: '#F3F4F6', // Tertiary background
+      secondary: '#FAFAFA', // Secondary background - Pure light gray
+      tertiary: '#F5F5F5', // Tertiary background - Pure light gray
     },
     // Surface colors (cards, dialogs, etc.)
     surface: {
       primary: '#FFFFFF',
-      secondary: '#F9FAFB',
-      tertiary: '#F3F4F6',
+      secondary: '#FAFAFA',
+      tertiary: '#F5F5F5',
     },
     // Border colors
     border: {
-      subtle: '#E5E7EB',
-      default: '#D1D5DB',
-      strong: '#9CA3AF',
+      subtle: '#E5E5E5',
+      default: '#D4D4D4',
+      strong: '#A3A3A3',
     },
     // Text colors
     text: {
-      primary: '#111827', // High contrast text
-      secondary: '#4B5563', // Medium contrast text
-      tertiary: '#6B7280', // Low contrast text
-      disabled: '#9CA3AF', // Disabled text
+      primary: '#171717', // High contrast text - Pure dark gray
+      secondary: '#525252', // Medium contrast text - Pure medium gray
+      tertiary: '#737373', // Low contrast text - Pure medium gray
+      disabled: '#A3A3A3', // Disabled text - Pure light gray
     },
   },
   // Dark mode - Updated to use pure gray palette (neutral black-derived grays with no color tint)

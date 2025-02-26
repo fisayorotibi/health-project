@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  name          String?
+  role          UserRole  @default(DOCTOR)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  patients      Patient[]
+  medicalRecords MedicalRecord[]
+  prescriptions Prescription[]
+}
+
+enum UserRole {
+  ADMIN
+  DOCTOR
+  NURSE
+  RECEPTIONIST
+}
+
+// Patient model
+model Patient {
+  id            String    @id @default(cuid())
+  identifier    String    @unique // External patient ID
+  // Non-sensitive fields stored directly
+  gender        String?
+  // Encrypted fields will be stored as JSON in the frontend
+  encryptedData String    // JSON string with encrypted patient data
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  createdBy     User      @relation(fields: [createdById], references: [id])
+  createdById   String
+  medicalRecords MedicalRecord[]
+  prescriptions Prescription[]
+  
+  @@index([createdById])
+}
+
+// Medical Record model
+model MedicalRecord {
+  id            String    @id @default(cuid())
+  recordType    String    // Type of medical record
+  encryptedData String    // JSON string with encrypted medical data
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  patientId     String
+  createdBy     User      @relation(fields: [createdById], references: [id])
+  createdById   String
+  
+  @@index([patientId])
+  @@index([createdById])
+}
+
+// Prescription model
+model Prescription {
+  id            String    @id @default(cuid())
+  status        PrescriptionStatus @default(ACTIVE)
+  encryptedData String    // JSON string with encrypted prescription data
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  patientId     String
+  createdBy     User      @relation(fields: [createdById], references: [id])
+  createdById   String
+  
+  @@index([patientId])
+  @@index([createdById])
+}
+
+enum PrescriptionStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+} 

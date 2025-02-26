@@ -198,46 +198,45 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-4">
             <div>
-              <div className="flex items-center">
-                <Paragraph className={`${isLightTheme ? 'text-gray-800' : 'text-gray-300'} font-medium`}>
-                  {getGreeting()}, {userName}
-                </Paragraph>
+              <div>
+                <SmallParagraph className={`${isLightTheme ? 'text-gray-600' : 'text-gray-500'} mt-1 flex items-center text-xs`}> 
+                  {getTodayDate()}
+                </SmallParagraph>
+                <div className="flex items-center">
+                  <Paragraph className={`${isLightTheme ? 'text-gray-800' : 'text-gray-300'} font-medium`}> 
+                    {getGreeting()}, {userName}
+                  </Paragraph>
+                  <button 
+                    onClick={() => setFocusMode(!focusMode)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors flex items-center ml-2 ${
+                      focusMode 
+                        ? isLightTheme 
+                          ? 'bg-primary-100 text-primary-700 shadow-sm' 
+                          : 'bg-primary-500/20 text-primary-300 shadow-sm'
+                        : isLightTheme 
+                          ? 'bg-white text-gray-600 shadow-sm hover:bg-gray-50' 
+                        : 'bg-[#1E1E1E] text-gray-400 shadow-sm hover:bg-[#242424]'
+                    }`}
+                    aria-label={focusMode ? "Disable focus mode" : "Enable focus mode"}
+                  >
+                    {focusMode ? (
+                      <>
+                        <Sparkles className="w-3 h-3 mr-1.5" />
+                        Focus mode
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-3 h-3 mr-1.5" />
+                        Focus mode
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
-              <SmallParagraph className={`${isLightTheme ? 'text-gray-600' : 'text-gray-500'} mt-1 flex items-center`}>
-                {getTodayDate()}
-              </SmallParagraph>
             </div>
-            
-            {/* Focus mode toggle */}
-            <button 
-              onClick={() => setFocusMode(!focusMode)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors flex items-center ${
-                focusMode 
-                  ? isLightTheme 
-                    ? 'bg-primary-100 text-primary-700 shadow-sm' 
-                    : 'bg-primary-500/20 text-primary-300 shadow-sm'
-                  : isLightTheme 
-                    ? 'bg-white text-gray-600 shadow-sm hover:bg-gray-50' 
-                  : 'bg-[#1E1E1E] text-gray-400 shadow-sm hover:bg-[#242424]'
-              }`}
-              aria-label={focusMode ? "Disable focus mode" : "Enable focus mode"}
-            >
-              {focusMode ? (
-                <>
-                  <Sparkles className="w-3 h-3 mr-1.5" />
-                  Focus mode
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-3 h-3 mr-1.5" />
-                  Focus mode
-                </>
-              )}
-            </button>
           </div>
-          
-          <div className="flex items-center space-x-3">
-            {/* Notification indicator */}
+          {/* Notification indicator - moved to extreme right */}
+          <div className="flex items-center justify-end space-x-3"> 
             {hasNotifications && (
               <button 
                 onClick={() => setExpandedNotifications(!expandedNotifications)}
@@ -252,8 +251,8 @@ const DashboardBanner: React.FC<DashboardBannerProps> = ({
                       : 'bg-primary-500/10 text-primary-400'
                     : isLightTheme 
                       ? 'hover:bg-gray-50' 
-                    : 'hover:bg-[#242424]'
-                }`}
+                      : 'hover:bg-[#242424]'
+                }`} 
                 aria-label="Notifications"
               >
                 <div className="relative">

@@ -389,15 +389,15 @@ export default function DashboardPage() {
                     <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                       {recentPatients[0].name.charAt(0)}
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                      <div className="w-2 h-2 rounded-full bg-green-500 dark:bg-green-400"></div>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                      <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"></div>
                     </div>
                   </div>
                   <div className="ml-3 flex-1">
                     <div className="flex items-center justify-between">
                       <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[0].name}</Paragraph>
                       <div className="flex items-center">
-                        <div className="text-xs font-medium px-2 py-1 rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                        <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                           Completed
                         </div>
                       </div>
@@ -445,15 +445,15 @@ export default function DashboardPage() {
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                     {recentPatients[1].name.charAt(0)}
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                    <div className="w-2 h-2 rounded-full bg-yellow-500 dark:bg-yellow-400"></div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                    <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"></div>
                   </div>
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
                     <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[1].name}</Paragraph>
                     <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                         {recentPatients[1].status}
                       </div>
                     </div>
@@ -495,15 +495,15 @@ export default function DashboardPage() {
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                     {recentPatients[2].name.charAt(0)}
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"></div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                    <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"></div>
                   </div>
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
                     <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[2].name}</Paragraph>
                     <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                         {recentPatients[2].status}
                       </div>
                     </div>
@@ -545,15 +545,15 @@ export default function DashboardPage() {
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                     {recentPatients[3].name.charAt(0)}
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center border-2 border-white dark:border-dark-surface">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"></div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center border-2 border-white dark:border-dark-surface">
+                    <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"></div>
                   </div>
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
                     <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[3].name}</Paragraph>
                     <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                         {recentPatients[3].status}
                       </div>
                     </div>

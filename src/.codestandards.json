@@ -1,0 +1,26 @@
+{
+  "fileHeaderComments": {
+    "required": true,
+    "format": {
+      "newFile": [
+        "/**",
+        " * File: [Filename]",
+        " * Created: [Creation Date]",
+        " * Changes: [Description of changes made in this update]",
+        " */"
+      ],
+      "updatedFile": [
+        "/**",
+        " * File: [Filename]",
+        " * Created: [Creation Date]",
+        " * Changes: ",
+        " * - [Date]: [Description of changes]",
+        " */"
+      ]
+    },
+    "applyTo": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.css", "**/*.scss", "**/*.md"]
+  },
+  "documentation": {
+    "referenceFile": "src/CONTRIBUTING.md"
+  }
+} 

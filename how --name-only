@@ -1,0 +1,5 @@
+[33mcommit f86657ceeee1b2940354c3c5b76fa2461f069ee1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Fisayo Rotibi <fisayorotibi@gmail.com>
+Date:   Wed Feb 26 00:02:50 2025 +0100
+
+    Remove dot from logo in Sidebar and DashboardLayout components
