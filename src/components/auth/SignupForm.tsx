@@ -75,16 +75,33 @@ export function SignupForm({ onComplete }: SignupFormProps) {
     setIsLoading(true);
 
     try {
-      // This is a placeholder for actual registration logic
-      // In a real implementation, you would call your registration API here
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // For demo purposes, we'll just redirect to the login form
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          name: fullName,
+          role: role.toUpperCase(),
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.error('Signup error:', data);
+        throw new Error(data.error || 'Failed to create account. Please try again.');
+      }
+
+      // Call onComplete to switch to login tab
       onComplete();
-    } catch (err) {
-      setError('Failed to create account. Please try again.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+      setError(err.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }
