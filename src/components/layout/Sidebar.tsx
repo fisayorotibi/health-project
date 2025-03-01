@@ -126,8 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
           {/* Stylized brand name */}
           <div className="flex flex-col">
             <div className="flex items-baseline">
-              <span className="text-gray-900 dark:text-white text-sm font-semibold tracking-tight">LAVENDER</span>
-              <span className="ml-1 text-[8px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
+              <span className="text-gray-900 dark:text-white text-sm font-semibold tracking-tight font-funnel-display">LAVENDER</span>
             </div>
             <div className="h-[2px] w-full bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700"></div>
           </div>
