@@ -368,29 +368,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
               </div>
               <div className="flex items-center">
-                {/* Profile dropdown */}
-                <div className="relative" ref={profileDropdownRef}>
-                  <div>
-                    <button
-                      type="button"
-                      className="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 dark:focus:ring-gray-700 transition-all duration-150"
-                      id="user-menu"
-                      aria-expanded={isProfileOpen}
-                      aria-haspopup="true"
-                      onClick={toggleProfile}
-                    >
-                      <span className="sr-only">Open user menu</span>
-                      <div className="relative">
-                        <div className="h-9 w-9 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center shadow-sm">
-                          <User className="h-5 w-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-
-                  {/* Dropdown menu */}
-                  {isProfileOpen && <ProfileDropdown />}
-                </div>
+                {/* Profile dropdown removed */}
               </div>
             </div>
           </div>

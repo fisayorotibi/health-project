@@ -14,7 +14,7 @@
 
 // Font families
 export const fontFamilies = {
-  sans: 'var(--font-inter)', // Primary font for UI and content
+  sans: 'var(--font-funnel-display)', // Primary font for UI and content
   mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace', // For code, data, and technical information
 };
 

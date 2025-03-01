@@ -22,6 +22,7 @@ import {
   Search
 } from 'lucide-react';
 import { Heading4, Paragraph, SmallParagraph, Caption } from '@/components/ui/typography';
+import ProfileModal from '@/components/ui/ProfileModal';
 
 interface SidebarProps {
   isMobile: boolean;
@@ -33,6 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   
   // Persist collapsed state in localStorage
   useEffect(() => {
@@ -48,43 +50,35 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
     localStorage.setItem('sidebarCollapsed', String(newState));
   };
 
-  const navItems = [
-    {
-      name: 'Dashboard',
-      href: '/dashboard',
-      icon: <LayoutDashboard className="w-3.5 h-3.5" />,
-    },
-    {
-      name: 'Patient Records',
-      href: '/patients',
-      icon: <Users className="w-3.5 h-3.5" />,
-    },
-    {
-      name: 'Medical Records',
-      href: '/medical-records',
-      icon: <FileText className="w-3.5 h-3.5" />,
-    },
-    {
-      name: 'Prescriptions',
-      href: '/prescriptions',
-      icon: <Pill className="w-3.5 h-3.5" />,
-    },
-    {
-      name: 'Appointments',
-      href: '/schedule',
-      icon: <Calendar className="w-3.5 h-3.5" />,
-    },
-    {
-      name: 'Analytics',
-      href: '/reports',
-      icon: <BarChart className="w-3.5 h-3.5" />,
-    },
+  const toggleProfile = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
+  // Define the type for nav items
+  interface NavItem {
+    name?: string;
+    href?: string;
+    icon: React.ReactNode;
+    isDivider?: boolean;
+  }
+
+  const navItems: NavItem[] = [
+    { name: 'Dashboard', href: '/dashboard', icon: <LayoutDashboard className="w-3.5 h-3.5" /> },
+    { name: 'Patient Records', href: '/patients', icon: <Users className="w-3.5 h-3.5" /> },
+    { name: 'Medical Records', href: '/medical-records', icon: <FileText className="w-3.5 h-3.5" /> },
+    // Divider
+    { isDivider: true, icon: <div className="my-2 border-t border-gray-200 dark:border-gray-800" /> },
+    { name: 'Prescriptions', href: '/prescriptions', icon: <Pill className="w-3.5 h-3.5" /> },
+    { name: 'Appointments', href: '/schedule', icon: <Calendar className="w-3.5 h-3.5" /> },
+    // Divider
+    { isDivider: true, icon: <div className="my-2 border-t border-gray-200 dark:border-gray-800" /> },
+    { name: 'Analytics', href: '/reports', icon: <BarChart className="w-3.5 h-3.5" /> },
   ];
 
   // Filter navigation items based on search query
   const filteredNavItems = searchQuery 
     ? navItems.filter(item => 
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        item.name ? item.name.toLowerCase().includes(searchQuery.toLowerCase()) : false
       )
     : navItems;
 
@@ -123,7 +117,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
               <div className="absolute inset-0 bg-gradient-to-tr from-gray-500/10 to-transparent opacity-60"></div>
             </div>
           </div>
-          
           {/* Stylized brand name */}
           <div className="flex flex-col">
             <div className="flex items-baseline">
@@ -131,15 +124,32 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
             </div>
           </div>
         </div>
-            
+        <div className="relative ml-auto">
             <button
-              onClick={toggleCollapse}
-              className="absolute right-0 transform translate-x-1/2 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-dark-surface-secondary text-gray-500 dark:text-gray-400 transition-colors opacity-0 group-hover:opacity-100"
-              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              type="button"
+              className="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-0 hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-700 transition-all duration-150"
+              id="user-menu"
+              aria-expanded={isProfileOpen}
+              aria-haspopup="true"
+              onClick={toggleProfile}
             >
-              {isCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+              <span className="sr-only">Open user menu</span>
+              <div className="relative">
+                <div className="h-6 w-6 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center shadow-sm">
+                  <User className="h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                </div>
+              </div>
             </button>
+          </div>
+          {/* Collapse button */}
+          <button
+            onClick={toggleCollapse}
+            className="absolute right-0 transform translate-x-1/2 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-dark-surface-secondary text-gray-500 dark:text-gray-400 transition-colors opacity-0 group-hover:opacity-100"
+            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {isCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+          </button>
           </>
         ) : (
           <div className="flex justify-center w-full">
@@ -211,26 +221,29 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
 
       <div className="flex-1 overflow-y-auto py-2">
         <nav className={`px-4 space-y-0.5 ${isCollapsed ? 'flex flex-col items-center' : ''}`}>
-          {filteredNavItems.map((item) => {
-            const isActive = pathname === item.href;
+          {filteredNavItems.map((item: NavItem, index) => {
+            const isActive = item.href ? pathname === item.href : false;
             return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`
-                  flex items-center ${isCollapsed ? 'justify-center' : ''} 
-                  ${isCollapsed ? 'px-2' : 'px-4'} py-1.5 text-xs font-medium rounded-md transition-colors
-                  ${isActive 
-                    ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100' 
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary hover:text-gray-900 dark:hover:text-white'}
-                `}
-                title={isCollapsed ? item.name : ''}
-              >
-                <span className={`${isCollapsed ? '' : 'mr-2.5'} ${isActive ? 'text-gray-700 dark:text-gray-300' : ''}`}>
-                  {item.icon}
-                </span>
-                {!isCollapsed && <span className="font-medium text-xs tracking-wide">{item.name}</span>}
-              </Link>
+              <React.Fragment key={index}>
+                {item.isDivider ? (
+                  <div className="my-2 border-t border-gray-200 dark:border-gray-800"></div>
+                ) : (
+                  item.href ? (
+                    <Link
+                      href={item.href}
+                      className={
+                        `flex items-center ${isCollapsed ? 'px-2' : 'px-4'} py-1.5 text-xs font-medium rounded-md transition-colors
+                        ${isActive ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface-secondary hover:text-gray-900 dark:hover:text-white'}
+                        `
+                      }
+                      title={isCollapsed ? (item.name || 'Unnamed') : ''}
+                    >
+                      <span className={`${isCollapsed ? '' : 'mr-2.5'} ${isActive ? 'text-gray-700 dark:text-gray-300' : ''}`}>{item.icon}</span>
+                      {!isCollapsed && <span className="font-medium text-xs tracking-wide">{item.name || 'Unnamed'}</span>}
+                    </Link>
+                  ) : null
+                )}
+              </React.Fragment>
             );
           })}
           
@@ -297,6 +310,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
           </Link>
         </div>
       )}
+
+      {/* Profile Modal */}
+      <ProfileModal isOpen={isProfileOpen} onClose={toggleProfile} />
     </div>
   );
 };
