@@ -17,18 +17,18 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen">
         <div className="fixed inset-0 bg-black opacity-30" />
-        <Dialog.Panel className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg relative shadow-lg border border-gray-200 dark:border-gray-700">
+        <Dialog.Panel className="bg-white dark:bg-gray-800 rounded-lg p-6 w-120 h-96 relative shadow-lg border border-gray-200 dark:border-gray-700">
           <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
             <X className="w-5 h-5" />
           </button>
-          <Dialog.Title className="text-lg font-semibold text-gray-900 dark:text-gray-100">Profile Settings</Dialog.Title>
+          <Dialog.Title className="text-md font-normal text-gray-900 dark:text-gray-100">Profile Settings</Dialog.Title>
           <div className="mt-4 flex">
             <div className="flex flex-col mr-4 border-r border-gray-200 dark:border-gray-700 pr-4">
-              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-600 text-white' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Account Settings</button>
-              <button onClick={() => setActiveTab('organization')} className={`py-2 px-4 rounded-lg transition-colors duration-200 ${activeTab === 'organization' ? 'bg-gray-600 text-white' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Organization Settings</button>
-              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-600 text-white' : 'text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Help</button>
+              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Account Settings</button>
+              <button onClick={() => setActiveTab('organization')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'organization' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Organization Settings</button>
+              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Help</button>
             </div>
-            <div className="flex-1 mt-4 space-y-4">
+            <div className="flex-1 mt-4 space-y-4 w-96">
               {activeTab === 'account' && (
                 <>
                   <div>
