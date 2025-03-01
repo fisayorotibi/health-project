@@ -22,24 +22,36 @@ export const registerSchema = z.object({
   role: z.enum(['ADMIN', 'DOCTOR', 'NURSE', 'RECEPTIONIST']).default('DOCTOR'),
 });
 
+interface User {
+  id: string;
+  email: string;
+  passwordHash: string;
+  name?: string;
+  role: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // User authentication
 export async function authenticateUser(email: string, password: string) {
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
+  console.log('Attempting to authenticate user:', email);
+  const user = await prisma.$queryRaw<User[]>`SELECT * FROM "User" WHERE LOWER(email) = LOWER(${email})`;
 
-  if (!user) {
+  if (!user || user.length === 0) {
+    console.log('User not found:', email);
     return null;
   }
 
-  const isPasswordValid = await compare(password, user.passwordHash);
+  const isPasswordValid = await compare(password, user[0].passwordHash);
+  console.log('Password valid:', isPasswordValid);
 
   if (!isPasswordValid) {
+    console.log('Invalid password for user:', email);
     return null;
   }
 
   // Don't return the password hash
-  const { passwordHash, ...userWithoutPassword } = user;
+  const { passwordHash, ...userWithoutPassword } = user[0];
   return userWithoutPassword;
 }
 
