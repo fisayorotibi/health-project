@@ -220,7 +220,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
       )}
 
       <div className="flex-1 overflow-y-auto py-2">
-        <nav className={`px-4 space-y-0.5 ${isCollapsed ? 'flex flex-col items-center' : ''}`}>
+        <nav className={`px-4 space-y-1.5`}>
           {filteredNavItems.map((item: NavItem, index) => {
             const isActive = item.href ? pathname === item.href : false;
             return (
