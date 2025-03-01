@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog } from '@headlessui/react';
-import { X } from 'lucide-react';
+import { X, Sun, Moon, Monitor } from 'lucide-react';
+import { useThemeContext } from '@/components/ThemeProvider';
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -8,6 +9,7 @@ interface ProfileModalProps {
 }
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
+  const { theme, setTheme } = useThemeContext();
   const [activeTab, setActiveTab] = useState('account');
   const [name, setName] = useState('Dr. Sarah Chen');
   const [email, setEmail] = useState('sarah.chen@example.com');
@@ -24,9 +26,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
           <Dialog.Title className="text-md font-normal text-gray-900 dark:text-gray-100">Profile Settings</Dialog.Title>
           <div className="mt-4 flex">
             <div className="flex flex-col mr-4 border-r border-gray-200 dark:border-gray-700 pr-4">
-              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Account Settings</button>
-              <button onClick={() => setActiveTab('organization')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'organization' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Organization Settings</button>
-              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>Help</button>
+              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Account Settings</button>
+              <button onClick={() => setActiveTab('appearance')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'appearance' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Appearance</button>
+              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Help</button>
             </div>
             <div className="flex-1 mt-4 space-y-4 w-96">
               {activeTab === 'account' && (
@@ -45,9 +47,22 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 </>
               )}
-              {activeTab === 'organization' && (
-                <div>
-                  <p className="text-gray-700 dark:text-gray-300">Organization settings content goes here.</p>
+              {activeTab === 'appearance' && (
+                <div className="w-full">
+                  <div className="flex space-x-4 mt-2 w-full">
+                    <button onClick={() => setTheme('light')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-700 ${theme === 'light' ? 'bg-gray-300 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'} hover:bg-gray-300 dark:hover:bg-gray-600`}> 
+                      <Sun className="w-4 h-4 mb-1" /> 
+                      <span className="text-xs text-gray-900 dark:text-gray-100">Light</span>
+                    </button>
+                    <button onClick={() => setTheme('dark')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-700 ${theme === 'dark' ? 'bg-gray-300 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'} hover:bg-gray-300 dark:hover:bg-gray-600`}> 
+                      <Moon className="w-4 h-4 mb-1" /> 
+                      <span className="text-xs text-gray-900 dark:text-gray-100">Dark</span>
+                    </button>
+                    <button onClick={() => setTheme('system')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-700 ${theme === 'system' ? 'bg-gray-300 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'} hover:bg-gray-300 dark:hover:bg-gray-600`}> 
+                      <Monitor className="w-4 h-4 mb-1" /> 
+                      <span className="text-xs text-gray-900 dark:text-gray-100">System</span>
+                    </button>
+                  </div>
                 </div>
               )}
               {activeTab === 'help' && (
