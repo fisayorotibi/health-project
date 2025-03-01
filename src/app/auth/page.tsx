@@ -7,6 +7,21 @@ import Link from 'next/link';
 import { Heading1, Heading4, Paragraph, SmallParagraph } from '@/components/ui/typography';
 import { LoginForm } from '../../components/auth/LoginForm';
 import { SignupForm } from '../../components/auth/SignupForm';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+
+// Function to handle Google sign-in
+const handleGoogleSignIn = async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    console.log('User signed in:', user);
+    // Handle user data (e.g., save to your database)
+  } catch (error) {
+    console.error('Error during Google sign-in:', error);
+  }
+};
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');

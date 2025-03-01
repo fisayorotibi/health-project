@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
 import { Paragraph, SmallParagraph } from '@/components/ui/typography';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -56,13 +58,15 @@ export function LoginForm() {
     setIsLoading(true);
 
     try {
-      // This is a placeholder for actual social authentication logic
-      // In a real implementation, you would initiate OAuth flow here
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo purposes, we'll just redirect to the dashboard
+      if (provider === 'google') {
+        const googleProvider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+        console.log('User signed in with Google:', user);
+        // Handle user data (e.g., save to your database)
+      } else if (provider === 'apple') {
+        // Handle Apple sign-in (if implemented)
+      }
       router.push('/dashboard');
     } catch (err) {
       setError(`Failed to login with ${provider}. Please try again.`);
