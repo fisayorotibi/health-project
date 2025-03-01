@@ -21,16 +21,31 @@ export function LoginForm() {
     setIsLoading(true);
 
     try {
-      // This is a placeholder for actual authentication logic
-      // In a real implementation, you would call your authentication API here
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo purposes, we'll just redirect to the dashboard
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.error('Login error:', data);
+        throw new Error(data.error || 'Invalid email or password. Please try again.');
+      }
+
+      // Call onComplete to switch to the dashboard
       router.push('/dashboard');
-    } catch (err) {
-      setError('Invalid email or password. Please try again.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }
