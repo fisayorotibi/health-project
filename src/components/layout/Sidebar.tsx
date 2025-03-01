@@ -109,8 +109,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
       flex-col ${isCollapsed ? 'w-16' : 'w-64'} h-screen bg-gray-100 dark:bg-dark-background
       border-r border-gray-200/70 dark:border-gray-800/70
       transition-all duration-300 ease-in-out
+      group
     `}>
-      <div className="flex items-center justify-between py-3.5 px-4">
+      <div className="flex items-center justify-between py-3.5 px-4 relative">
         {!isCollapsed ? (
           <>
         <div className="flex items-center space-x-3">
@@ -133,11 +134,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
             
             <button
               onClick={toggleCollapse}
-              className="p-1.5 rounded-md hover:bg-gray-200 dark:hover:bg-dark-surface-secondary text-gray-500 dark:text-gray-400 transition-colors"
-              aria-label="Collapse sidebar"
-              title="Collapse sidebar"
+              className="absolute right-0 transform translate-x-1/2 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-dark-surface-secondary text-gray-500 dark:text-gray-400 transition-colors opacity-0 group-hover:opacity-100"
+              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
-              <ChevronLeft className="w-4 h-4" />
+              {isCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
             </button>
           </>
         ) : (

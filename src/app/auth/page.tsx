@@ -44,7 +44,7 @@ export default function AuthPage() {
                 <span className="text-white text-xl font-bold">L</span>
               </div>
               <div>
-                <span className="text-gray-900 dark:text-gray-100 text-base font-semibold tracking-tight">LAVENDER</span>
+                <span className="text-gray-900 dark:text-gray-100 text-base font-semibold tracking-tight" style={{ fontFamily: 'Funnel Display' }}>lavender</span>
                 <span className="ml-1 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider font-medium">Health</span>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function AuthPage() {
               <span className="text-white text-xl font-bold">L</span>
             </div>
             <div>
-              <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight">LAVENDER</span>
+              <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight" style={{ fontFamily: 'Funnel Display' }}>lavender</span>
               <span className="ml-1 text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
             </div>
           </div>
