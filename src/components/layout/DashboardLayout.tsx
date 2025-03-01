@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useThemeContext } from '@/components/ThemeProvider';
+import OfflineToast from '@/components/ui/OfflineToast';
 
 // Dynamically import components that use browser APIs with no SSR
 const Sidebar = dynamic(() => import('./Sidebar'), { ssr: false });
@@ -331,7 +332,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               >
                 <span className="sr-only">Close sidebar</span>
                 <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -354,7 +355,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     onClick={toggleSidebar}
                   >
                     <span className="sr-only">Open sidebar</span>
-                    <Menu className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
                 {/* Breadcrumb navigation */}
@@ -383,6 +383,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </main>
       </div>
+
+      {/* Offline Toast Notification */}
+      <OfflineToast />
 
       {/* Settings Modal */}
       {settingsModalOpen && <SettingsModal isOpen={settingsModalOpen} onClose={() => setSettingsModalOpen(false)} />}
