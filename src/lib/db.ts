@@ -21,5 +21,5 @@ export const checkIfUserExists = async (uid: string): Promise<boolean> => {
 // Function to create a new user in the database
 export const createUserInDatabase = async (user: any): Promise<void> => {
     const { uid, email, displayName } = user;
-    await client.query('INSERT INTO users (uid, email, display_name) VALUES ($1, $2, $3)', [uid, email, displayName]);
+    await client.query('INSERT INTO users (id, email, display_name) VALUES ($1, $2, $3)', [uid, email, displayName]);
 }; 

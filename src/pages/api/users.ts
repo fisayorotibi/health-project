@@ -19,16 +19,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { uid, email, displayName } = req.body;
 
         try {
-            // Check if user exists
-            const userExistsRes = await client.query('SELECT COUNT(*) FROM users WHERE uid = $1', [uid]);
+            // Check if user exists by email
+            const userExistsRes = await client.query('SELECT COUNT(*) FROM users WHERE email = $1', [email]);
             const userExists = parseInt(userExistsRes.rows[0].count) > 0;
 
-            if (!userExists) {
-                // Create a new user
-                await client.query('INSERT INTO users (uid, email, display_name) VALUES ($1, $2, $3)', [uid, email, displayName]);
+            if (userExists) {
+                return res.status(409).json({ error: 'User already exists' }); // Conflict status
             }
 
-            res.status(200).json({ userExists });
+            // Create a new user
+            await client.query('INSERT INTO users (uid, email, display_name) VALUES ($1, $2, $3)', [uid, email, displayName]);
+            res.status(200).json({ userExists: false }); // User was created
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Database error:', error.message);

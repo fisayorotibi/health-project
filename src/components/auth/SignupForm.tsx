@@ -134,20 +134,33 @@ export function SignupForm({ onComplete }: SignupFormProps) {
                 }),
             });
 
+            if (response.status === 409) {
+                const data = await response.json();
+                throw new Error(data.error); // Notify user that they already exist
+            }
+
             if (!response.ok) {
                 throw new Error('Failed to create user in database.');
             }
 
             const { userExists } = await response.json();
 
-            // Only call onComplete if the user is successfully created or already exists
-            onComplete(); // Call onComplete to switch to the next step
+            // Only call onComplete if the user is successfully created
+            if (!userExists) {
+                onComplete(); // Call onComplete to switch to the next step
+            } else {
+                setError('User already exists. Please log in.'); // Notify user
+            }
         } else if (provider === 'apple') {
             // Handle Apple sign-in (if implemented)
         }
-    } catch (err) {
-        console.error('Error during Google sign-up:', err); // Enhanced error logging
-        setError(`Failed to sign up with ${provider}. Please try again.`);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            console.error('Error during Google sign-up:', err); // Enhanced error logging
+            setError(err.message || `Failed to sign up with ${provider}. Please try again.`);
+        } else {
+            setError(`Failed to sign up with ${provider}. Please try again.`);
+        }
     } finally {
         setIsLoading(false);
     }
