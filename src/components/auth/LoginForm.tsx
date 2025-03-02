@@ -80,17 +80,36 @@ export function LoginForm() {
         const googleProvider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
-        console.log('User signed in with Google:', user);
 
-        // Check if user exists in your database
-        const userExists = await checkIfUserExists(user.uid);
-        if (!userExists) {
-          // Create a new user in your database
-          await createUserInDatabase(user);
+        // Call the new backend API to check if user exists
+        const response = await fetch('/api/auth/google-signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          if (data.userExists) {
+            // Redirect to dashboard or handle user data
+            router.push('/dashboard');
+          } else {
+            setError('User does not exist. Please sign up.'); // Notify user
+          }
+        } else {
+          // Handle specific error messages
+          if (data.message === 'User does not exist') {
+            setError('User does not exist. Please sign up.'); // Notify user
+          } else {
+            setError(data.error || 'Failed to check user existence.');
+          }
         }
-
-        // Redirect to dashboard or handle user data
-        router.push('/dashboard');
       } else if (provider === 'apple') {
         // Handle Apple sign-in (if implemented)
       }
