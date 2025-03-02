@@ -46,6 +46,26 @@ app.post('/api/users', async (req, res) => {
     }
 });
 
+// API route to check if a user exists by email
+app.post('/api/users/check', async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        // Check if user exists by email
+        const userExistsRes = await client.query('SELECT COUNT(*) FROM users WHERE email = $1', [email]);
+        const userExists = parseInt(userExistsRes.rows[0].count) > 0;
+
+        if (userExists) {
+            return res.status(409).json({ error: 'User already exists' }); // Conflict status
+        }
+
+        res.status(200).json({ userExists: false }); // User does not exist
+    } catch (error) {
+        console.error('Database error:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

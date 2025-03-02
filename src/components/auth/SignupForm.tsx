@@ -56,6 +56,21 @@ export function SignupForm({ onComplete }: SignupFormProps) {
         return;
       }
       
+      // Check if the email already exists
+      const response = await fetch('http://localhost:5000/api/users/check', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.status === 409) {
+        const data = await response.json();
+        setError(data.error); // Notify user that the email already exists
+        return;
+      }
+
       setError(null);
       setStep(2);
       return;
