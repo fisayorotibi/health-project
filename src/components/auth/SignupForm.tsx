@@ -70,7 +70,7 @@ export function SignupForm({ onComplete }: SignupFormProps) {
         setError(data.error); // Notify user that the email already exists
         return;
       }
-
+      
       setError(null);
       setStep(2);
       return;
@@ -174,10 +174,10 @@ export function SignupForm({ onComplete }: SignupFormProps) {
             console.error('Error during Google sign-up:', err); // Enhanced error logging
             setError(err.message || `Failed to sign up with ${provider}. Please try again.`);
         } else {
-            setError(`Failed to sign up with ${provider}. Please try again.`);
+      setError(`Failed to sign up with ${provider}. Please try again.`);
         }
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
