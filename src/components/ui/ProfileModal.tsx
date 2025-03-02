@@ -13,6 +13,7 @@ const textSizes = {
   title: 'text-lg',
   subtitle: 'text-sm',
   body: 'text-xs',
+  link: 'text-xs',
 };
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
@@ -27,7 +28,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen">
         <div className="fixed inset-0 bg-black opacity-30" />
-        <Dialog.Panel className="bg-white dark:bg-gray-900 rounded-lg p-6 w-120 h-96 relative shadow-lg border border-gray-300 dark:border-gray-800">
+        <Dialog.Panel className="bg-white dark:bg-gray-900 rounded-lg p-6 w-1/2 h-auto relative shadow-lg border border-gray-300 dark:border-gray-800 overflow-auto">
           <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
             <X className="w-5 h-5" />
           </button>
@@ -39,10 +40,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
               <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Help</button>
               <button onClick={() => setActiveTab('security')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'security' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Security & Privacy</button>
             </div>
-            <div className="flex-1 mt-4 space-y-4 w-96">
+            <div className="flex-1 overflow-auto h-80 space-y-4 w-96">
               {activeTab === 'account' && (
                 <>
-                  <h2 className={`${textSizes.title} font-semibold text-gray-900 dark:text-gray-100`}>Account Settings</h2>
                   <div>
                     <label className={`${textSizes.body} block font-medium text-gray-700 dark:text-gray-300`}>Name</label>
                     <input type='text' value={name} onChange={(e) => setName(e.target.value)} className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 p-2' placeholder='Enter your name' />
@@ -62,15 +62,15 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                   <button onClick={() => setTheme('light')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'light' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
                     <Sun className='w-4 h-4 mb-1' /> 
                     <span className='text-xs text-gray-900 dark:text-gray-100'>Light</span>
-                  </button>
+                    </button>
                   <button onClick={() => setTheme('dark')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'dark' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
                     <Moon className='w-4 h-4 mb-1' /> 
                     <span className='text-xs text-gray-900 dark:text-gray-100'>Dark</span>
-                  </button>
+                    </button>
                   <button onClick={() => setTheme('system')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'system' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
                     <Monitor className='w-4 h-4 mb-1' /> 
                     <span className='text-xs text-gray-900 dark:text-gray-100'>System</span>
-                  </button>
+                    </button>
                 </div>
               )}
               {activeTab === 'help' && (
@@ -80,10 +80,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
               )}
               {activeTab === 'security' && (
                 <div>
-                  <div className='mt-4 flex items-center justify-between w-full'>
+                  <div className='flex items-center justify-between w-full'>
                     <div className='flex-1'>
                       <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Two-Factor Authentication</h3>
-                      <p className={`${textSizes.body} text-gray-600 dark:text-gray-400 mt-1`}>Two-Factor Authentication (2FA) adds an extra layer of security to your account by requiring not only your password but also a second factor, such as a code sent to your mobile device. This helps protect your account from unauthorized access.</p>
+                      <p className={`${textSizes.body} text-gray-600 dark:text-gray-400 mt-1`}>Two-Factor Authentication (2FA) adds an extra layer of security by requiring a second factor, such as a code sent to your mobile device, in addition to your password.</p>
                     </div>
                     <Switch
                       checked={is2faEnabled}
@@ -99,12 +99,11 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                       />
                     </Switch>
                   </div>
-                  <button className='mt-2 text-blue-500 hover:underline'>Manage 2FA Settings</button>
+                  <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>Manage 2FA Settings</button>
                   <div className='mt-4'>
                     <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Password Management</h3>
                     <input type='password' placeholder='New Password' className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 p-2' />
-                    <button className='mt-2 text-blue-500 hover:underline'>Reset Password</button>
-                    <p className='mt-1 text-sm text-gray-500 dark:text-gray-400'>Password strength: <span className='font-semibold'>Strong</span></p>
+                    <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>Reset Password</button>
                   </div>
                   <div className='mt-4'>
                     <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Session Management</h3>
@@ -118,7 +117,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                         <button className='text-red-500 hover:underline'>Revoke</button>
                       </li>
                     </ul>
-                    <button className='mt-2 text-blue-500 hover:underline'>View All Sessions</button>
+                    <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>View All Sessions</button>
                   </div>
                   <div className='mt-4'>
                     <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Privacy Settings</h3>
