@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
@@ -16,6 +16,18 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('email');
+    const storedPassword = localStorage.getItem('password'); // Optional
+
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+    if (storedPassword) {
+      setPassword(storedPassword); // Optional
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +50,12 @@ export function LoginForm() {
         const data = await response.json();
         console.error('Login error:', data);
         throw new Error(data.error || 'Invalid email or password. Please try again.');
+      }
+
+      // Store credentials if "Remember Me" is checked
+      if (rememberMe) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password); // Optional
       }
 
       // Call onComplete to switch to the dashboard
