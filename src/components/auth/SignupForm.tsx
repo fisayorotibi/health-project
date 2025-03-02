@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, User, AlertCircle, Check, ChevronDown, Building, Briefcase, X, Shield, ShieldCheck, ShieldAlert } from 'lucide-react';
 import { Paragraph, SmallParagraph } from '@/components/ui/typography';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { checkIfUserExists, createUserInDatabase } from '@/lib/db';
 
 type UserRole = 'doctor' | 'nurse' | 'admin' | 'patient';
 
@@ -112,18 +115,41 @@ export function SignupForm({ onComplete }: SignupFormProps) {
     setIsLoading(true);
 
     try {
-      // This is a placeholder for actual social authentication logic
-      // In a real implementation, you would initiate OAuth flow here
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // For demo purposes, we'll just call onComplete to move to the next step
-      onComplete();
+        if (provider === 'google') {
+            const googleProvider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            console.log('User signed up with Google:', user);
+
+            // Call the new backend API to check if user exists and create if not
+            const response = await fetch('http://localhost:5000/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create user in database.');
+            }
+
+            const { userExists } = await response.json();
+
+            // Only call onComplete if the user is successfully created or already exists
+            onComplete(); // Call onComplete to switch to the next step
+        } else if (provider === 'apple') {
+            // Handle Apple sign-in (if implemented)
+        }
     } catch (err) {
-      setError(`Failed to sign up with ${provider}. Please try again.`);
+        console.error('Error during Google sign-up:', err); // Enhanced error logging
+        setError(`Failed to sign up with ${provider}. Please try again.`);
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
   };
 

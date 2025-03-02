@@ -63,16 +63,35 @@ export function LoginForm() {
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
         console.log('User signed in with Google:', user);
-        // Handle user data (e.g., save to your database)
+
+        // Check if user exists in your database
+        const userExists = await checkIfUserExists(user.uid);
+        if (!userExists) {
+          // Create a new user in your database
+          await createUserInDatabase(user);
+        }
+
+        // Redirect to dashboard or handle user data
+        router.push('/dashboard');
       } else if (provider === 'apple') {
         // Handle Apple sign-in (if implemented)
       }
-      router.push('/dashboard');
     } catch (err) {
       setError(`Failed to login with ${provider}. Please try again.`);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const checkIfUserExists = async (uid: string) => {
+    // Placeholder logic to simulate checking user existence
+    console.log('Checking if user exists for UID:', uid);
+    return false; // Simulate that the user does not exist
+  };
+
+  const createUserInDatabase = async (user: any) => {
+    // Placeholder logic to simulate creating a new user in the database
+    console.log('Creating new user in database:', user);
   };
 
   return (
