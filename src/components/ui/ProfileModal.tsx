@@ -16,6 +16,24 @@ const textSizes = {
   link: 'text-xs',
 };
 
+const lightenColor = (color: string, percent: number): string => {
+  const num = parseInt(color.slice(1), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = (num >> 16) + amt;
+  const G = (num >> 8 & 0x00FF) + amt;
+  const B = (num & 0x0000FF) + amt;
+  return `#${(0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 + (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 + (B < 255 ? (B < 1 ? 0 : B) : 255)).toString(16).slice(1)}`;
+};
+
+const darkenColor = (color: string, percent: number): string => {
+  const num = parseInt(color.slice(1), 16);
+  const amt = Math.round(2.55 * -percent * 0.5);
+  const R = (num >> 16) + amt;
+  const G = (num >> 8 & 0x00FF) + amt;
+  const B = (num & 0x0000FF) + amt;
+  return `#${(0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 + (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 + (B < 255 ? (B < 1 ? 0 : B) : 255)).toString(16).slice(1)}`;
+};
+
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const { theme, setTheme } = useThemeContext();
   const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme'>('account');
@@ -88,17 +106,20 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                       <button
                         key={color}
                         onClick={() => setAccentColor(color)}
-                        className={`w-10 h-10 rounded-full border-2 ${accentColor === color ? 'border-blue-500' : 'border-transparent'}`}
-                        style={{ backgroundColor: color }}
+                        className={`w-8 h-8 rounded-full border-2 ${accentColor === color ? 'border-blue-500' : 'border-transparent'}`}
+                        style={{ backgroundColor: color, borderColor: (theme === 'dark' ? lightenColor(color, 20) : darkenColor(color, 20)) }}
                       />
                     ))}
-                    <input
-                      type='text'
-                      value={accentColor}
-                      onChange={(e) => setAccentColor(e.target.value)}
-                      className='border border-gray-300 rounded-md p-1 w-24'
-                      placeholder='#F5F5F5'
-                    />
+                    <div className='relative'>
+                      <input
+                        type='text'
+                        value={accentColor.slice(1)}
+                        onChange={(e) => setAccentColor(`#${e.target.value}`)}
+                        className='border border-gray-300 rounded-md p-1 pl-5 w-24 h-10 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 text-sm'
+                        placeholder='F5F5F5'
+                      />
+                      <span className='absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400'>#</span>
+                    </div>
                   </div>
                 </div>
               )}
