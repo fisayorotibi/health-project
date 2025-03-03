@@ -36,13 +36,18 @@ const darkenColor = (color: string, percent: number): string => {
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const { theme, setTheme } = useThemeContext();
-  const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme'>('account');
+  const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme' | 'notifications'>('account');
   const [name, setName] = useState('Dr. Sarah Chen');
   const [email, setEmail] = useState('sarah.chen@example.com');
   const [notifications, setNotifications] = useState(true);
   const [is2faEnabled, setIs2faEnabled] = useState(false);
   const [dataSharing, setDataSharing] = useState(true);
   const [accentColor, setAccentColor] = useState('#F5F5F5');
+
+  const handleLogout = () => {
+    // Redirect to the logout page
+    window.location.href = '/logout';
+  };
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
@@ -59,6 +64,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
               <button onClick={() => setActiveTab('appearance')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'appearance' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Appearance</button>
               <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Help</button>
               <button onClick={() => setActiveTab('security')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'security' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Security & Privacy</button>
+              <button onClick={() => setActiveTab('notifications')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'notifications' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Notifications</button>
+              <div className='mt-auto'>
+                <button onClick={handleLogout} className='py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'>Log out</button>
+              </div>
             </div>
             <div className="flex-1 overflow-auto h-80 space-y-4 w-96">
               {activeTab === 'account' && (
@@ -97,30 +106,41 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                       <span className='text-xs text-gray-900 dark:text-gray-100'>System</span>
                     </button>
                   </div>
-                  <div className='flex flex-col space-y-1'>
-                    <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Accent Color</h4>
-                    <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred accent color for the dashboard.</p>
-                  </div>
-                  <div className='flex flex-col space-y-4'>
-                    <div className='flex space-x-2 mt-2 ml-1'>
-                      {['#000000', '#8A2BE2', '#00BFFF', '#008080', '#FFFFFF'].map(color => (
-                        <button
-                          key={color}
-                          onClick={() => setAccentColor(color)}
-                          className={`w-8 h-8 rounded-full border-2 ${accentColor === color ? 'border-blue-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 ${theme === 'dark' ? 'focus:ring-offset-gray-900' : ''}`}
-                          style={{ backgroundColor: color, borderColor: (theme === 'dark' ? lightenColor(color, 20) : darkenColor(color, 20)) }}
-                        />
-                      ))}
+                  <div className='inline-flex flex-col space-y-4 pb-10'>
+                    <div className='flex flex-col space-y-1'>
+                      <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Accent Color</h4>
+                      <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred accent color for the dashboard.</p>
                     </div>
-                    <div className='relative'>
-                      <input
-                        type='text'
-                        value={accentColor.slice(1)}
-                        onChange={(e) => setAccentColor(`#${e.target.value}`)}
-                        className='border border-gray-300 rounded-md p-1 pl-5 w-24 h-10 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 text-sm'
-                        placeholder='F5F5F5'
-                      />
-                      <span className='absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400'>#</span>
+                    <div className='flex space-x-4'>
+                      <div className='flex space-x-2 mt-2 ml-1'>
+                        {['#000000', '#8A2BE2', '#00BFFF', '#008080', '#FFFFFF'].map(color => (
+                          <button
+                            key={color}
+                            onClick={() => setAccentColor(color)}
+                            className={`w-8 h-8 rounded-full border-2 ${accentColor === color ? 'border-blue-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 ${theme === 'dark' ? 'focus:ring-offset-gray-900' : ''}`}
+                            style={{ backgroundColor: color, borderColor: (theme === 'dark' ? lightenColor(color, 20) : darkenColor(color, 20)) }}
+                          />
+                        ))}
+                      </div>
+                      <div className='relative flex items-center'>
+                        <span className='absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400'>#</span>
+                        <input
+                          className='border border-gray-300 rounded-md p-1 pl-5 w-24 h-10 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 text-sm'
+                          placeholder='F5F5F5'
+                          type='text'
+                          value={accentColor.slice(1)}
+                          onChange={(e) => setAccentColor(`#${e.target.value}`)}
+                        />
+                      </div>
+                    </div>
+                    <div className='flex flex-col space-y-1'>
+                      <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Font Size</h4>
+                      <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred font size for the dashboard.</p>
+                      <select className='border border-gray-300 rounded-md p-1 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200'>
+                        <option value='text-xs'>Small</option>
+                        <option value='text-sm'>Medium</option>
+                        <option value='text-lg'>Large</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -131,7 +151,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                 </div>
               )}
               {activeTab === 'security' && (
-                <div>
+                <div className='mt-4 pb-10'>
                   <div className='flex items-center justify-between w-full'>
                     <div className='flex-1'>
                       <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Two-Factor Authentication</h3>
@@ -151,7 +171,6 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                       />
                     </Switch>
                   </div>
-                  <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>Manage 2FA Settings</button>
                   <div className='mt-4'>
                     <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Password Management</h3>
                     <input type='password' placeholder='New Password' className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 p-2' />
@@ -216,6 +235,28 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                         </Switch>
                       </div>
                     </div>
+                  </div>
+                </div>
+              )}
+              {activeTab === 'notifications' && (
+                <div className='flex flex-col space-y-4'>
+                  <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Notification Settings</h4>
+                  <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Manage your notification preferences below.</p>
+                  <div className='flex items-center justify-between'>
+                    <span className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Email Notifications</span>
+                    <Switch
+                      checked={notifications}
+                      onChange={() => setNotifications(!notifications)}
+                      className={`${
+                        notifications ? 'bg-blue-600' : 'bg-gray-200'
+                      } relative inline-flex items-center h-6 rounded-full w-11`}
+                    >
+                      <span
+                        className={`${
+                          notifications ? 'translate-x-6' : 'translate-x-1'
+                        } inline-block w-4 h-4 transform bg-white rounded-full transition`}
+                      />
+                    </Switch>
                   </div>
                 </div>
               )}
