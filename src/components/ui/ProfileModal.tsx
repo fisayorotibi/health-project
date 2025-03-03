@@ -18,12 +18,13 @@ const textSizes = {
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const { theme, setTheme } = useThemeContext();
-  const [activeTab, setActiveTab] = useState('account');
+  const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme'>('account');
   const [name, setName] = useState('Dr. Sarah Chen');
   const [email, setEmail] = useState('sarah.chen@example.com');
   const [notifications, setNotifications] = useState(true);
   const [is2faEnabled, setIs2faEnabled] = useState(false);
   const [dataSharing, setDataSharing] = useState(true);
+  const [accentColor, setAccentColor] = useState('#F5F5F5');
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
@@ -59,19 +60,46 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                 </>
               )}
               {activeTab === 'appearance' && (
-                <div className='flex space-x-4 mt-2 w-full'>
-                  <button onClick={() => setTheme('light')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'light' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
-                    <Sun className='w-4 h-4 mb-1' /> 
-                    <span className='text-xs text-gray-900 dark:text-gray-100'>Light</span>
+                <div className='flex flex-col space-y-4'>
+                  <div className='flex flex-col space-y-1'>
+                    <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Theme Selector</h4>
+                    <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred theme for the dashboard.</p>
+                  </div>
+                  <div className='flex space-x-4'>
+                    <button onClick={() => setTheme('light')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'light' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
+                      <Sun className='w-4 h-4 mb-1' /> 
+                      <span className='text-xs text-gray-900 dark:text-gray-100'>Light</span>
                     </button>
-                  <button onClick={() => setTheme('dark')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'dark' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
-                    <Moon className='w-4 h-4 mb-1' /> 
-                    <span className='text-xs text-gray-900 dark:text-gray-100'>Dark</span>
+                    <button onClick={() => setTheme('dark')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'dark' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
+                      <Moon className='w-4 h-4 mb-1' /> 
+                      <span className='text-xs text-gray-900 dark:text-gray-100'>Dark</span>
                     </button>
-                  <button onClick={() => setTheme('system')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'system' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
-                    <Monitor className='w-4 h-4 mb-1' /> 
-                    <span className='text-xs text-gray-900 dark:text-gray-100'>System</span>
+                    <button onClick={() => setTheme('system')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'system' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
+                      <Monitor className='w-4 h-4 mb-1' /> 
+                      <span className='text-xs text-gray-900 dark:text-gray-100'>System</span>
                     </button>
+                  </div>
+                  <div className='flex flex-col space-y-1'>
+                    <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Accent Color</h4>
+                    <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred accent color for the dashboard.</p>
+                  </div>
+                  <div className='flex space-x-2 mt-2'>
+                    {['#000000', '#8A2BE2', '#00BFFF', '#008080', '#FFFFFF'].map(color => (
+                      <button
+                        key={color}
+                        onClick={() => setAccentColor(color)}
+                        className={`w-10 h-10 rounded-full border-2 ${accentColor === color ? 'border-blue-500' : 'border-transparent'}`}
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                    <input
+                      type='text'
+                      value={accentColor}
+                      onChange={(e) => setAccentColor(e.target.value)}
+                      className='border border-gray-300 rounded-md p-1 w-24'
+                      placeholder='#F5F5F5'
+                    />
+                  </div>
                 </div>
               )}
               {activeTab === 'help' && (
@@ -169,10 +197,6 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                 </div>
               )}
             </div>
-          </div>
-          <div className="mt-6 flex justify-end space-x-4">
-            <button onClick={onClose} className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">Cancel</button>
-            <button className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded-md hover:bg-gray-700">Save Changes</button>
           </div>
         </Dialog.Panel>
       </div>
