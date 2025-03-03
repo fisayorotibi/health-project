@@ -418,7 +418,7 @@ export default function DashboardPage() {
                       <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
                         <FileText className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">View Record</span>
                       </button>
-                      <button className="px-3 py-1 rounded bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors flex items-center">
+                      <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
                         <Calendar className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">Schedule Follow-up</span>
                       </button>
                     </div>
@@ -474,7 +474,7 @@ export default function DashboardPage() {
                     <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
                       <FileText className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">View Record</span>
                     </button>
-                    <button className="px-3 py-1 rounded bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors flex items-center">
+                    <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
                       <Calendar className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">Start Visit</span>
                     </button>
                   </div>
