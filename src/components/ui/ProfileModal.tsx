@@ -53,12 +53,14 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen">
         <div className="fixed inset-0 bg-black opacity-30" />
-        <Dialog.Panel className="bg-white dark:bg-gray-900 rounded-lg p-6 w-1/2 h-auto relative shadow-lg border border-gray-300 dark:border-gray-800 overflow-auto">
-          <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-            <X className="w-5 h-5" />
-          </button>
-          <Dialog.Title className="text-md font-normal text-gray-900 dark:text-gray-100">Profile Settings</Dialog.Title>
-          <div className="mt-4 flex">
+        <Dialog.Panel className="bg-white dark:bg-gray-900 rounded-lg w-1/2 h-auto relative shadow-lg border border-gray-300 dark:border-gray-800 overflow-hidden">
+          <div className="flex items-center justify-between mb-4 px-6 pt-5">
+            <Dialog.Title className="text-md font-normal text-gray-900 dark:text-gray-100">Profile Settings</Dialog.Title>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          <div className="flex pl-6 pb-6">
             <div className="flex flex-col mr-4 border-r border-gray-200 dark:border-gray-700 pr-4">
               <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Account Settings</button>
               <button onClick={() => setActiveTab('appearance')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'appearance' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Appearance</button>
@@ -69,7 +71,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                 <button onClick={handleLogout} className='py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'>Log out</button>
               </div>
             </div>
-            <div className="flex-1 overflow-auto h-80 space-y-4 w-96">
+            <div className="flex-1 overflow-auto h-80 space-y-4 pr-4">
               {activeTab === 'account' && (
                 <>
                   <div>
