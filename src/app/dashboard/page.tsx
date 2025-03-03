@@ -327,12 +327,12 @@ export default function DashboardPage() {
               </div>
             </div>
             
-        <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
-          <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
+        <div className="bg-gray-100 dark:bg-dark-background rounded-lg overflow-hidden border border-gray-200 dark:border-gray-900">
+          <div className="px-5 py-4 bg-gray-100 dark:bg-dark-background border-b border-gray-100 dark:border-gray-800/50">
             <div className="flex items-center justify-between">
               <div>
-                <Heading4 className="text-gray-900 dark:text-white">Activity Stream</Heading4>
-                <SmallParagraph className="text-gray-500 dark:text-gray-400">Upcoming appointments and patient activities</SmallParagraph>
+                <Heading4 className="text-gray-800 dark:text-gray-200 mb-0.5">Today's Schedule</Heading4>
+                <SmallParagraph className="text-gray-500 dark:text-gray-400">Manage your appointments for {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</SmallParagraph>
               </div>
               <div className="flex items-center space-x-3">
                 <button 
@@ -371,13 +371,13 @@ export default function DashboardPage() {
 
           <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
             {/* Completed Appointments Section */}
-            <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
-              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Completed Appointments</Label>
+            <div className="px-5 py-2 bg-gray-100 dark:bg-dark-background">
+              <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wider">Completed appointments</Label>
             </div>
             
             {/* Checked In Patient - Now shown as completed */}
             <div className="p-0">
-              <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+              <div className="p-4 hover:bg-gray-200 dark:hover:bg-gray-800/50 transition-colors">
                 <div className="flex items-start">
                   <div className="relative">
                     <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
@@ -389,37 +389,37 @@ export default function DashboardPage() {
                   </div>
                   <div className="ml-3 flex-1">
                     <div className="flex items-center justify-between">
-                      <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[0].name}</Paragraph>
+                      <p className="text-[16px] leading-[1.5] font-medium text-gray-900 dark:text-white">{recentPatients[0].name}</p>
                       <div className="flex items-center">
-                        <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+                        <div className="text-[12px] leading-[1.5] font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                           Completed
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between mt-1">
-                      <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400">
                         {recentPatients[0].age} years • {recentPatients[0].reason}
-                      </SmallParagraph>
-                      <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                      </p>
+                      <span className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400 flex items-center">
                         <Clock className="w-3 h-3 mr-1" /> {recentPatients[0].time}
-                      </Caption>
+                      </span>
                     </div>
                     
                     {/* Related activity */}
                     <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                      <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                      <p className="text-[12px] leading-[1.5] text-gray-700 dark:text-gray-300">
                         <span className="font-medium">{recentActivities[0].action}</span> • {recentActivities[0].time}
-                      </SmallParagraph>
-                      <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[0].user}</Caption>
+                      </p>
+                      <span className="text-[12px] leading-[1.5] text-gray-500 dark:text-gray-400">by Dr. John Doe</span>
                     </div>
                     
-                    {/* Quick actions */}
+                    {/* Action buttons */}
                     <div className="mt-3 flex space-x-2">
-                      <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                        <FileText className="w-3 h-3 mr-1" /> View Record
+                      <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                        <FileText className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">View Record</span>
                       </button>
-                      <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                        <Calendar className="w-3 h-3 mr-1" /> Schedule Follow-up
+                      <button className="px-3 py-1 rounded bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors flex items-center">
+                        <Calendar className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">Schedule Follow-up</span>
                       </button>
                     </div>
                   </div>
@@ -428,12 +428,12 @@ export default function DashboardPage() {
             </div>
             
             {/* Upcoming Appointments Section */}
-            <div className="px-5 py-2 bg-gray-50/50 dark:bg-dark-surface-secondary/50">
-              <Label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Upcoming Appointments</Label>
+            <div className="px-5 py-2 bg-gray-100 dark:bg-dark-background">
+              <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wider">Upcoming appointments</Label>
             </div>
             
             {/* Waiting Patient */}
-            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+            <div className="p-4 hover:bg-gray-200 dark:hover:bg-gray-800/50 transition-colors">
               <div className="flex items-start">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
@@ -445,37 +445,37 @@ export default function DashboardPage() {
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
-                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[1].name}</Paragraph>
+                    <p className="text-[16px] leading-[1.5] font-medium text-gray-900 dark:text-white">{recentPatients[1].name}</p>
                     <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+                      <div className="text-[12px] leading-[1.5] font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                         {recentPatients[1].status}
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400">
                       {recentPatients[1].age} years • {recentPatients[1].reason}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                    </p>
+                    <span className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400 flex items-center">
                       <Clock className="w-3 h-3 mr-1" /> {recentPatients[1].time}
-                    </Caption>
+                    </span>
                   </div>
                   
                   {/* Related activity */}
                   <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                    <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                    <p className="text-[12px] leading-[1.5] text-gray-700 dark:text-gray-300">
                       <span className="font-medium">{recentActivities[1].action}</span> • {recentActivities[1].time}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[1].user}</Caption>
+                    </p>
+                    <span className="text-[12px] leading-[1.5] text-gray-500 dark:text-gray-400">by {recentActivities[1].user}</span>
                   </div>
                   
                   {/* Quick actions */}
                   <div className="mt-3 flex space-x-2">
-                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <FileText className="w-3 h-3 mr-1" /> View Record
+                    <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <FileText className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">View Record</span>
                     </button>
-                    <button className="text-xs px-3 py-1 rounded bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors flex items-center">
-                      <Calendar className="w-3 h-3 mr-1" /> Start Visit
+                    <button className="px-3 py-1 rounded bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors flex items-center">
+                      <Calendar className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">Start Visit</span>
                     </button>
                   </div>
                 </div>
@@ -483,7 +483,7 @@ export default function DashboardPage() {
             </div>
             
             {/* Scheduled Patient */}
-            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+            <div className="p-4 hover:bg-gray-200 dark:hover:bg-gray-800/50 transition-colors">
               <div className="flex items-start">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
@@ -495,37 +495,37 @@ export default function DashboardPage() {
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
-                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[2].name}</Paragraph>
+                    <p className="text-[16px] leading-[1.5] font-medium text-gray-900 dark:text-white">{recentPatients[2].name}</p>
                     <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+                      <div className="text-[12px] leading-[1.5] font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                         {recentPatients[2].status}
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400">
                       {recentPatients[2].age} years • {recentPatients[2].reason}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                    </p>
+                    <span className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400 flex items-center">
                       <Clock className="w-3 h-3 mr-1" /> {recentPatients[2].time}
-                    </Caption>
+                    </span>
                   </div>
                   
                   {/* Related activity */}
                   <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                    <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                    <p className="text-[12px] leading-[1.5] text-gray-700 dark:text-gray-300">
                       <span className="font-medium">{recentActivities[2].action}</span> • {recentActivities[2].time}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[2].user}</Caption>
+                    </p>
+                    <span className="text-[12px] leading-[1.5] text-gray-500 dark:text-gray-400">by {recentActivities[2].user}</span>
                   </div>
                   
                   {/* Quick actions */}
                   <div className="mt-3 flex space-x-2">
-                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <FileText className="w-3 h-3 mr-1" /> View Record
+                    <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <FileText className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">View Record</span>
                     </button>
-                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <Calendar className="w-3 h-3 mr-1" /> Reschedule
+                    <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <Calendar className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">Reschedule</span>
                     </button>
                   </div>
                 </div>
@@ -533,7 +533,7 @@ export default function DashboardPage() {
             </div>
             
             {/* More Scheduled Patients */}
-            <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+            <div className="p-4 hover:bg-gray-200 dark:hover:bg-gray-800/50 transition-colors">
               <div className="flex items-start">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
@@ -545,37 +545,37 @@ export default function DashboardPage() {
                 </div>
                 <div className="ml-3 flex-1">
                   <div className="flex items-center justify-between">
-                    <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[3].name}</Paragraph>
+                    <p className="text-[16px] leading-[1.5] font-medium text-gray-900 dark:text-white">{recentPatients[3].name}</p>
                     <div className="flex items-center">
-                      <div className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+                      <div className="text-[12px] leading-[1.5] font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
                         {recentPatients[3].status}
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <SmallParagraph className="text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400">
                       {recentPatients[3].age} years • {recentPatients[3].reason}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400 flex items-center">
+                    </p>
+                    <span className="text-[14px] leading-[1.5] text-gray-500 dark:text-gray-400 flex items-center">
                       <Clock className="w-3 h-3 mr-1" /> {recentPatients[3].time}
-                    </Caption>
+                    </span>
                   </div>
                   
                   {/* Related activity */}
                   <div className="mt-3 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                    <SmallParagraph className="text-gray-700 dark:text-gray-300">
+                    <p className="text-[12px] leading-[1.5] text-gray-700 dark:text-gray-300">
                       <span className="font-medium">{recentActivities[3].action}</span> • {recentActivities[3].time}
-                    </SmallParagraph>
-                    <Caption className="text-gray-500 dark:text-gray-400">by {recentActivities[3].user}</Caption>
+                    </p>
+                    <span className="text-[12px] leading-[1.5] text-gray-500 dark:text-gray-400">by {recentActivities[3].user}</span>
                   </div>
                   
                   {/* Quick actions */}
                   <div className="mt-3 flex space-x-2">
-                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <FileText className="w-3 h-3 mr-1" /> View Record
+                    <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <FileText className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">View Record</span>
                     </button>
-                    <button className="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
-                      <Calendar className="w-3 h-3 mr-1" /> Confirm
+                    <button className="px-3 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
+                      <Calendar className="w-3 h-3 mr-1" /> <span className="text-[12px] leading-[1.5] font-medium">Confirm</span>
                     </button>
                   </div>
                 </div>
@@ -593,26 +593,26 @@ export default function DashboardPage() {
 
         {/* This Week Section - Only show when not on Today tab */}
         {activeTab !== 'today' && (
-          <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden mt-6">
-            <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
+          <div className="bg-gray-100 dark:bg-dark-background rounded-lg overflow-hidden border border-gray-200 dark:border-gray-900 mt-6">
+            <div className="px-5 py-4 bg-gray-100 dark:bg-dark-background border-b border-gray-100 dark:border-gray-800/50">
               <div className="flex items-center justify-between">
                 <div>
-                  <Heading4 className="text-gray-900 dark:text-white">This Week</Heading4>
-                  <SmallParagraph className="text-gray-500 dark:text-gray-400">Recent patient activities from this week</SmallParagraph>
+                  <Heading4 className="text-gray-800 dark:text-gray-200 mb-0.5">Upcoming Schedule</Heading4>
+                  <SmallParagraph className="text-gray-500 dark:text-gray-400">View your appointments for the week ahead</SmallParagraph>
                 </div>
               </div>
             </div>
 
             <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
               {/* Other Patient - Moved from Yesterday */}
-              <div className="p-4 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary/50 transition-colors">
+              <div className="p-4 hover:bg-gray-200 dark:hover:bg-gray-800/50 transition-colors">
                 <div className="flex items-start">
                   <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300 font-medium">
                     {recentPatients[4].name.charAt(0)}
                   </div>
                   <div className="ml-3 flex-1">
                     <div className="flex items-center justify-between">
-                      <Paragraph className="font-medium text-gray-900 dark:text-white">{recentPatients[4].name}</Paragraph>
+                      <Paragraph className="text-[16px] leading-[1.5] font-medium text-gray-900 dark:text-white">{recentPatients[4].name}</Paragraph>
                       <Caption className="text-gray-500 dark:text-gray-400">Yesterday</Caption>
                     </div>
                     <SmallParagraph className="text-gray-500 dark:text-gray-400">
