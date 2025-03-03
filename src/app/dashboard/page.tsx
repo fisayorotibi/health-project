@@ -214,22 +214,12 @@ export default function DashboardPage() {
         />
 
         {/* Combined Stats & Quick Actions Card */}
-        <div className="bg-white dark:bg-dark-surface rounded-lg shadow-md overflow-hidden">
-          {/* Card Header */}
-          <div className="px-5 py-4 bg-gray-50 dark:bg-dark-surface-secondary border-b border-gray-100 dark:border-gray-800/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <Heading4 className="text-gray-900 dark:text-white">Practice Dashboard</Heading4>
-                <SmallParagraph className="text-gray-500 dark:text-gray-400">Key metrics and frequent actions</SmallParagraph>
-              </div>
-            </div>
-          </div>
-          
+        <div className="bg-gray-100 dark:bg-dark-background border border-gray-200 dark:border-gray-900 rounded-lg overflow-hidden">
           <div className="p-5">
             {/* Stats Grid Section */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-4">
-                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Key Metrics</Label>
+                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wider">Key Metrics</Label>
                 <div className="h-px bg-gray-100 dark:bg-gray-800 flex-grow mx-4"></div>
                 <button className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
                   View Details <ChevronRight className="w-3 h-3 ml-1" />
@@ -240,7 +230,7 @@ export default function DashboardPage() {
           {stats.map((stat, index) => (
             <div 
               key={index} 
-                    className="relative overflow-hidden bg-gray-50 dark:bg-dark-surface-secondary rounded-lg group"
+                    className="relative overflow-hidden bg-gray-50 dark:bg-gray-900 rounded-lg group"
                   >
                     <div className="p-4">
                       {/* Header with icon and status */}
@@ -292,7 +282,7 @@ export default function DashboardPage() {
             {/* Quick Actions Section */}
             <div>
               <div className="flex items-center justify-between mb-4">
-                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quick Actions</Label>
+                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wider">Quick Actions</Label>
                 <div className="h-px bg-gray-100 dark:bg-gray-800 flex-grow mx-4"></div>
                 <button className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
                   All Actions <ChevronRight className="w-3 h-3 ml-1" />
@@ -300,33 +290,37 @@ export default function DashboardPage() {
               </div>
               
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                <button className="relative flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg transition-colors group">
                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Plus className="w-4 h-4" />
                   </div>
                   <Label className="mt-2 text-gray-700 dark:text-gray-300">New Patient</Label>
                   <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Create patient record</SmallParagraph>
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-200/0 via-gray-200/0 to-gray-200/0 group-hover:from-gray-300/30 group-hover:via-gray-400/40 group-hover:to-gray-300/0 dark:group-hover:from-gray-700/30 dark:group-hover:via-gray-600/40 dark:group-hover:to-gray-700/0 transition-all duration-300"></div>
                 </button>
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                <button className="relative flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg transition-colors group">
                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Calendar className="w-4 h-4" />
                   </div>
                   <Label className="mt-2 text-gray-700 dark:text-gray-300">Schedule</Label>
                   <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Book appointment</SmallParagraph>
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-200/0 via-gray-200/0 to-gray-200/0 group-hover:from-gray-300/30 group-hover:via-gray-400/40 group-hover:to-gray-300/0 dark:group-hover:from-gray-700/30 dark:group-hover:via-gray-600/40 dark:group-hover:to-gray-700/0 transition-all duration-300"></div>
                 </button>
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                <button className="relative flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg transition-colors group">
                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <FileText className="w-4 h-4" />
                   </div>
                   <Label className="mt-2 text-gray-700 dark:text-gray-300">New Record</Label>
                   <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Document visit</SmallParagraph>
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-200/0 via-gray-200/0 to-gray-200/0 group-hover:from-gray-300/30 group-hover:via-gray-400/40 group-hover:to-gray-300/0 dark:group-hover:from-gray-700/30 dark:group-hover:via-gray-600/40 dark:group-hover:to-gray-700/0 transition-all duration-300"></div>
                 </button>
-                <button className="flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-surface-secondary rounded-lg hover:bg-gray-100 dark:hover:bg-dark-surface-tertiary transition-colors">
+                <button className="relative flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg transition-colors group">
                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Pill className="w-4 h-4" />
                   </div>
                   <Label className="mt-2 text-gray-700 dark:text-gray-300">Prescribe</Label>
                   <SmallParagraph className="text-xs text-gray-500 dark:text-gray-400">Create prescription</SmallParagraph>
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-200/0 via-gray-200/0 to-gray-200/0 group-hover:from-gray-300/30 group-hover:via-gray-400/40 group-hover:to-gray-300/0 dark:group-hover:from-gray-700/30 dark:group-hover:via-gray-600/40 dark:group-hover:to-gray-700/0 transition-all duration-300"></div>
                 </button>
               </div>
             </div>
