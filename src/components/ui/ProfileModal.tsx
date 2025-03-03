@@ -23,6 +23,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('sarah.chen@example.com');
   const [notifications, setNotifications] = useState(true);
   const [is2faEnabled, setIs2faEnabled] = useState(false);
+  const [dataSharing, setDataSharing] = useState(true);
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
@@ -107,27 +108,62 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                   </div>
                   <div className='mt-4'>
                     <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Session Management</h3>
-                    <ul className='list-disc pl-5'>
-                      <li className='flex justify-between items-center'>
-                        <span>Device 1 (Chrome on Windows)</span>
-                        <button className='text-red-500 hover:underline'>Revoke</button>
+                    <ul className='list-disc'>
+                      <li className='flex justify-between items-center mb-1'>
+                        <span className='text-xs'>Chrome on Windows</span>
+                        <a className='text-red-500 hover:underline text-xs'>Revoke</a>
                       </li>
-                      <li className='flex justify-between items-center'>
-                        <span>Device 2 (Safari on iPhone)</span>
-                        <button className='text-red-500 hover:underline'>Revoke</button>
+                      <li className='flex justify-between items-center mb-1'>
+                        <span className='text-xs'>Safari on iPhone</span>
+                        <a className='text-red-500 hover:underline text-xs'>Revoke</a>
                       </li>
                     </ul>
                     <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>View All Sessions</button>
                   </div>
                   <div className='mt-4'>
-                    <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Privacy Settings</h3>
-                    <div className='flex items-center'>
-                      <input type='checkbox' id='activityLogs' className='h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600' />
-                      <label htmlFor='activityLogs' className={`${textSizes.body} ml-2 text-gray-700 dark:text-gray-300`}>Allow others to view my activity logs</label>
+                    <div className='flex items-center justify-between'>
+                      <div className='flex flex-col'>
+                        <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Allow others to view my activity logs</h4>
+                        <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Enabling this option allows others to see your activity logs, enhancing transparency and collaboration.</p>
+                      </div>
+                      <div className='flex items-center'>
+                        <Switch
+                          checked={notifications}
+                          onChange={() => setNotifications(!notifications)}
+                          className={`${
+                            notifications ? 'bg-blue-600' : 'bg-gray-200'
+                          } relative inline-flex items-center h-6 rounded-full w-11`}
+                        >
+                          <span
+                            className={`${
+                              notifications ? 'translate-x-6' : 'translate-x-1'
+                            } inline-block w-4 h-4 transform bg-white rounded-full transition`}
+                          />
+                        </Switch>
+                      </div>
                     </div>
+                  </div>
+                  <div className='mt-4'>
                     <div className='flex items-center'>
-                      <input type='checkbox' id='dataSharing' className='h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600' />
-                      <label htmlFor='dataSharing' className={`${textSizes.body} ml-2 text-gray-700 dark:text-gray-300`}>Consent to share data with other practitioners</label>
+                      <div className='flex flex-col'>
+                        <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Consent to share data with other practitioners</h4>
+                        <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>By enabling this option, you allow your data to be shared with other practitioners, facilitating better collaboration and care.</p>
+                      </div>
+                      <div className='flex items-center'>
+                        <Switch
+                          checked={dataSharing}
+                          onChange={() => setDataSharing(!dataSharing)}
+                          className={`${
+                            dataSharing ? 'bg-blue-600' : 'bg-gray-200'
+                          } relative inline-flex items-center h-6 rounded-full w-11`}
+                        >
+                          <span
+                            className={`${
+                              dataSharing ? 'translate-x-6' : 'translate-x-1'
+                            } inline-block w-4 h-4 transform bg-white rounded-full transition`}
+                          />
+                        </Switch>
+                      </div>
                     </div>
                   </div>
                 </div>
