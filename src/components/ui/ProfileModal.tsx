@@ -101,15 +101,17 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Accent Color</h4>
                     <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred accent color for the dashboard.</p>
                   </div>
-                  <div className='flex space-x-2 mt-2'>
-                    {['#000000', '#8A2BE2', '#00BFFF', '#008080', '#FFFFFF'].map(color => (
-                      <button
-                        key={color}
-                        onClick={() => setAccentColor(color)}
-                        className={`w-8 h-8 rounded-full border-2 ${accentColor === color ? 'border-blue-500' : 'border-transparent'}`}
-                        style={{ backgroundColor: color, borderColor: (theme === 'dark' ? lightenColor(color, 20) : darkenColor(color, 20)) }}
-                      />
-                    ))}
+                  <div className='flex flex-col space-y-4'>
+                    <div className='flex space-x-2 mt-2 ml-1'>
+                      {['#000000', '#8A2BE2', '#00BFFF', '#008080', '#FFFFFF'].map(color => (
+                        <button
+                          key={color}
+                          onClick={() => setAccentColor(color)}
+                          className={`w-8 h-8 rounded-full border-2 ${accentColor === color ? 'border-blue-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 ${theme === 'dark' ? 'focus:ring-offset-gray-900' : ''}`}
+                          style={{ backgroundColor: color, borderColor: (theme === 'dark' ? lightenColor(color, 20) : darkenColor(color, 20)) }}
+                        />
+                      ))}
+                    </div>
                     <div className='relative'>
                       <input
                         type='text'
