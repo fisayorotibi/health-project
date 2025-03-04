@@ -43,39 +43,45 @@ const MOCK_PATIENTS: Patient[] = [
     gender: 'male',
     phoneNumber: '+1 (555) 123-4567',
     email: 'john.doe@example.com',
-    address: '123 Main St, Anytown, CA 94321',
-    bloodType: 'O+',
+    address: '123 Main St, Anytown, CA 90210',
+    bloodType: 'A+',
     allergies: ['Penicillin', 'Peanuts'],
-    createdAt: '2023-01-15T08:30:00Z',
-    updatedAt: '2023-02-20T14:45:00Z',
+    lastVisit: '2023-05-10T09:30:00Z',
+    status: 'active',
+    createdAt: '2023-01-15T10:00:00Z',
+    updatedAt: '2023-05-10T09:30:00Z',
   },
   {
     id: '2',
     firstName: 'Jane',
     lastName: 'Smith',
-    dateOfBirth: '1990-08-22',
+    dateOfBirth: '1990-08-20',
     gender: 'female',
     phoneNumber: '+1 (555) 987-6543',
     email: 'jane.smith@example.com',
     address: '456 Oak Ave, Somewhere, NY 10001',
-    bloodType: 'A-',
-    allergies: ['Sulfa drugs'],
-    createdAt: '2023-01-20T10:15:00Z',
-    updatedAt: '2023-02-25T11:30:00Z',
+    bloodType: 'O-',
+    allergies: [],
+    lastVisit: '2023-06-02T14:15:00Z',
+    status: 'active',
+    createdAt: '2023-02-20T11:30:00Z',
+    updatedAt: '2023-06-02T14:15:00Z',
   },
   {
     id: '3',
-    firstName: 'Robert',
-    lastName: 'Johnson',
+    firstName: 'Michael',
+    lastName: 'Brown',
     dateOfBirth: '1978-11-30',
     gender: 'male',
-    phoneNumber: '+1 (555) 456-7890',
-    email: 'robert.johnson@example.com',
-    address: '789 Pine Rd, Elsewhere, TX 75001',
-    bloodType: 'B+',
-    allergies: [],
-    createdAt: '2023-02-01T09:45:00Z',
-    updatedAt: '2023-02-28T16:20:00Z',
+    phoneNumber: '+1 (555) 876-5432',
+    email: 'michael.brown@example.com',
+    address: '654 Maple Dr, Somewhere Else, WA 98001',
+    bloodType: 'O-',
+    allergies: ['Ibuprofen'],
+    lastVisit: '2023-04-18T11:00:00Z',
+    status: 'inactive',
+    createdAt: '2023-02-10T14:30:00Z',
+    updatedAt: '2023-03-05T09:55:00Z',
   },
   {
     id: '4',
@@ -93,17 +99,17 @@ const MOCK_PATIENTS: Patient[] = [
   },
   {
     id: '5',
-    firstName: 'Michael',
-    lastName: 'Brown',
-    dateOfBirth: '1982-07-08',
+    firstName: 'Robert',
+    lastName: 'Johnson',
+    dateOfBirth: '1978-11-30',
     gender: 'male',
-    phoneNumber: '+1 (555) 876-5432',
-    email: 'michael.brown@example.com',
-    address: '654 Maple Dr, Somewhere Else, WA 98001',
-    bloodType: 'O-',
-    allergies: ['Ibuprofen'],
-    createdAt: '2023-02-10T14:30:00Z',
-    updatedAt: '2023-03-05T09:55:00Z',
+    phoneNumber: '+1 (555) 456-7890',
+    email: 'robert.johnson@example.com',
+    address: '789 Pine Rd, Elsewhere, TX 75001',
+    bloodType: 'B+',
+    allergies: [],
+    createdAt: '2023-02-01T09:45:00Z',
+    updatedAt: '2023-02-28T16:20:00Z',
   },
 ];
 
@@ -128,39 +134,78 @@ const PatientCard = ({ patient }: { patient: Patient }) => {
     
     return age;
   }, [patient.dateOfBirth]);
+
+  // Calculate last visit days ago
+  const lastVisitDaysAgo = useMemo(() => {
+    if (!patient.lastVisit) return null;
+    const lastVisit = new Date(patient.lastVisit);
+    const today = new Date();
+    const diffTime = Math.abs(today.getTime() - lastVisit.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }, [patient.lastVisit]);
+  
+  // Get initials for avatar
+  const getInitials = () => {
+    return `${patient.firstName.charAt(0)}${patient.lastName.charAt(0)}`;
+  };
+
+  // Get blood type badge color - using more subtle colors
+  const getBloodTypeColor = () => {
+    return 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400';
+  };
   
   return (
     <div 
       className={`
-        relative p-4 rounded-xl border border-gray-200 dark:border-gray-800 
-        bg-white dark:bg-dark-surface transition-all duration-200
-        ${isHovered ? 'shadow-md dark:shadow-gray-900/30 scale-[1.01]' : ''}
+        relative p-5 rounded-xl border border-gray-200 dark:border-gray-800 
+        bg-white dark:bg-dark-surface transition-all duration-200 flex flex-col h-full
+        ${isHovered ? 'shadow-md dark:shadow-gray-900/30 border-gray-300 dark:border-gray-700' : ''}
       `}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={navigateToPatientDetail}
     >
+      {/* Top section with avatar and basic info */}
       <div className="flex items-start">
-        <div className="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mr-3">
-          <User className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+        {/* Avatar without status indicator */}
+        <div className="h-12 w-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+          {patient.avatarUrl ? (
+            <img src={patient.avatarUrl} alt={`${patient.firstName} ${patient.lastName}`} className="h-full w-full object-cover" />
+          ) : (
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{getInitials()}</span>
+          )}
         </div>
-        <div className="flex-1 min-w-0">
+        
+        {/* Patient name and basic info */}
+        <div className="flex-1 min-w-0 ml-3.5">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate">
+              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                 {patient.firstName} {patient.lastName}
               </h3>
-              <div className="flex items-center mt-1">
-                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-                  <Calendar className="h-3 w-3 mr-1" />
-                  <span>{age} years ({new Date(patient.dateOfBirth).toLocaleDateString()})</span>
+              <div className="flex items-center mt-0.5 flex-nowrap overflow-hidden">
+                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                  <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
+                  <span>{age} yrs</span>
                 </div>
-                <div className="mx-2 h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-700"></div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 capitalize">{patient.gender}</div>
+                <div className="mx-2 h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-700 flex-shrink-0"></div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 capitalize whitespace-nowrap">{patient.gender}</div>
+                
+                {patient.bloodType && (
+                  <>
+                    <div className="mx-2 h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-700 flex-shrink-0"></div>
+                    <div className={`text-xs px-1.5 py-0.5 rounded-sm font-medium whitespace-nowrap ${getBloodTypeColor()}`}>
+                      {patient.bloodType}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
+            
+            {/* Action menu */}
             <button 
-              className="p-1 rounded-md text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="p-1.5 rounded-md text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 // Add action menu logic here
@@ -169,78 +214,78 @@ const PatientCard = ({ patient }: { patient: Patient }) => {
               <MoreHorizontal className="h-4 w-4" />
             </button>
           </div>
-          
-          <div className="mt-3 grid grid-cols-1 gap-2">
-            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-              <Phone className="h-3 w-3 mr-2 flex-shrink-0" />
-              <span className="truncate">{patient.phoneNumber}</span>
-            </div>
-            {patient.email && (
-              <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-                <Mail className="h-3 w-3 mr-2 flex-shrink-0" />
-                <span className="truncate">{patient.email}</span>
-              </div>
-            )}
-            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-              <MapPin className="h-3 w-3 mr-2 flex-shrink-0" />
-              <span className="truncate">{patient.address}</span>
-            </div>
-          </div>
-          
-          {patient.allergies && patient.allergies.length > 0 && (
-            <div className="mt-3">
-              <div className="flex items-center">
-                <AlertCircle className="h-3 w-3 text-amber-500 mr-1" />
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Allergies</span>
-              </div>
-              <div className="mt-1 flex flex-wrap gap-1">
-                {patient.allergies.map((allergy, index) => (
-                  <span 
-                    key={index}
-                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-800 dark:bg-amber-900/30 dark:text-amber-500"
-                  >
-                    {allergy}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          <div className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex justify-between">
-            <div className="flex space-x-2">
-              <button 
-                className="inline-flex items-center px-2 py-1 text-xs font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  router.push(`/medical-records?patientId=${patient.id}`);
-                }}
-              >
-                <FileText className="h-3 w-3 mr-1" />
-                Records
-              </button>
-              <button 
-                className="inline-flex items-center px-2 py-1 text-xs font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  router.push(`/prescriptions?patientId=${patient.id}`);
-                }}
-              >
-                <Pill className="h-3 w-3 mr-1" />
-                Prescriptions
-              </button>
-            </div>
-            <button 
-              className="inline-flex items-center text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
-              onClick={navigateToPatientDetail}
-            >
-              View <ChevronRight className="h-3 w-3 ml-0.5" />
-            </button>
-          </div>
         </div>
       </div>
       
+      {/* Middle section with contact info */}
+      <div className="mt-4 grid grid-cols-1 gap-2.5 pl-0.5">
+        <div className="flex items-center text-xs text-gray-600 dark:text-gray-400">
+          <Phone className="h-3.5 w-3.5 mr-2.5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span className="truncate">{patient.phoneNumber}</span>
+        </div>
+        {patient.email && (
+          <div className="flex items-center text-xs text-gray-600 dark:text-gray-400">
+            <Mail className="h-3.5 w-3.5 mr-2.5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+            <span className="truncate">{patient.email}</span>
+          </div>
+        )}
+        <div className="flex items-center text-xs text-gray-600 dark:text-gray-400">
+          <MapPin className="h-3.5 w-3.5 mr-2.5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span className="truncate">{patient.address}</span>
+        </div>
+      </div>
+      
+      {/* Allergies section with more subtle styling */}
+      {patient.allergies && patient.allergies.length > 0 && (
+        <div className="mt-4 p-2.5 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-800">
+          <div className="flex items-center">
+            <AlertCircle className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400 mr-1.5" />
+            <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Allergies</span>
+          </div>
+          <div className="mt-1.5 flex flex-wrap gap-1.5">
+            {patient.allergies.map((allergy, index) => (
+              <span 
+                key={index}
+                className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+              >
+                {allergy}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* Last visit info */}
+      {patient.lastVisit && (
+        <div className="mt-3 flex items-center">
+          <Clock className="h-3.5 w-3.5 text-gray-400 dark:text-gray-500 mr-1.5" />
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            Last visit: {lastVisitDaysAgo === 0 ? 'Today' : lastVisitDaysAgo === 1 ? 'Yesterday' : `${lastVisitDaysAgo} days ago`}
+          </span>
+        </div>
+      )}
+      
+      {/* Spacer to push footer to bottom */}
+      <div className="flex-grow"></div>
+      
+      {/* Footer section with patient ID and view action */}
+      <div className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
+        <div className="flex flex-col">
+          <span className="text-xs text-gray-400 dark:text-gray-500">ID: {patient.id.substring(0, 8)}</span>
+          <span className="text-xs text-gray-400 dark:text-gray-500">Added {new Date(patient.createdAt).toLocaleDateString()}</span>
+        </div>
+        
+        <button 
+          className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 flex items-center"
+          onClick={navigateToPatientDetail}
+        >
+          Details <ChevronRight className="h-3 w-3 ml-0.5" />
+        </button>
+      </div>
+      
+      {/* Hover effect border - more subtle */}
       {isHovered && (
-        <div className="absolute inset-0 rounded-xl pointer-events-none border-2 border-indigo-500 dark:border-indigo-400 opacity-30"></div>
+        <div className="absolute inset-0 rounded-xl pointer-events-none border-2 border-gray-300 dark:border-gray-700 opacity-30"></div>
       )}
     </div>
   );
@@ -287,7 +332,7 @@ const FilterBadge = ({ label, onRemove }: { label: string; onRemove: () => void 
 export default function PatientsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [patients, setPatients] = useState<Patient[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -431,7 +476,7 @@ export default function PatientsPage() {
           </div>
           <button
             onClick={handleAddPatient}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900"
+            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900 dark:focus:ring-gray-400"
           >
             <Plus className="h-4 w-4 mr-1.5" />
             Add Patient
@@ -515,9 +560,9 @@ export default function PatientsPage() {
         
         {/* Patient list */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, index) => (
-              <div key={index} className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 animate-pulse">
+              <div key={index} className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 animate-pulse h-64">
                 <div className="flex items-start">
                   <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3"></div>
                   <div className="flex-1">
@@ -534,9 +579,11 @@ export default function PatientsPage() {
             ))}
           </div>
         ) : filteredPatients.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPatients.map(patient => (
-              <PatientCard key={patient.id} patient={patient} />
+              <div key={patient.id} className="h-full">
+                <PatientCard patient={patient} />
+              </div>
             ))}
           </div>
         ) : (
@@ -568,4 +615,4 @@ export default function PatientsPage() {
       </div>
     </DashboardLayout>
   );
-}
+} 
