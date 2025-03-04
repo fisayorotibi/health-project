@@ -52,7 +52,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   return (
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen">
-        <div className="fixed inset-0 bg-black opacity-30" />
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
         <Dialog.Panel className="bg-white dark:bg-gray-900 rounded-lg w-1/2 h-auto relative shadow-lg border border-gray-300 dark:border-gray-800 overflow-hidden">
           <div className="flex items-center justify-between mb-4 px-6 pt-5">
             <Dialog.Title className="text-md font-normal text-gray-900 dark:text-gray-100">Profile Settings</Dialog.Title>
