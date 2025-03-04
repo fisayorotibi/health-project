@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, Switch } from '@headlessui/react';
 import { X, Sun, Moon, Monitor, Laptop, Smartphone } from 'lucide-react';
 import { useThemeContext } from '@/components/ThemeProvider';
@@ -35,7 +35,7 @@ const darkenColor = (color: string, percent: number): string => {
 };
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
-  const { theme, setTheme } = useThemeContext();
+  const { theme, setTheme, resolvedTheme } = useThemeContext();
   const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme' | 'notifications'>('account');
   const [name, setName] = useState('Dr. Sarah Chen');
   const [email, setEmail] = useState('sarah.chen@example.com');
@@ -95,18 +95,34 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred theme for the dashboard.</p>
                   </div>
                   <div className='flex space-x-4'>
-                    <button onClick={() => setTheme('light')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'light' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
+                    <button 
+                      onClick={() => setTheme('light')} 
+                      className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'light' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}
+                    > 
                       <Sun className='w-4 h-4 mb-1' /> 
                       <span className='text-xs text-gray-900 dark:text-gray-100'>Light</span>
                     </button>
-                    <button onClick={() => setTheme('dark')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'dark' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
+                    <button 
+                      onClick={() => setTheme('dark')} 
+                      className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'dark' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}
+                    > 
                       <Moon className='w-4 h-4 mb-1' /> 
                       <span className='text-xs text-gray-900 dark:text-gray-100'>Dark</span>
                     </button>
-                    <button onClick={() => setTheme('system')} className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'system' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}> 
+                    <button 
+                      onClick={() => setTheme('system')} 
+                      className={`flex flex-col items-center p-2 rounded-lg w-full border border-gray-300 dark:border-gray-800 ${theme === 'system' ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'} hover:bg-gray-300 dark:hover:bg-gray-700`}
+                    > 
                       <Monitor className='w-4 h-4 mb-1' /> 
                       <span className='text-xs text-gray-900 dark:text-gray-100'>System</span>
                     </button>
+                  </div>
+                  <div className='flex flex-col space-y-1 mt-2'>
+                    <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>
+                      {theme === 'system' && (
+                        <>System preference detected: <span className="font-medium">{resolvedTheme === 'dark' ? 'Dark' : 'Light'}</span> mode</>
+                      )}
+                    </p>
                   </div>
                   <div className='inline-flex flex-col space-y-4 pb-10'>
                     <div className='flex flex-col space-y-1'>
