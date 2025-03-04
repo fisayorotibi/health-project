@@ -595,7 +595,7 @@ export default function PatientDetailPage() {
                   .map((item, index) => {
                     const isMedicalRecord = 'diagnosis' in item;
                     return (
-                      <li key={item.id}>
+                      <li key={`${isMedicalRecord ? 'record' : 'prescription'}-${item.id}-${index}`}>
                         <TimelineItem
                           date={item.date}
                           title={isMedicalRecord 
