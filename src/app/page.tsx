@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation';
 import { Heading1, Paragraph } from '@/components/ui/typography';
 
 export default function Home() {
+  const [isMounted, setIsMounted] = useState(true);
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-    // Redirect to auth page instead of dashboard
-    router.push('/auth');
+    // No need to set isMounted here since it's already true
+    
+    // Redirect to dashboard
+    router.push('/dashboard');
   }, [router]);
 
   // Prevent hydration errors by only rendering client-specific content after mounting

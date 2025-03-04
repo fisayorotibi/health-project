@@ -5,25 +5,18 @@ import { useRouter } from 'next/navigation';
 import { Heading1, Paragraph } from '@/components/ui/typography';
 
 export default function LogoutPage() {
+  const [isMounted, setIsMounted] = useState(true);
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    // No need to set isMounted here since it's already true
     
     // Simulate logout process
-    const performLogout = async () => {
-      // This is a placeholder for actual logout logic
-      // In a real implementation, you would call your logout API here
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Redirect to auth page
+    const timer = setTimeout(() => {
       router.push('/auth');
-    };
+    }, 2000);
     
-    performLogout();
+    return () => clearTimeout(timer);
   }, [router]);
 
   // Prevent hydration errors by only rendering client-specific content after mounting

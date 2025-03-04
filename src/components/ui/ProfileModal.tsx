@@ -35,7 +35,7 @@ const darkenColor = (color: string, percent: number): string => {
 };
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
-  const { theme, setTheme, resolvedTheme } = useThemeContext();
+  const { theme, setTheme } = useThemeContext();
   const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme' | 'notifications'>('account');
   const [name, setName] = useState('Dr. Sarah Chen');
   const [email, setEmail] = useState('sarah.chen@example.com');
@@ -71,11 +71,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                 <button onClick={handleLogout} className='py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'>Log out</button>
               </div>
             </div>
-            <div className={`flex-1 overflow-auto h-80 space-y-4 pr-4 ${
-              theme === 'light' || (theme === 'system' && resolvedTheme === 'light') 
-                ? 'light-scrollbar' 
-                : 'dark-scrollbar'
-            }`}>
+            <div className="flex-1 overflow-auto h-80 space-y-4 pr-4">
               {activeTab === 'account' && (
                 <>
                   <div>

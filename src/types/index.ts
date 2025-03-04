@@ -10,6 +10,9 @@ export interface Patient {
   address: string;
   bloodType?: string;
   allergies?: string[];
+  avatarUrl?: string;
+  lastVisit?: string;
+  status?: 'active' | 'inactive';
   createdAt: string;
   updatedAt: string;
 }

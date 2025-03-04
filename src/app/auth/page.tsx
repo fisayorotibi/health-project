@@ -25,15 +25,16 @@ const handleGoogleSignIn = async () => {
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    setIsMounted(true);
+    // No need to set isMounted here since it's already true
   }, []);
 
   // Prevent hydration errors by only rendering client-specific content after mounting
   if (!isMounted) {
+    // This block will never execute since isMounted is initialized as true
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center">

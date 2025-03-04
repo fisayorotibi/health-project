@@ -32,6 +32,7 @@ import { Patient } from '@/types';
 
 // Dynamically import components that use browser APIs
 const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), { ssr: false });
+const AddPatientModal = dynamic(() => import('@/components/patients/AddPatientModal'), { ssr: false });
 
 // Mock data for patients
 const MOCK_PATIENTS: Patient[] = [
@@ -304,10 +305,10 @@ const EmptyState = ({ onAddPatient }: { onAddPatient: () => void }) => (
     <div className="mt-6">
       <button
         onClick={onAddPatient}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900"
+        className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900 dark:focus:ring-gray-400"
       >
         <Plus className="h-4 w-4 mr-1.5" />
-        Add New Patient
+        Add Patient
       </button>
     </div>
   </div>
@@ -344,6 +345,7 @@ export default function PatientsPage() {
     key: keyof Patient;
     direction: 'asc' | 'desc';
   }>({ key: 'lastName', direction: 'asc' });
+  const [isAddPatientModalOpen, setIsAddPatientModalOpen] = useState(false);
 
   // Fetch patients data
   useEffect(() => {
@@ -456,7 +458,36 @@ export default function PatientsPage() {
 
   // Add new patient
   const handleAddPatient = () => {
-    router.push('/patients/new');
+    setIsAddPatientModalOpen(true);
+  };
+
+  // Handle adding a new patient from the modal
+  const handleAddPatientSubmit = (patient: Partial<Patient>) => {
+    // In a real app, this would make an API call to add the patient
+    console.log('Adding patient:', patient);
+    
+    // For demo purposes, add the patient to the mock data
+    const newPatient: Patient = {
+      id: `${MOCK_PATIENTS.length + 1}`,
+      firstName: patient.firstName || '',
+      lastName: patient.lastName || '',
+      dateOfBirth: patient.dateOfBirth || '',
+      gender: patient.gender || 'other',
+      phoneNumber: patient.phoneNumber || '',
+      email: patient.email || '',
+      address: patient.address || '',
+      bloodType: patient.bloodType || '',
+      allergies: patient.allergies || [],
+      status: 'active',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    
+    setPatients([newPatient, ...patients]);
+    
+    // Show success message
+    // This would typically be handled by a toast notification
+    alert('Patient added successfully!');
   };
 
   // Prevent hydration errors by only rendering client-specific content after mounting
@@ -482,6 +513,13 @@ export default function PatientsPage() {
             Add Patient
           </button>
         </div>
+        
+        {/* Add Patient Modal */}
+        <AddPatientModal 
+          isOpen={isAddPatientModalOpen} 
+          onClose={() => setIsAddPatientModalOpen(false)} 
+          onAddPatient={handleAddPatientSubmit} 
+        />
         
         {/* Search and filters */}
         <div className="flex flex-col sm:flex-row gap-4">

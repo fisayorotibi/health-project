@@ -26,28 +26,17 @@ import {
 
 // Dynamically import components that use browser APIs with no SSR
 const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-dark-background">
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
-          <span className="text-gray-700 dark:text-gray-300 text-2xl font-bold">L</span>
-        </div>
-        <Heading1 className="mt-4 text-gray-900 dark:text-white">Lavender Health Records</Heading1>
-        <Paragraph className="mt-2 text-gray-500 dark:text-gray-400">Loading dashboard...</Paragraph>
-      </div>
-    </div>
-  )
+  ssr: false
 });
 
 const DashboardBanner = dynamic(() => import('@/components/ui/DashboardBanner'), { ssr: false });
 
 export default function DashboardPage() {
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
   const [activeTab, setActiveTab] = useState<'today' | 'week' | 'all'>('today');
 
   useEffect(() => {
-    setIsMounted(true);
+    // No need to set isMounted here since it's already true
   }, []);
 
   // Sample data for dashboard

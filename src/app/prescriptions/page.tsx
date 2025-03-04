@@ -9,16 +9,11 @@ const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayou
 const ComingSoon = dynamic(() => import('@/components/ui/ComingSoon'), { ssr: false });
 
 export default function PrescriptionsPage() {
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
-    setIsMounted(true);
+    // No need to set isMounted here since it's already true
   }, []);
-
-  // Prevent hydration errors by only rendering client-specific content after mounting
-  if (!isMounted) {
-    return null;
-  }
 
   const prescriptionFeatures = [
     "E-prescribing with direct pharmacy integration",
