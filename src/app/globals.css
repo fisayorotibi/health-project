@@ -99,6 +99,46 @@ body {
   --scrollbar-thumb-hover: var(--scrollbar-thumb-hover-dark);
 }
 
+/* Light scrollbar - always uses light mode styles regardless of system preference */
+.light-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track) !important;
+  border-radius: var(--scrollbar-border-radius);
+}
+
+.light-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb) !important;
+  border-radius: var(--scrollbar-border-radius);
+}
+
+.light-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover) !important;
+}
+
+/* Firefox */
+.light-scrollbar {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track) !important;
+}
+
+/* Dark scrollbar - always uses dark mode styles regardless of system preference */
+.dark-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-dark) !important;
+  border-radius: var(--scrollbar-border-radius);
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-dark) !important;
+  border-radius: var(--scrollbar-border-radius);
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-dark) !important;
+}
+
+/* Firefox */
+.dark-scrollbar {
+  scrollbar-color: var(--scrollbar-thumb-dark) var(--scrollbar-track-dark) !important;
+}
+
 /* Webkit scrollbar styles with transitions */
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
