@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Dialog } from '@headlessui/react';
 import { 
   X, 
@@ -19,8 +19,16 @@ import {
   Clipboard,
   ClipboardCheck
 } from 'lucide-react';
-import { Heading3, Paragraph, SmallParagraph, Label } from '@/components/ui/typography';
+import { Heading3, Paragraph, SmallParagraph, Label, Typography } from '@/components/ui/typography';
 import { Patient } from '@/types';
+
+// Define a type system for text sizes (matching ProfileModal)
+const textSizes = {
+  title: 'text-lg',
+  subtitle: 'text-sm',
+  body: 'text-xs',
+  link: 'text-xs',
+};
 
 // Form field component for consistent styling
 interface FormFieldProps {
@@ -33,11 +41,11 @@ interface FormFieldProps {
 const FormField = ({ label, children, required = false, error }: FormFieldProps) => {
   return (
     <div className="mb-4">
-      <Label className="mb-1 block">
+      <label className={`${textSizes.body} block font-medium text-gray-700 dark:text-gray-300 mb-1`}>
         {label} {required && <span className="text-danger">*</span>}
-      </Label>
+      </label>
       {children}
-      {error && <SmallParagraph className="text-danger mt-1">{error}</SmallParagraph>}
+      {error && <p className={`${textSizes.body} text-danger mt-1`}>{error}</p>}
     </div>
   );
 };
@@ -221,13 +229,13 @@ export default function AddPatientModal({ isOpen, onClose, onAddPatient }: AddPa
     setFormData((prev) => ({ ...prev, allergies: allergiesArray }));
   };
   
-  // Validate form data for current step
-  const validateCurrentStep = (): boolean => {
+  // Validate form data for current step - wrapped in useCallback to prevent re-renders
+  const validateCurrentStep = useCallback((): { isValid: boolean; errors: Record<string, string> } => {
     const newErrors: Record<string, string> = {};
     
     if (currentStep === 0) {
       // Mode selection step - no validation needed
-      return true;
+      return { isValid: true, errors: {} };
     } else if (currentStep === 1 && phrMode === 'sync') {
       // PHR code input step
       if (!phrCode.trim()) {
@@ -252,13 +260,26 @@ export default function AddPatientModal({ isOpen, onClose, onAddPatient }: AddPa
       if (!formData.address?.trim()) newErrors.address = 'Address is required';
     }
     
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    // Return validation result and errors
+    return {
+      isValid: Object.keys(newErrors).length === 0,
+      errors: newErrors
+    };
+  }, [currentStep, phrMode, phrCode, formData]);
+
+  // Memoize the validation result to prevent recalculation on every render
+  const validationResult = useMemo(() => {
+    return validateCurrentStep();
+  }, [validateCurrentStep]);
+  
+  // Update errors state when validation result changes
+  useEffect(() => {
+    setErrors(validationResult.errors);
+  }, [validationResult]);
   
   // Handle next step
   const handleNextStep = () => {
-    if (validateCurrentStep()) {
+    if (validationResult.isValid) {
       if (currentStep === 0) {
         // If user selected manual mode, skip the PHR code input step
         if (phrMode === 'manual') {
@@ -333,7 +354,7 @@ export default function AddPatientModal({ isOpen, onClose, onAddPatient }: AddPa
   
   // Handle form submission
   const handleSubmit = () => {
-    if (validateCurrentStep()) {
+    if (validationResult.isValid) {
       onAddPatient(formData);
       onClose();
     }
@@ -427,102 +448,82 @@ export default function AddPatientModal({ isOpen, onClose, onAddPatient }: AddPa
   };
   
   return (
-    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
-      {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
-      
-      {/* Full-screen container for centering */}
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="w-full max-w-md rounded-xl bg-white dark:bg-dark-background shadow-xl overflow-hidden">
-          {/* Header with gradient background */}
-          <div className="relative">
-            {/* Background gradient header */}
-            <div className="bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 pt-6 pb-10 px-6">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 mr-3">
-                    {getStepIcon()}
-                  </div>
-                </div>
-                <button
-                  onClick={onClose}
-                  className="rounded-full p-1.5 bg-white/20 hover:bg-white/30 transition-colors"
-                >
-                  <X className="h-4 w-4 text-white" />
-                </button>
-              </div>
-              
-              {/* Step title */}
-              <h3 className="text-xl font-semibold text-white">{getStepTitle()}</h3>
-              <p className="text-white/80 text-sm mt-1">{getStepDescription()}</p>
-            </div>
-            
-            {/* Overlapping card with content - no more StepIndicator */}
-            <div className="relative -mt-6 mx-4 bg-white dark:bg-dark-background rounded-t-xl shadow-sm">
-              {/* Empty div to create the overlapping effect */}
-              <div className="h-6"></div>
-            </div>
+    <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
+        
+        <Dialog.Panel className="bg-white dark:bg-gray-900 rounded-lg w-full max-w-md relative shadow-lg border border-gray-300 dark:border-gray-800 overflow-hidden">
+          <div className="flex items-center justify-between mb-4 px-6 pt-5">
+            <Dialog.Title className={`${textSizes.title} font-medium text-gray-900 dark:text-gray-100`}>
+              {getStepTitle()}
+            </Dialog.Title>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <X className="w-5 h-5" />
+            </button>
           </div>
           
-          {/* Content */}
-          <div className="px-8 pb-8">
+          <div className="px-6 pb-6">
+            <p className={`${textSizes.body} text-gray-600 dark:text-gray-400 mb-6`}>
+              {getStepDescription()}
+            </p>
+            
             {/* Step content */}
             <div className="space-y-6">
               {/* Step 0: Mode Selection */}
               {currentStep === 0 && (
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {/* Option 1: Sync with PHR */}
-                    <div 
-                      className={`
-                        relative p-5 rounded-lg border-2 transition-all duration-200 cursor-pointer
-                        ${phrMode === 'sync' 
-                          ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-sm' 
-                          : 'border-gray-200 dark:border-gray-800 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary'}
-                      `}
-                      onClick={() => setPhrMode('sync')}
-                    >
-                      <div className="flex items-center mb-3">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
-                          <LinkIcon className="h-5 w-5 text-primary" />
-                        </div>
-                        <span className="font-medium text-gray-900 dark:text-white">Sync with PHR</span>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {/* Option 1: Sync with PHR */}
+                  <div 
+                    className={`
+                      relative p-5 rounded-lg border transition-all duration-200 cursor-pointer
+                      ${phrMode === 'sync' 
+                        ? 'border-gray-600 bg-gray-100 dark:bg-gray-800 shadow-sm' 
+                        : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'}
+                    `}
+                    onClick={() => setPhrMode('sync')}
+                  >
+                    <div className="flex items-center mb-3">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
+                        <LinkIcon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                       </div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Import patient data from an existing Personal Health Record
-                      </p>
-                      {phrMode === 'sync' && (
-                        <div className="absolute top-3 right-3 text-primary">
-                          <Check className="h-5 w-5" />
-                        </div>
-                      )}
+                      <span className={`${textSizes.subtitle} font-medium text-gray-900 dark:text-white`}>Sync with PHR</span>
                     </div>
-
-                    {/* Option 2: Create from scratch */}
-                    <div 
-                      className={`
-                        relative p-5 rounded-lg border-2 transition-all duration-200 cursor-pointer
-                        ${phrMode === 'manual' 
-                          ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-sm' 
-                          : 'border-gray-200 dark:border-gray-800 hover:border-primary/50 hover:bg-gray-50 dark:hover:bg-dark-surface-secondary'}
-                      `}
-                      onClick={() => setPhrMode('manual')}
-                    >
-                      <div className="flex items-center mb-3">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 mr-3">
-                          <UserPlus className="h-5 w-5 text-primary" />
-                        </div>
-                        <span className="font-medium text-gray-900 dark:text-white">Create New</span>
+                    <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>
+                      Import patient data from an existing Personal Health Record
+                    </p>
+                    {phrMode === 'sync' && (
+                      <div className="absolute top-3 right-3 text-gray-700 dark:text-gray-300">
+                        <Check className="h-5 w-5" />
                       </div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Create a new patient record from scratch
-                      </p>
-                      {phrMode === 'manual' && (
-                        <div className="absolute top-3 right-3 text-primary">
-                          <Check className="h-5 w-5" />
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
+
+                  {/* Option 2: Create from scratch */}
+                  <div 
+                    className={`
+                      relative p-5 rounded-lg border transition-all duration-200 cursor-pointer
+                      ${phrMode === 'manual' 
+                        ? 'border-gray-600 bg-gray-100 dark:bg-gray-800 shadow-sm' 
+                        : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'}
+                    `}
+                    onClick={() => setPhrMode('manual')}
+                  >
+                    <div className="flex items-center mb-3">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
+                        <UserPlus className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                      </div>
+                      <span className={`${textSizes.subtitle} font-medium text-gray-900 dark:text-white`}>Create New</span>
+                    </div>
+                    <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>
+                      Create a new patient record manually
+                    </p>
+                    {phrMode === 'manual' && (
+                      <div className="absolute top-3 right-3 text-gray-700 dark:text-gray-300">
+                        <Check className="h-5 w-5" />
+                      </div>
+                    )}
+                  </div>
+                </div>
               )}
               
               {/* Step 1 (Sync Mode): PHR Code Input */}
@@ -699,57 +700,41 @@ export default function AddPatientModal({ isOpen, onClose, onAddPatient }: AddPa
               )}
               
               {/* Navigation buttons */}
-              <div className="flex justify-between pt-6 mt-6 border-t border-gray-100 dark:border-gray-800">
-                {currentStep === 0 ? (
-                  <Button
-                    variant="ghost"
-                    onClick={onClose}
-                    className="text-gray-600 dark:text-gray-300"
-                  >
-                    Cancel
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outline"
+              <div className="flex justify-between mt-8">
+                {currentStep > 0 ? (
+                  <button
                     onClick={handlePrevStep}
-                    icon={<ArrowLeft className="h-4 w-4" />}
+                    className="flex items-center px-4 py-2 text-xs font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md shadow-sm hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
                   >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
                     Back
-                  </Button>
+                  </button>
+                ) : (
+                  <div></div>
                 )}
                 
-                {currentStep === 0 ? (
-                  <Button
+                {currentStep < 4 ? (
+                  <button
                     onClick={handleNextStep}
-                    className="bg-primary hover:bg-primary/90 text-white px-5"
+                    disabled={!validationResult.isValid}
+                    className="flex items-center px-4 py-2 text-xs font-medium text-white bg-gray-700 border border-gray-700 rounded-md shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600"
                   >
-                    Continue
-                  </Button>
-                ) : currentStep === 1 && phrMode === 'sync' ? (
-                    <Button
-                      onClick={handlePhrSync}
-                      isLoading={isSyncing}
-                        disabled={isSyncing || !phrCode.trim()}
-                        className="bg-primary hover:bg-primary/90 text-white px-5"
-                      >
-                        {syncSuccess ? 'Continue' : 'Sync PHR'}
-                      </Button>
-                ) : ((currentStep === 4 && phrMode === 'manual') || (currentStep === 5 && phrMode === 'sync')) ? (
-                  <Button
+                    {currentStep === 0 ? (
+                      phrMode === 'sync' ? 'Enter PHR Code' : 'Continue'
+                    ) : (
+                      'Continue'
+                    )}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </button>
+                ) : (
+                  <button
                     onClick={handleSubmit}
-                    icon={<Check className="h-4 w-4" />}
-                    className="bg-primary hover:bg-primary/90 text-white px-6"
+                    disabled={!validationResult.isValid}
+                    className="flex items-center px-4 py-2 text-xs font-medium text-white bg-gray-700 border border-gray-700 rounded-md shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600"
                   >
                     Add Patient
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={handleNextStep}
-                    icon={<ArrowRight className="h-4 w-4" />}
-                    className="bg-primary hover:bg-primary/90 text-white px-5"
-                  >
-                    Next
-                  </Button>
+                    <Check className="w-4 h-4 ml-2" />
+                  </button>
                 )}
               </div>
             </div>
