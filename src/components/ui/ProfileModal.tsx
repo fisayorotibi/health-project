@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog, Switch } from '@headlessui/react';
-import { X, Sun, Moon, Monitor } from 'lucide-react';
+import { X, Sun, Moon, Monitor, Laptop, Smartphone } from 'lucide-react';
 import { useThemeContext } from '@/components/ThemeProvider';
 
 interface ProfileModalProps {
@@ -179,18 +179,19 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>Reset Password</button>
                   </div>
                   <div className='mt-4'>
-                    <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Session Management</h3>
-                    <ul className='list-disc'>
-                      <li className='flex justify-between items-center mb-1'>
-                        <span className='text-xs'>Chrome on Windows</span>
-                        <a className='text-red-500 hover:underline text-xs'>Revoke</a>
+                    <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Active Sessions</h3>
+                    <ul className='mt-1'>
+                      <li className='flex items-center mb-2'>
+                        <Laptop className="w-4 h-4 mr-2" />
+                        <span className='text-xs w-32'>Chrome on Windows</span>
+                        <a className='text-red-500 hover:underline text-xs ml-2'>Terminate</a>
                       </li>
-                      <li className='flex justify-between items-center mb-1'>
-                        <span className='text-xs'>Safari on iPhone</span>
-                        <a className='text-red-500 hover:underline text-xs'>Revoke</a>
+                      <li className='flex items-center mb-1'>
+                        <Smartphone className="w-4 h-4 mr-2" />
+                        <span className='text-xs w-32'>Safari on iPhone</span>
+                        <a className='text-red-500 hover:underline text-xs ml-2'>Terminate</a>
                       </li>
                     </ul>
-                    <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>View All Sessions</button>
                   </div>
                   <div className='mt-4'>
                     <div className='flex items-center justify-between'>
