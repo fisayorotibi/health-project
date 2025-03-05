@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { 
@@ -345,6 +345,25 @@ export default function PatientsPage() {
     direction: 'asc' | 'desc';
   }>({ key: 'lastName', direction: 'asc' });
   const [isAddPatientModalOpen, setIsAddPatientModalOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
+  const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: any[] }>({});
+
+  const filterOptions = [
+    { label: 'Gender', value: 'gender', options: [
+      { label: 'Male', value: 'male' },
+      { label: 'Female', value: 'female' }
+    ]},
+    { label: 'Has Allergies', value: 'hasAllergies', options: [
+      { label: 'Yes', value: true },
+      { label: 'No', value: false }
+    ]}
+  ];
+
+  const handleFilterSelect = (key: string, value: any) => {
+    setSelectedFilters(prev => ({ ...prev, [key]: [value] })); // Clear previous selections in the same category
+    applyFilter(key, value); // Apply filter immediately
+  };
 
   // Fetch patients data
   useEffect(() => {
@@ -489,6 +508,26 @@ export default function PatientsPage() {
     alert('Patient added successfully!');
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setIsFilterOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const clearAllFilters = () => {
+    setActiveFilters({});
+    setSelectedFilters({}); // Unselect all options in the dropdown
+    router.push('/patients'); // Reset the URL parameters
+  };
+
   // Prevent hydration errors by only rendering client-specific content after mounting
   if (!isMounted) {
     return null;
@@ -546,14 +585,35 @@ export default function PatientsPage() {
                 id="filter-menu"
                 aria-expanded="true"
                 aria-haspopup="true"
-                onClick={() => {
-                  // Toggle filter dropdown
-                }}
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
                 <Filter className="h-4 w-4 mr-2" />
                 Filter
               </button>
-              {/* Filter dropdown would go here */}
+              {isFilterOpen && (
+                <div ref={filterRef} className="absolute z-10 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="filter-menu">
+                    {filterOptions.map(option => (
+                      <div key={option.value} className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">
+                        <span className="font-medium">{option.label}</span>
+                        <div className="flex flex-col mt-1">
+                          {option.options.map(opt => (
+                            <label key={String(opt.value)} className="flex items-center">
+                              <input
+                                type="radio"
+                                className="mr-2"
+                                checked={selectedFilters[option.value]?.includes(opt.value)}
+                                onChange={() => handleFilterSelect(option.value, opt.value)}
+                              />
+                              {opt.label}
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             
             <button
@@ -585,9 +645,7 @@ export default function PatientsPage() {
             {Object.keys(activeFilters).length > 0 && (
               <button
                 className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 underline"
-                onClick={() => {
-                  router.push('/patients');
-                }}
+                onClick={clearAllFilters}
               >
                 Clear all filters
               </button>

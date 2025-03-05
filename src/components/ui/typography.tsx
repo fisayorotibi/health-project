@@ -62,7 +62,7 @@ export function Typography({
 // Specialized components for common typography elements
 export function Heading1({ className, children, ...props }: Omit<TypographyProps, 'variant' | 'as'>) {
   return (
-    <Typography variant="h1" as="h1" className={className} {...props}>
+    <Typography variant="h1" as="h1" className={`${className} text-2xl font-bold`} {...props}>
       {children}
     </Typography>
   );

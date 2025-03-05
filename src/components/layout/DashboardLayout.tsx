@@ -358,14 +358,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   </button>
                 </div>
                 {/* Breadcrumb navigation */}
-                <div className="flex items-center ml-2">
-                  <Breadcrumb 
-                    items={[
-                      { label: 'Dashboard', href: '/dashboard' },
-                      { label: 'Home', href: '/dashboard/home', isCurrent: true }
-                    ]} 
-                  />
-                </div>
+                {pathname !== '/patients' && (
+                  <div className="flex items-center ml-2">
+                    <Breadcrumb 
+                      items={[
+                        { label: 'Dashboard', href: '/dashboard' },
+                        { label: 'Home', href: '/dashboard/home', isCurrent: true }
+                      ]} 
+                    />
+                  </div>
+                )}
               </div>
               <div className="flex items-center">
                 {/* Profile dropdown removed */}
