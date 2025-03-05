@@ -181,7 +181,7 @@ const PatientCard = ({ patient }: { patient: Patient }) => {
         <div className="flex-1 min-w-0 ml-3.5">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-base font-normal text-gray-900 dark:text-white">
                 {patient.firstName} {patient.lastName}
               </h3>
               <div className="flex items-center mt-0.5 flex-nowrap overflow-hidden">
@@ -592,25 +592,27 @@ export default function PatientsPage() {
               </button>
               {isFilterOpen && (
                 <div ref={filterRef} className="absolute z-10 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
-                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="filter-menu">
-                    {filterOptions.map(option => (
-                      <div key={option.value} className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">
-                        <span className="font-medium">{option.label}</span>
-                        <div className="flex flex-col mt-1">
-                          {option.options.map(opt => (
-                            <label key={String(opt.value)} className="flex items-center">
-                              <input
-                                type="radio"
-                                className="mr-2"
-                                checked={selectedFilters[option.value]?.includes(opt.value)}
-                                onChange={() => handleFilterSelect(option.value, opt.value)}
-                              />
-                              {opt.label}
-                            </label>
-                          ))}
+                  <div className="py-0">
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="filter-menu">
+                      {filterOptions.map(option => (
+                        <div key={option.value} className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">
+                          <span className="font-medium">{option.label}</span>
+                          <div className="flex flex-col mt-1">
+                            {option.options.map(opt => (
+                              <label key={String(opt.value)} className="flex items-center">
+                                <input
+                                  type="radio"
+                                  className="mr-2"
+                                  checked={selectedFilters[option.value]?.includes(opt.value)}
+                                  onChange={() => handleFilterSelect(option.value, opt.value)}
+                                />
+                                {opt.label}
+                              </label>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
