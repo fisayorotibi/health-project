@@ -34,6 +34,13 @@ const darkenColor = (color: string, percent: number): string => {
   return `#${(0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 + (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 + (B < 255 ? (B < 1 ? 0 : B) : 255)).toString(16).slice(1)}`;
 };
 
+const getToggleClasses = (isEnabled: boolean, theme: 'light' | 'dark' | 'system') => {
+  const baseClasses = 'relative inline-flex items-center h-6 rounded-full w-11';
+  const enabledClasses = theme === 'light' && isEnabled ? 'bg-gray-800' : (theme === 'dark' && isEnabled ? 'bg-gray-100' : (theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'));
+  const disabledClasses = theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200';
+  return `${baseClasses} ${isEnabled ? enabledClasses : disabledClasses}`;
+};
+
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const { theme, setTheme } = useThemeContext();
   const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme' | 'notifications' | 'integrations'>('account');
@@ -78,14 +85,6 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                   <div>
                     <label className={`${textSizes.body} block font-medium text-gray-700 dark:text-gray-300`}>Name</label>
                     <input type='text' value={name} onChange={(e) => setName(e.target.value)} className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 p-2' placeholder='Enter your name' />
-                  </div>
-                  <div>
-                    <label className={`${textSizes.body} block font-medium text-gray-700 dark:text-gray-300`}>Email</label>
-                    <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 p-2' placeholder='Enter your email' />
-                  </div>
-                  <div className='flex items-center justify-between'>
-                    <label className={`${textSizes.body} block font-medium text-gray-700 dark:text-gray-300`}>Receive Notifications</label>
-                    <input type='checkbox' checked={notifications} onChange={() => setNotifications(!notifications)} className='h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600' />
                   </div>
                 </>
               )}
@@ -163,22 +162,24 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <Switch
                       checked={is2faEnabled}
                       onChange={setIs2faEnabled}
-                      className={`${
-                        is2faEnabled ? 'bg-blue-600' : 'bg-gray-200'
-                      } relative inline-flex items-center h-6 rounded-full w-11`}
+                      className={getToggleClasses(is2faEnabled, theme as 'light' | 'dark' | 'system')}
                     >
                       <span
-                        className={`${
-                          is2faEnabled ? 'translate-x-6' : 'translate-x-1'
-                        } inline-block w-4 h-4 transform bg-white rounded-full transition`}
+                        className={`${is2faEnabled ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${is2faEnabled ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !is2faEnabled ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
                       />
                     </Switch>
                   </div>
-                  <div className='mt-4'>
-                    <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Password Management</h3>
-                    <input type='password' placeholder='New Password' className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 p-2' />
-                    <button className={`mt-2 ${textSizes.link} text-blue-500 hover:underline`}>Reset Password</button>
+                  
+                  <div className='mt-4 flex items-center justify-between'>
+                    <div>
+                      <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Password</h3>
+                      <div className='mt-1'>
+                        <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Manage your password settings here.</p>
+                      </div>
+                    </div>
+                    <button className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>Change Password</button>
                   </div>
+                  
                   <div className='mt-4'>
                     <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Active Sessions</h3>
                     <ul className='mt-1'>
@@ -204,14 +205,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                         <Switch
                           checked={notifications}
                           onChange={() => setNotifications(!notifications)}
-                          className={`${
-                            notifications ? 'bg-blue-600' : 'bg-gray-200'
-                          } relative inline-flex items-center h-6 rounded-full w-11`}
+                          className={getToggleClasses(notifications, theme as 'light' | 'dark' | 'system')}
                         >
                           <span
-                            className={`${
-                              notifications ? 'translate-x-6' : 'translate-x-1'
-                            } inline-block w-4 h-4 transform bg-white rounded-full transition`}
+                            className={`${notifications ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${notifications ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !notifications ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
                           />
                         </Switch>
                       </div>
@@ -227,14 +224,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                         <Switch
                           checked={dataSharing}
                           onChange={() => setDataSharing(!dataSharing)}
-                          className={`${
-                            dataSharing ? 'bg-blue-600' : 'bg-gray-200'
-                          } relative inline-flex items-center h-6 rounded-full w-11`}
+                          className={getToggleClasses(dataSharing, theme as 'light' | 'dark' | 'system')}
                         >
                           <span
-                            className={`${
-                              dataSharing ? 'translate-x-6' : 'translate-x-1'
-                            } inline-block w-4 h-4 transform bg-white rounded-full transition`}
+                            className={`${dataSharing ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${dataSharing ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !dataSharing ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
                           />
                         </Switch>
                       </div>
@@ -251,14 +244,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <Switch
                       checked={notifications}
                       onChange={() => setNotifications(!notifications)}
-                      className={`${
-                        notifications ? 'bg-blue-600' : 'bg-gray-200'
-                      } relative inline-flex items-center h-6 rounded-full w-11`}
+                      className={getToggleClasses(notifications, theme as 'light' | 'dark' | 'system')}
                     >
                       <span
-                        className={`${
-                          notifications ? 'translate-x-6' : 'translate-x-1'
-                        } inline-block w-4 h-4 transform bg-white rounded-full transition`}
+                        className={`${notifications ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${notifications ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !notifications ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
                       />
                     </Switch>
                   </div>
