@@ -23,6 +23,8 @@ import {
   Caption,
   LargeDataDisplay
 } from '@/components/ui/typography';
+import AddPatientModal from '@/components/patients/AddPatientModal';
+import { Patient } from '@/types';
 
 // Dynamically import components that use browser APIs with no SSR
 const DashboardLayout = dynamic(() => import('@/components/layout/DashboardLayout'), {
@@ -34,6 +36,7 @@ const DashboardBanner = dynamic(() => import('@/components/ui/DashboardBanner'),
 export default function DashboardPage() {
   const [isMounted, setIsMounted] = useState(true);
   const [activeTab, setActiveTab] = useState<'today' | 'week' | 'all'>('today');
+  const [isAddPatientModalOpen, setAddPatientModalOpen] = useState(false);
 
   useEffect(() => {
     // No need to set isMounted here since it's already true
@@ -177,6 +180,17 @@ export default function DashboardPage() {
     // Search functionality is now handled in the DashboardBanner component
   };
 
+  const handleNewPatientClick = () => {
+    setAddPatientModalOpen(true);
+  };
+
+  const handleAddPatient = (newPatientData: Partial<Patient>) => {
+    // Logic to handle adding a new patient
+    console.log('New patient data:', newPatientData);
+    // Close the modal after adding the patient
+    setAddPatientModalOpen(false);
+  };
+
   // Prevent hydration errors by only rendering client-specific content after mounting
   if (!isMounted) {
     return (
@@ -279,7 +293,7 @@ export default function DashboardPage() {
               </div>
               
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <button className="relative flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg transition-colors group">
+                <button className="relative flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg transition-colors group" onClick={handleNewPatientClick}>
                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-300">
                     <Plus className="w-4 h-4" />
                   </div>
@@ -626,6 +640,7 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      {isAddPatientModalOpen && <AddPatientModal isOpen={isAddPatientModalOpen} onClose={() => setAddPatientModalOpen(false)} onAddPatient={handleAddPatient} />}
     </DashboardLayout>
   );
 } 
