@@ -154,7 +154,7 @@ interface AddPatientModalProps {
   onAddPatient: (patient: Partial<Patient>) => void;
 }
 
-export default function AddPatientModal({ isOpen, onClose, onAddPatient }: AddPatientModalProps) {
+const AddPatientModal: React.FC<AddPatientModalProps> = ({ isOpen, onClose, onAddPatient }) => {
   // State for multi-step form
   const [currentStep, setCurrentStep] = useState(0);
   const totalSteps = 5; // Increased from 3 to 5 steps
@@ -743,4 +743,6 @@ export default function AddPatientModal({ isOpen, onClose, onAddPatient }: AddPa
       </div>
     </Dialog>
   );
-}
+};
+
+export default AddPatientModal;

@@ -158,11 +158,10 @@ const PatientCard = ({ patient }: { patient: Patient }) => {
   
   return (
     <div 
-      className={`
-        relative p-5 rounded-xl border border-gray-200 dark:border-gray-800 
-        bg-white dark:bg-dark-surface transition-all duration-200 flex flex-col h-full
-        ${isHovered ? 'shadow-md dark:shadow-gray-900/30 border-gray-300 dark:border-gray-700' : ''}
-      `}
+      className={
+        `relative p-5 rounded-xl border border-gray-200 dark:border-gray-800 
+        bg-gray-50 dark:bg-gray-900 transition-all duration-200 flex flex-col h-full` 
+      }
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={navigateToPatientDetail}

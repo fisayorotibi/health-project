@@ -19,7 +19,8 @@ import {
   Hexagon,
   ChevronLeft,
   ChevronRight,
-  Search
+  Search,
+  Star as NewStar
 } from 'lucide-react';
 import { Heading4, Paragraph, SmallParagraph, Caption } from '@/components/ui/typography';
 import ProfileModal from '@/components/ui/ProfileModal';
@@ -109,18 +110,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
         {!isCollapsed ? (
           <>
         <div className="flex items-center space-x-3">
-          {/* Stylized logo placeholder */}
-          <div className="relative">
-            <div className="w-5 h-5 bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-600 dark:to-gray-800 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
-              <Hexagon className="w-4.5 h-4.5 text-gray-200 absolute" strokeWidth={1.5} />
-              <span className="text-gray-100 font-bold text-xs relative z-10">L</span>
-              <div className="absolute inset-0 bg-gradient-to-tr from-gray-500/10 to-transparent opacity-60"></div>
-            </div>
-          </div>
           {/* Stylized brand name */}
           <div className="flex flex-col">
-            <div className="flex items-baseline">
-              <span className="text-gray-900 dark:text-white text-sm font-semibold tracking-tight font-funnel-display">LAVENDER</span>
+            <div className="flex items-center">
+              <div className="w-5 h-5 border-4 border-[#7C66DC] rounded-full bg-transparent shadow-lg mr-1"></div>
+              <span className="text-gray-900 dark:text-white text-md font-semibold tracking-tight font-funnel-display">lavender</span>
             </div>
           </div>
         </div>

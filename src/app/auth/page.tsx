@@ -56,13 +56,9 @@ export default function AuthPage() {
         <div className="relative z-10 flex flex-col justify-between w-full p-12">
           <div>
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-lg bg-gray-700 flex items-center justify-center mr-3">
-                <span className="text-white text-xl font-bold">L</span>
-              </div>
-              <div>
-                <span className="text-gray-900 dark:text-gray-100 text-base font-semibold tracking-tight" style={{ fontFamily: 'Funnel Display' }}>lavender</span>
-                <span className="ml-1 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider font-medium">Health</span>
-              </div>
+              <div className="w-5 h-5 border-4 border-[#7C66DC] rounded-full bg-transparent shadow-lg mr-3"></div>
+              <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight">lavender</span>
+              <span className="ml-1 text-md text-gray-700 dark:text-gray-300 uppercase tracking-wider font-medium"></span>
             </div>
           </div>
           
@@ -124,13 +120,8 @@ export default function AuthPage() {
         <div className="w-full max-w-md my-4">
           {/* Mobile logo */}
           <div className="flex md:hidden items-center justify-center mb-6">
-            <div className="w-10 h-10 rounded-lg bg-gray-700 flex items-center justify-center mr-3">
-              <span className="text-white text-xl font-bold">L</span>
-            </div>
-            <div>
-              <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight" style={{ fontFamily: 'Funnel Display' }}>lavender</span>
-              <span className="ml-1 text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wider font-medium">Health</span>
-            </div>
+            <div className="w-5 h-5 border-4 border-[#7C66DC] rounded-full bg-transparent shadow-lg mr-3"></div>
+            <span className="text-gray-900 dark:text-white text-base font-semibold tracking-tight">lavender</span>
           </div>
           
           {/* Tab navigation */}
