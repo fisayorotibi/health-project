@@ -142,34 +142,40 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                       <div className='flex space-x-4 mt-2'>
                         <button 
                           onClick={() => setFontSize('text-xs')} 
-                          className={`flex-1 py-2 px-3 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                          className={`py-2 px-4 rounded-lg text-xs font-medium ${
                             fontSize === 'text-xs' 
                               ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200' 
-                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700'
                           }`}
                         >
                           Small
                         </button>
                         <button 
                           onClick={() => setFontSize('text-sm')} 
-                          className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                          className={`py-2 px-4 rounded-lg text-xs font-medium ${
                             fontSize === 'text-sm' 
                               ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200' 
-                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700'
                           }`}
                         >
                           Medium
                         </button>
                         <button 
                           onClick={() => setFontSize('text-lg')} 
-                          className={`flex-1 py-2 px-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                          className={`py-2 px-4 rounded-lg text-xs font-medium ${
                             fontSize === 'text-lg' 
                               ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200' 
-                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700'
                           }`}
                         >
                           Large
                         </button>
+                      </div>
+                      
+                      <div className='mt-6 py-8 px-4 border border-gray-300 dark:border-gray-800 rounded-lg flex justify-center items-center min-h-[100px]'>
+                        <p className={`${fontSize} text-gray-800 dark:text-gray-200 text-center`}>
+                          This is a preview text.
+                        </p>
                       </div>
                     </div>
                   </div>
