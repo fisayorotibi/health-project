@@ -50,6 +50,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const [is2faEnabled, setIs2faEnabled] = useState(false);
   const [dataSharing, setDataSharing] = useState(true);
   const [accentColor, setAccentColor] = useState('#F5F5F5');
+  const [fontSize, setFontSize] = useState<'text-xs' | 'text-sm' | 'text-lg'>('text-sm');
 
   const handleLogout = () => {
     // Redirect to the logout page
@@ -138,11 +139,38 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <div className='flex flex-col space-y-1'>
                       <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Font Size</h4>
                       <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Choose your preferred font size for the dashboard.</p>
-                      <select className='border border-gray-300 rounded-md p-1 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200'>
-                        <option value='text-xs'>Small</option>
-                        <option value='text-sm'>Medium</option>
-                        <option value='text-lg'>Large</option>
-                      </select>
+                      <div className='flex space-x-4 mt-2'>
+                        <button 
+                          onClick={() => setFontSize('text-xs')} 
+                          className={`flex-1 py-2 px-3 rounded-lg text-xs font-medium transition-colors duration-200 ${
+                            fontSize === 'text-xs' 
+                              ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200' 
+                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                          }`}
+                        >
+                          Small
+                        </button>
+                        <button 
+                          onClick={() => setFontSize('text-sm')} 
+                          className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                            fontSize === 'text-sm' 
+                              ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200' 
+                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                          }`}
+                        >
+                          Medium
+                        </button>
+                        <button 
+                          onClick={() => setFontSize('text-lg')} 
+                          className={`flex-1 py-2 px-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                            fontSize === 'text-lg' 
+                              ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200' 
+                              : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'
+                          }`}
+                        >
+                          Large
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
