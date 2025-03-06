@@ -587,7 +587,7 @@ export default function DashboardPage() {
             
             {/* View more button */}
             <div className="p-4 flex justify-center">
-              <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+              <button className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
                 View more activities <ChevronRight className="w-4 h-4 ml-1" />
               </button>
             </div>
@@ -632,7 +632,7 @@ export default function DashboardPage() {
               
               {/* View more button */}
               <div className="p-4 flex justify-center">
-                <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
+                <button className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center">
                   View more weekly activities <ChevronRight className="w-4 h-4 ml-1" />
                 </button>
               </div>

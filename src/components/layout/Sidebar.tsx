@@ -68,11 +68,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
     { name: 'Patient Records', href: '/patients', icon: <Users className="w-3.5 h-3.5" /> },
     { name: 'Medical Records', href: '/medical-records', icon: <FileText className="w-3.5 h-3.5" /> },
     // Divider
-    { isDivider: true, icon: <div className="my-2 border-t border-gray-200 dark:border-gray-800" /> },
+    { isDivider: true, icon: <div className="my-2 border-t border-gray-200 dark:border-gray-800/50" /> },
     { name: 'Prescriptions', href: '/prescriptions', icon: <Pill className="w-3.5 h-3.5" /> },
     { name: 'Appointments', href: '/schedule', icon: <Calendar className="w-3.5 h-3.5" /> },
     // Divider
-    { isDivider: true, icon: <div className="my-2 border-t border-gray-200 dark:border-gray-800" /> },
+    { isDivider: true, icon: <div className="my-2 border-t border-gray-200 dark:border-gray-800/50" /> },
     { name: 'Analytics', href: '/reports', icon: <BarChart className="w-3.5 h-3.5" /> },
   ];
 
@@ -102,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
     <div className={`
       ${isMobile ? 'fixed inset-0 z-50 bg-gray-100 dark:bg-dark-background' : 'hidden md:flex'}
       flex-col ${isCollapsed ? 'w-16' : 'w-64'} h-screen bg-gray-100 dark:bg-dark-background
-      border-r border-gray-200/70 dark:border-gray-800/70
+      border-r border-gray-200/70 dark:border-gray-800/50
       transition-all duration-300 ease-in-out
       group
     `}>

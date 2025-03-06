@@ -518,7 +518,7 @@ export default function PatientDetailPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <Heading3>Vital Signs</Heading3>
-            <button className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">
+            <button className="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">
               View History
             </button>
           </div>
@@ -616,7 +616,7 @@ export default function PatientDetailPage() {
             </div>
             
             <div className="mt-6 text-center">
-              <button className="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">
+              <button className="inline-flex items-center text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">
                 View full history
                 <ArrowUpRight className="h-4 w-4 ml-1" />
               </button>

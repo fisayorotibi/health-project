@@ -325,47 +325,53 @@ const PatientTableRow = ({ patient }: { patient: Patient }) => {
 
   return (
     <tr 
-      className={`group hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer ${isHovered ? 'bg-gray-50 dark:bg-gray-800/50' : ''}`}
+      className={`group transition-colors duration-150 even:bg-gray-50 even:dark:bg-gray-800/30 hover:bg-gray-100 dark:hover:bg-gray-800/50 cursor-pointer ${isHovered ? 'bg-gray-100 dark:bg-gray-800/50' : ''}`}
       onClick={() => router.push(`/patients/${patient.id}`)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+      <td className="whitespace-nowrap py-4 pl-6 pr-3 text-sm border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center">
-          <div className="h-8 w-8 flex-shrink-0">
-            <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+          <div className="h-9 w-9 flex-shrink-0">
+            <div className="h-9 w-9 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
               <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {`${patient.firstName.charAt(0)}${patient.lastName.charAt(0)}`}
               </span>
             </div>
           </div>
-          <div className="ml-3">
+          <div className="ml-4">
             <div className="font-medium text-gray-900 dark:text-white">{`${patient.firstName} ${patient.lastName}`}</div>
-            <div className="text-gray-500 dark:text-gray-400 text-xs">#{patient.id}</div>
+            <div className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">#{patient.id.substring(0, 8)}</div>
           </div>
         </div>
       </td>
-      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-800">
         {age} yrs
       </td>
-      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-800">
         {patient.phoneNumber}
       </td>
-      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-        {patient.bloodType || '-'}
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-800">
+        {patient.bloodType ? (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+            {patient.bloodType}
+          </span>
+        ) : '-'}
       </td>
-      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-800">
         {patient.status === 'active' ? (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-gray-500 dark:bg-gray-400 mr-1.5"></span>
             Active
           </span>
         ) : (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500 mr-1.5"></span>
             Inactive
           </span>
         )}
       </td>
-      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-800">
         {lastVisitDaysAgo !== null ? (
           <span>
             {lastVisitDaysAgo === 0 ? 'Today' : 
@@ -393,7 +399,7 @@ const EmptyState = ({ onAddPatient }: { onAddPatient: () => void }) => (
     <div className="mt-6">
       <button
         onClick={onAddPatient}
-        className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900 dark:focus:ring-gray-400"
+        className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
       >
         <Plus className="h-4 w-4 mr-1.5" />
         Add Patient
@@ -635,7 +641,7 @@ export default function PatientsPage() {
           </div>
           <button
             onClick={handleAddPatient}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
+            className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
           >
             <Plus className="h-4 w-4 mr-1.5" />
             Add Patient
@@ -671,7 +677,7 @@ export default function PatientsPage() {
             <div className="relative inline-block text-left">
               <button
                 type="button"
-                className="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
+                className="inline-flex justify-center w-full rounded-md shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
                 id="filter-menu"
                 aria-expanded="true"
                 aria-haspopup="true"
@@ -710,7 +716,7 @@ export default function PatientsPage() {
             
             <button
               type="button"
-              className="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
+              className="inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
               onClick={() => handleSort('lastName')}
             >
               <ArrowUpDown className="h-4 w-4 mr-2" />
@@ -719,7 +725,7 @@ export default function PatientsPage() {
 
             <button
               type="button"
-              className="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
+              className="inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
               onClick={() => setViewMode(prev => prev === 'card' ? 'table' : 'card')}
             >
               {viewMode === 'card' ? (
@@ -786,39 +792,75 @@ export default function PatientsPage() {
             </div>
           ) : (
             <div className="mt-2 flow-root">
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto sm:rounded-lg">
                 <div className="inline-block min-w-full py-2 align-middle">
-                  <div className="overflow-hidden ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-10 rounded-lg">
-                    <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-                      <thead className="bg-gray-50 dark:bg-gray-800/50">
+                  <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+                    <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-800">
+                      <thead className="bg-gray-100 dark:bg-gray-900">
                         <tr>
-                          <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                          <th scope="col" className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6 border-b border-gray-200 dark:border-gray-800">
                             <button
                               className="group inline-flex items-center focus:outline-none focus:ring-0"
                               onClick={() => handleSort('lastName')}
                             >
                               Name
-                              <span className="ml-2 flex-none rounded text-gray-400">
+                              <span className="ml-2 flex-none rounded text-gray-400 dark:text-gray-500">
                                 {sortConfig.key === 'lastName' ? (
                                   sortConfig.direction === 'asc' ? (
-                                    <ChevronUp className="h-4 w-4" />
+                                    <ChevronUp className="h-4 w-4 text-gray-700 dark:text-gray-300" />
                                   ) : (
-                                    <ChevronDown className="h-4 w-4" />
+                                    <ChevronDown className="h-4 w-4 text-gray-700 dark:text-gray-300" />
                                   )
                                 ) : (
-                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100" />
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 )}
                               </span>
                             </button>
                           </th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Age</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Phone</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Blood Type</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Last Visit</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">
+                            <button
+                              className="group inline-flex items-center focus:outline-none focus:ring-0"
+                              onClick={() => handleSort('dateOfBirth')}
+                            >
+                              Age
+                              <span className="ml-2 flex-none rounded text-gray-400 dark:text-gray-500">
+                                {sortConfig.key === 'dateOfBirth' ? (
+                                  sortConfig.direction === 'asc' ? (
+                                    <ChevronUp className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  )
+                                ) : (
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                )}
+                              </span>
+                            </button>
+                          </th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">Phone</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">Blood Type</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">Status</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">
+                            <button
+                              className="group inline-flex items-center focus:outline-none focus:ring-0"
+                              onClick={() => handleSort('lastVisit')}
+                            >
+                              Last Visit
+                              <span className="ml-2 flex-none rounded text-gray-400 dark:text-gray-500">
+                                {sortConfig.key === 'lastVisit' ? (
+                                  sortConfig.direction === 'asc' ? (
+                                    <ChevronUp className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  )
+                                ) : (
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                )}
+                              </span>
+                            </button>
+                          </th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
+                      <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
                         {filteredPatients.map((patient) => (
                           <PatientTableRow key={patient.id} patient={patient} />
                         ))}
@@ -840,39 +882,75 @@ export default function PatientsPage() {
             </div>
           ) : (
             <div className="mt-2 flow-root">
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto sm:rounded-lg">
                 <div className="inline-block min-w-full py-2 align-middle">
-                  <div className="overflow-hidden ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-10 rounded-lg">
-                    <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-                      <thead className="bg-gray-50 dark:bg-gray-800/50">
+                  <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+                    <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-800">
+                      <thead className="bg-gray-100 dark:bg-gray-900">
                         <tr>
-                          <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                          <th scope="col" className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6 border-b border-gray-200 dark:border-gray-800">
                             <button
                               className="group inline-flex items-center focus:outline-none focus:ring-0"
                               onClick={() => handleSort('lastName')}
                             >
                               Name
-                              <span className="ml-2 flex-none rounded text-gray-400">
+                              <span className="ml-2 flex-none rounded text-gray-400 dark:text-gray-500">
                                 {sortConfig.key === 'lastName' ? (
                                   sortConfig.direction === 'asc' ? (
-                                    <ChevronUp className="h-4 w-4" />
+                                    <ChevronUp className="h-4 w-4 text-gray-700 dark:text-gray-300" />
                                   ) : (
-                                    <ChevronDown className="h-4 w-4" />
+                                    <ChevronDown className="h-4 w-4 text-gray-700 dark:text-gray-300" />
                                   )
                                 ) : (
-                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100" />
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 )}
                               </span>
                             </button>
                           </th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Age</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Phone</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Blood Type</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Last Visit</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">
+                            <button
+                              className="group inline-flex items-center focus:outline-none focus:ring-0"
+                              onClick={() => handleSort('dateOfBirth')}
+                            >
+                              Age
+                              <span className="ml-2 flex-none rounded text-gray-400 dark:text-gray-500">
+                                {sortConfig.key === 'dateOfBirth' ? (
+                                  sortConfig.direction === 'asc' ? (
+                                    <ChevronUp className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  )
+                                ) : (
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                )}
+                              </span>
+                            </button>
+                          </th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">Phone</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">Blood Type</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">Status</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800">
+                            <button
+                              className="group inline-flex items-center focus:outline-none focus:ring-0"
+                              onClick={() => handleSort('lastVisit')}
+                            >
+                              Last Visit
+                              <span className="ml-2 flex-none rounded text-gray-400 dark:text-gray-500">
+                                {sortConfig.key === 'lastVisit' ? (
+                                  sortConfig.direction === 'asc' ? (
+                                    <ChevronUp className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+                                  )
+                                ) : (
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                )}
+                              </span>
+                            </button>
+                          </th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
+                      <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
                         {filteredPatients.map((patient) => (
                           <PatientTableRow key={patient.id} patient={patient} />
                         ))}
@@ -895,13 +973,13 @@ export default function PatientsPage() {
             </div>
             <div className="flex space-x-2">
               <button
-                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-xs font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={true}
               >
                 Previous
               </button>
               <button
-                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-xs font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={true}
               >
                 Next
