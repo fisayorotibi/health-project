@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog, Switch } from '@headlessui/react';
-import { X, Sun, Moon, Monitor, Laptop, Smartphone } from 'lucide-react';
+import { X, Sun, Moon, Monitor, Laptop, Smartphone, User, Palette, HelpCircle, Shield, Bell, Link2, LogOut } from 'lucide-react';
 import { useThemeContext } from '@/components/ThemeProvider';
 
 interface ProfileModalProps {
@@ -72,21 +72,42 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
         <Dialog.Panel className="bg-white dark:bg-gray-900 rounded-lg w-1/2 h-auto relative shadow-lg border border-gray-300 dark:border-gray-800 overflow-hidden">
           <div className="flex items-center justify-between mb-4 px-6 pt-5">
-            <Dialog.Title className="text-md font-normal text-gray-900 dark:text-gray-100">Profile Settings</Dialog.Title>
+            <Dialog.Title className="text-md font-normal text-gray-900 dark:text-gray-100">Settings</Dialog.Title>
             <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
               <X className="w-5 h-5" />
             </button>
           </div>
-          <div className="flex pl-6 pb-6">
+          <div className="flex pl-4 pb-6">
             <div className="flex flex-col mr-4 border-r border-gray-200 dark:border-gray-800/50 pr-4">
-              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Account Settings</button>
-              <button onClick={() => setActiveTab('appearance')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'appearance' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Appearance</button>
-              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Help</button>
-              <button onClick={() => setActiveTab('security')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'security' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Security & Privacy</button>
-              <button onClick={() => setActiveTab('notifications')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'notifications' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Notifications</button>
-              <button onClick={() => setActiveTab('integrations')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'integrations' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Integrations</button>
+              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5 flex items-center`}>
+                <User className="w-3.5 h-3.5 mr-2" />
+                Account
+              </button>
+              <button onClick={() => setActiveTab('appearance')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'appearance' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5 flex items-center`}>
+                <Palette className="w-3.5 h-3.5 mr-2" />
+                Appearance
+              </button>
+              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5 flex items-center`}>
+                <HelpCircle className="w-3.5 h-3.5 mr-2" />
+                Help
+              </button>
+              <button onClick={() => setActiveTab('security')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'security' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5 flex items-center`}>
+                <Shield className="w-3.5 h-3.5 mr-2" />
+                Security & Privacy
+              </button>
+              <button onClick={() => setActiveTab('notifications')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'notifications' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5 flex items-center`}>
+                <Bell className="w-3.5 h-3.5 mr-2" />
+                Notifications
+              </button>
+              <button onClick={() => setActiveTab('integrations')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'integrations' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5 flex items-center`}>
+                <Link2 className="w-3.5 h-3.5 mr-2" />
+                Integrations
+              </button>
               <div className='mt-auto'>
-                <button onClick={handleLogout} className='py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'>Log out</button>
+                <button onClick={handleLogout} className='py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80 flex items-center'>
+                  <LogOut className="w-3.5 h-3.5 mr-2" />
+                  Log out
+                </button>
               </div>
             </div>
             <div className="flex-1 overflow-auto h-80 space-y-4 pr-4">
