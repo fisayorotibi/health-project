@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog, Switch } from '@headlessui/react';
-import { X, Sun, Moon, Monitor, Laptop, Smartphone, User, Palette, HelpCircle, Shield, Bell, Link2, LogOut } from 'lucide-react';
+import { X, Sun, Moon, Monitor, Laptop, Smartphone, User, Palette, HelpCircle, Shield, Bell, Link2, LogOut, Upload, Trash2, Camera, Twitter, Mail, Facebook, Linkedin, Plus, MoreVertical } from 'lucide-react';
 import { useThemeContext } from '@/components/ThemeProvider';
 
 interface ProfileModalProps {
@@ -55,15 +55,26 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const [dataSharing, setDataSharing] = useState(true);
   const [accentColor, setAccentColor] = useState('#F5F5F5');
   const [fontSize, setFontSize] = useState<FontSizeType>('text-sm');
+  const [hasProfileImage, setHasProfileImage] = useState(false);
 
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    window.location.href = '/logout';
+    window.location.href = '/auth';
   };
 
   const handleTerminateSession = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     // Add session termination logic here
+  };
+
+  const handleImageUpload = () => {
+    // In a real implementation, this would open a file picker
+    // and handle the image upload process
+    setHasProfileImage(true);
+  };
+
+  const handleImageRemove = () => {
+    setHasProfileImage(false);
   };
 
   return (
@@ -113,9 +124,98 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
             <div className="flex-1 overflow-auto h-80 space-y-4 pr-4">
               {activeTab === 'account' && (
                 <>
-                  <div>
-                    <label className={`${textSizes.body} block font-medium text-gray-700 dark:text-gray-300`}>Name</label>
-                    <input type='text' value={name} onChange={(e) => setName(e.target.value)} className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 p-2' placeholder='Enter your name' />
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="relative mb-3">
+                      <div className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden border-2 border-gray-300 dark:border-gray-600">
+                        {hasProfileImage ? (
+                          // This would be an actual image in a real implementation
+                          <div className="bg-blue-500 w-full h-full flex items-center justify-center">
+                            <User className="h-6 w-6 text-white" />
+                          </div>
+                        ) : (
+                          <User className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <button 
+                        onClick={handleImageUpload}
+                        className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        <Upload className="mr-1.5 h-3.5 w-3.5" />
+                        {hasProfileImage ? "Change Image" : "Upload Image"}
+                      </button>
+                      {hasProfileImage && (
+                        <button 
+                          onClick={handleImageRemove}
+                          className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-gray-100 dark:bg-gray-800 text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        >
+                          <Trash2 className="mr-1.5 h-3.5 w-3.5" />
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex flex-col">
+                      <span className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Name</span>
+                      <span className={`${textSizes.body} text-gray-600 dark:text-gray-400 mt-0.5`}>{name}</span>
+                    </div>
+                    <button className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>
+                      Edit
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex flex-col">
+                      <span className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Contact</span>
+                      <span className={`${textSizes.body} text-gray-600 dark:text-gray-400 mt-0.5`}>+1 (555) 123-4567</span>
+                      <span className={`${textSizes.body} text-gray-600 dark:text-gray-400 mt-0.5`}>{email}</span>
+                    </div>
+                    <button className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>
+                      Edit
+                    </button>
+                  </div>
+                  
+                  {/* Connected Accounts Section */}
+                  <div className="mt-6">
+                    <h3 className="text-sm font-medium text-gray-800 dark:text-gray-200">Connected Accounts</h3>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-4">Connect your accounts to enable single sign-on and additional features.</p>
+                    
+                    <div className="space-y-3">
+                      {/* Gmail Account */}
+                      <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center shadow-sm">
+                            <Mail className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+                          </div>
+                          <div className="ml-3">
+                            <h4 className="text-xs font-medium text-gray-800 dark:text-gray-200">
+                              Gmail <span className="font-normal text-gray-500 dark:text-gray-400 text-base mx-1">•</span> <span className="font-normal text-gray-500 dark:text-gray-400">{email}</span>
+                            </h4>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Connected</p>
+                          </div>
+                        </div>
+                        <button className="text-xs text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors">
+                          Disconnect
+                        </button>
+                      </div>
+                      
+                      {/* LinkedIn Account */}
+                      <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center shadow-sm">
+                            <Linkedin className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+                          </div>
+                          <div className="ml-3">
+                            <h4 className="text-xs font-medium text-gray-800 dark:text-gray-200">LinkedIn</h4>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Not connected</p>
+                          </div>
+                        </div>
+                        <button className="text-xs text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors">
+                          Connect
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </>
               )}
