@@ -121,7 +121,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile, isOpen, toggleSidebar }) =>
         <div className="relative ml-auto">
             <button
               type="button"
-              className="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-0 hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-700 transition-all duration-150"
+              className="flex items-center max-w-xs text-sm rounded-full focus:outline-none focus:ring-0 hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-700"
               id="user-menu"
               aria-expanded={isProfileOpen}
               aria-haspopup="true"

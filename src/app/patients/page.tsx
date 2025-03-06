@@ -26,7 +26,11 @@ import {
   X,
   Check,
   Clock,
-  ArrowUpDown
+  ArrowUpDown,
+  ChevronUp,
+  ChevronDown,
+  LayoutGrid,
+  Table2
 } from 'lucide-react';
 import { Patient } from '@/types';
 
@@ -291,6 +295,91 @@ const PatientCard = ({ patient }: { patient: Patient }) => {
   );
 };
 
+// Patient table row component
+const PatientTableRow = ({ patient }: { patient: Patient }) => {
+  const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const age = useMemo(() => {
+    const birthDate = new Date(patient.dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    return age;
+  }, [patient.dateOfBirth]);
+
+  // Calculate last visit days ago
+  const lastVisitDaysAgo = useMemo(() => {
+    if (!patient.lastVisit) return null;
+    const lastVisit = new Date(patient.lastVisit);
+    const today = new Date();
+    const diffTime = Math.abs(today.getTime() - lastVisit.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }, [patient.lastVisit]);
+
+  return (
+    <tr 
+      className={`group hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer ${isHovered ? 'bg-gray-50 dark:bg-gray-800/50' : ''}`}
+      onClick={() => router.push(`/patients/${patient.id}`)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+        <div className="flex items-center">
+          <div className="h-8 w-8 flex-shrink-0">
+            <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                {`${patient.firstName.charAt(0)}${patient.lastName.charAt(0)}`}
+              </span>
+            </div>
+          </div>
+          <div className="ml-3">
+            <div className="font-medium text-gray-900 dark:text-white">{`${patient.firstName} ${patient.lastName}`}</div>
+            <div className="text-gray-500 dark:text-gray-400 text-xs">#{patient.id}</div>
+          </div>
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+        {age} yrs
+      </td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+        {patient.phoneNumber}
+      </td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+        {patient.bloodType || '-'}
+      </td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+        {patient.status === 'active' ? (
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+            Active
+          </span>
+        ) : (
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400">
+            Inactive
+          </span>
+        )}
+      </td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+        {lastVisitDaysAgo !== null ? (
+          <span>
+            {lastVisitDaysAgo === 0 ? 'Today' : 
+             lastVisitDaysAgo === 1 ? 'Yesterday' : 
+             `${lastVisitDaysAgo} days ago`}
+          </span>
+        ) : (
+          <span className="text-gray-400 dark:text-gray-500">No visits</span>
+        )}
+      </td>
+    </tr>
+  );
+};
+
 // Empty state component
 const EmptyState = ({ onAddPatient }: { onAddPatient: () => void }) => (
   <div className="text-center py-12 px-4 rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-800">
@@ -319,7 +408,7 @@ const FilterBadge = ({ label, onRemove }: { label: string; onRemove: () => void 
     {label}
     <button
       type="button"
-      className="flex-shrink-0 ml-1 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-400 hover:bg-gray-200 hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-gray-300 focus:outline-none"
+      className="flex-shrink-0 ml-1 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-400 hover:bg-gray-200 hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-gray-300 focus:outline-none focus:ring-0"
       onClick={onRemove}
     >
       <span className="sr-only">Remove filter for {label}</span>
@@ -336,6 +425,7 @@ export default function PatientsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [patients, setPatients] = useState<Patient[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'table' | 'card'>('card');
   const [activeFilters, setActiveFilters] = useState<{
     gender?: 'male' | 'female' | 'other';
     hasAllergies?: boolean;
@@ -545,7 +635,7 @@ export default function PatientsPage() {
           </div>
           <button
             onClick={handleAddPatient}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:focus:ring-offset-gray-900 dark:focus:ring-gray-400"
+            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
           >
             <Plus className="h-4 w-4 mr-1.5" />
             Add Patient
@@ -581,7 +671,7 @@ export default function PatientsPage() {
             <div className="relative inline-block text-left">
               <button
                 type="button"
-                className="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400"
+                className="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
                 id="filter-menu"
                 aria-expanded="true"
                 aria-haspopup="true"
@@ -620,11 +710,29 @@ export default function PatientsPage() {
             
             <button
               type="button"
-              className="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400"
+              className="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
               onClick={() => handleSort('lastName')}
             >
               <ArrowUpDown className="h-4 w-4 mr-2" />
               Sort
+            </button>
+
+            <button
+              type="button"
+              className="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0"
+              onClick={() => setViewMode(prev => prev === 'card' ? 'table' : 'card')}
+            >
+              {viewMode === 'card' ? (
+                <>
+                  <Table2 className="h-4 w-4 mr-2" />
+                  Switch to Table
+                </>
+              ) : (
+                <>
+                  <LayoutGrid className="h-4 w-4 mr-2" />
+                  Switch to Cards
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -657,32 +765,124 @@ export default function PatientsPage() {
         
         {/* Patient list */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, index) => (
-              <div key={index} className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 animate-pulse h-64">
-                <div className="flex items-start">
-                  <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3"></div>
-                  <div className="flex-1">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
-                    <div className="space-y-2">
-                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
-                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
-                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+          viewMode === 'card' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 animate-pulse h-64">
+                  <div className="flex items-start">
+                    <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3"></div>
+                    <div className="flex-1">
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
+                      <div className="space-y-2">
+                        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+                        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+                        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-2 flow-root">
+              <div className="overflow-x-auto">
+                <div className="inline-block min-w-full py-2 align-middle">
+                  <div className="overflow-hidden ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-10 rounded-lg">
+                    <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+                      <thead className="bg-gray-50 dark:bg-gray-800/50">
+                        <tr>
+                          <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                            <button
+                              className="group inline-flex items-center focus:outline-none focus:ring-0"
+                              onClick={() => handleSort('lastName')}
+                            >
+                              Name
+                              <span className="ml-2 flex-none rounded text-gray-400">
+                                {sortConfig.key === 'lastName' ? (
+                                  sortConfig.direction === 'asc' ? (
+                                    <ChevronUp className="h-4 w-4" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4" />
+                                  )
+                                ) : (
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100" />
+                                )}
+                              </span>
+                            </button>
+                          </th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Age</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Phone</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Blood Type</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Last Visit</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
+                        {filteredPatients.map((patient) => (
+                          <PatientTableRow key={patient.id} patient={patient} />
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          )
         ) : filteredPatients.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPatients.map(patient => (
-              <div key={patient.id} className="h-full">
-                <PatientCard patient={patient} />
+          viewMode === 'card' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPatients.map(patient => (
+                <div key={patient.id} className="h-full">
+                  <PatientCard patient={patient} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-2 flow-root">
+              <div className="overflow-x-auto">
+                <div className="inline-block min-w-full py-2 align-middle">
+                  <div className="overflow-hidden ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-10 rounded-lg">
+                    <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+                      <thead className="bg-gray-50 dark:bg-gray-800/50">
+                        <tr>
+                          <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                            <button
+                              className="group inline-flex items-center focus:outline-none focus:ring-0"
+                              onClick={() => handleSort('lastName')}
+                            >
+                              Name
+                              <span className="ml-2 flex-none rounded text-gray-400">
+                                {sortConfig.key === 'lastName' ? (
+                                  sortConfig.direction === 'asc' ? (
+                                    <ChevronUp className="h-4 w-4" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4" />
+                                  )
+                                ) : (
+                                  <ChevronUp className="h-4 w-4 opacity-0 group-hover:opacity-100" />
+                                )}
+                              </span>
+                            </button>
+                          </th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Age</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Phone</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Blood Type</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Last Visit</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
+                        {filteredPatients.map((patient) => (
+                          <PatientTableRow key={patient.id} patient={patient} />
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          )
         ) : (
           <EmptyState onAddPatient={handleAddPatient} />
         )}
@@ -695,13 +895,13 @@ export default function PatientsPage() {
             </div>
             <div className="flex space-x-2">
               <button
-                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={true}
               >
                 Previous
               </button>
               <button
-                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={true}
               >
                 Next
