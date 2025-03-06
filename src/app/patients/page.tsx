@@ -431,7 +431,7 @@ export default function PatientsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [patients, setPatients] = useState<Patient[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [viewMode, setViewMode] = useState<'table' | 'card'>('card');
+  const [viewMode, setViewMode] = useState<'table' | 'card'>('table');
   const [activeFilters, setActiveFilters] = useState<{
     gender?: 'male' | 'female' | 'other';
     hasAllergies?: boolean;
