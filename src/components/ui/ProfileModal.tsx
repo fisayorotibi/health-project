@@ -8,6 +8,10 @@ interface ProfileModalProps {
   onClose: () => void;
 }
 
+type TabType = 'account' | 'appearance' | 'help' | 'security' | 'theme' | 'notifications' | 'integrations';
+type FontSizeType = 'text-xs' | 'text-sm' | 'text-lg';
+type ThemeType = 'light' | 'dark' | 'system';
+
 // Define a type system for text sizes
 const textSizes = {
   title: 'text-lg',
@@ -34,7 +38,7 @@ const darkenColor = (color: string, percent: number): string => {
   return `#${(0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 + (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 + (B < 255 ? (B < 1 ? 0 : B) : 255)).toString(16).slice(1)}`;
 };
 
-const getToggleClasses = (isEnabled: boolean, theme: 'light' | 'dark' | 'system') => {
+const getToggleClasses = (isEnabled: boolean, theme: ThemeType): string => {
   const baseClasses = 'relative inline-flex items-center h-6 rounded-full w-11';
   const enabledClasses = theme === 'light' && isEnabled ? 'bg-gray-800' : (theme === 'dark' && isEnabled ? 'bg-gray-100' : (theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'));
   const disabledClasses = theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200';
@@ -43,18 +47,23 @@ const getToggleClasses = (isEnabled: boolean, theme: 'light' | 'dark' | 'system'
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const { theme, setTheme } = useThemeContext();
-  const [activeTab, setActiveTab] = useState<'account' | 'appearance' | 'help' | 'security' | 'theme' | 'notifications' | 'integrations'>('account');
+  const [activeTab, setActiveTab] = useState<TabType>('account');
   const [name, setName] = useState('Dr. Sarah Chen');
   const [email, setEmail] = useState('sarah.chen@example.com');
   const [notifications, setNotifications] = useState(true);
   const [is2faEnabled, setIs2faEnabled] = useState(false);
   const [dataSharing, setDataSharing] = useState(true);
   const [accentColor, setAccentColor] = useState('#F5F5F5');
-  const [fontSize, setFontSize] = useState<'text-xs' | 'text-sm' | 'text-lg'>('text-sm');
+  const [fontSize, setFontSize] = useState<FontSizeType>('text-sm');
 
-  const handleLogout = () => {
-    // Redirect to the logout page
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     window.location.href = '/logout';
+  };
+
+  const handleTerminateSession = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    // Add session termination logic here
   };
 
   return (
@@ -69,15 +78,15 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
             </button>
           </div>
           <div className="flex pl-6 pb-6">
-            <div className="flex flex-col mr-4 border-r border-gray-200 dark:border-gray-700 pr-4">
-              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Account Settings</button>
-              <button onClick={() => setActiveTab('appearance')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'appearance' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Appearance</button>
-              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Help</button>
-              <button onClick={() => setActiveTab('security')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'security' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Security & Privacy</button>
-              <button onClick={() => setActiveTab('notifications')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'notifications' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Notifications</button>
-              <button onClick={() => setActiveTab('integrations')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'integrations' ? 'bg-gray-600 text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'} mb-1.5`}>Integrations</button>
+            <div className="flex flex-col mr-4 border-r border-gray-200 dark:border-gray-800/50 pr-4">
+              <button onClick={() => setActiveTab('account')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'account' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Account Settings</button>
+              <button onClick={() => setActiveTab('appearance')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'appearance' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Appearance</button>
+              <button onClick={() => setActiveTab('help')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'help' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Help</button>
+              <button onClick={() => setActiveTab('security')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'security' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Security & Privacy</button>
+              <button onClick={() => setActiveTab('notifications')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'notifications' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Notifications</button>
+              <button onClick={() => setActiveTab('integrations')} className={`py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 ${activeTab === 'integrations' ? 'bg-gray-200 dark:bg-gray-800/90 text-gray-900 dark:text-white' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'} mb-1.5`}>Integrations</button>
               <div className='mt-auto'>
-                <button onClick={handleLogout} className='py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'>Log out</button>
+                <button onClick={handleLogout} className='py-2 px-4 text-xs text-left rounded-lg transition-colors duration-200 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80'>Log out</button>
               </div>
             </div>
             <div className="flex-1 overflow-auto h-80 space-y-4 pr-4">
@@ -172,7 +181,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                         </button>
                       </div>
                       
-                      <div className='mt-6 py-8 px-4 border border-gray-300 dark:border-gray-800 rounded-lg flex justify-center items-center min-h-[100px]'>
+                      <div className='mt-4 py-8 px-4 border border-gray-300 dark:border-gray-800 rounded-lg flex justify-center items-center min-h-[100px]'>
                         <p className={`${fontSize} text-gray-800 dark:text-gray-200 text-center`}>
                           This is a preview text.
                         </p>
@@ -187,7 +196,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                 </div>
               )}
               {activeTab === 'security' && (
-                <div className='mt-4 pb-10'>
+                <div className='pb-10'>
                   <div className='flex items-center justify-between w-full'>
                     <div className='flex-1'>
                       <h3 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Two-Factor Authentication</h3>
@@ -196,7 +205,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <Switch
                       checked={is2faEnabled}
                       onChange={setIs2faEnabled}
-                      className={getToggleClasses(is2faEnabled, theme as 'light' | 'dark' | 'system')}
+                      className={getToggleClasses(is2faEnabled, theme as ThemeType)}
                     >
                       <span
                         className={`${is2faEnabled ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${is2faEnabled ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !is2faEnabled ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
@@ -220,51 +229,47 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                       <li className='flex items-center mb-2'>
                         <Laptop className="w-4 h-4 mr-2" />
                         <span className='text-xs w-32'>Chrome on Windows</span>
-                        <a className='text-red-500 hover:underline text-xs ml-2'>Terminate</a>
+                        <a href="#" className='text-red-500 hover:underline text-xs ml-2' onClick={handleTerminateSession}>Terminate</a>
                       </li>
                       <li className='flex items-center mb-1'>
                         <Smartphone className="w-4 h-4 mr-2" />
                         <span className='text-xs w-32'>Safari on iPhone</span>
-                        <a className='text-red-500 hover:underline text-xs ml-2'>Terminate</a>
+                        <a href="#" className='text-red-500 hover:underline text-xs ml-2' onClick={handleTerminateSession}>Terminate</a>
                       </li>
                     </ul>
                   </div>
                   <div className='mt-4'>
                     <div className='flex items-center justify-between'>
-                      <div className='flex flex-col'>
+                      <div className='flex-1'>
                         <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Allow others to view my activity logs</h4>
                         <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>Enabling this option allows others to see your activity logs, enhancing transparency and collaboration.</p>
                       </div>
-                      <div className='flex items-center'>
-                        <Switch
-                          checked={notifications}
-                          onChange={() => setNotifications(!notifications)}
-                          className={getToggleClasses(notifications, theme as 'light' | 'dark' | 'system')}
-                        >
-                          <span
-                            className={`${notifications ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${notifications ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !notifications ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
-                          />
-                        </Switch>
-                      </div>
+                      <Switch
+                        checked={notifications}
+                        onChange={setNotifications}
+                        className={getToggleClasses(notifications, theme as ThemeType)}
+                      >
+                        <span
+                          className={`${notifications ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${notifications ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !notifications ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
+                        />
+                      </Switch>
                     </div>
                   </div>
                   <div className='mt-4'>
-                    <div className='flex items-center'>
-                      <div className='flex flex-col'>
+                    <div className='flex items-center justify-between'>
+                      <div className='flex-1'>
                         <h4 className={`${textSizes.subtitle} font-medium text-gray-800 dark:text-gray-200`}>Consent to share data with other practitioners</h4>
                         <p className={`${textSizes.body} text-gray-600 dark:text-gray-400`}>By enabling this option, you allow your data to be shared with other practitioners, facilitating better collaboration and care.</p>
                       </div>
-                      <div className='flex items-center'>
-                        <Switch
-                          checked={dataSharing}
-                          onChange={() => setDataSharing(!dataSharing)}
-                          className={getToggleClasses(dataSharing, theme as 'light' | 'dark' | 'system')}
-                        >
-                          <span
-                            className={`${dataSharing ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${dataSharing ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !dataSharing ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
-                          />
-                        </Switch>
-                      </div>
+                      <Switch
+                        checked={dataSharing}
+                        onChange={() => setDataSharing(!dataSharing)}
+                        className={getToggleClasses(dataSharing, theme as ThemeType)}
+                      >
+                        <span
+                          className={`${dataSharing ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${dataSharing ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !dataSharing ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
+                        />
+                      </Switch>
                     </div>
                   </div>
                 </div>
@@ -278,7 +283,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
                     <Switch
                       checked={notifications}
                       onChange={() => setNotifications(!notifications)}
-                      className={getToggleClasses(notifications, theme as 'light' | 'dark' | 'system')}
+                      className={getToggleClasses(notifications, theme as ThemeType)}
                     >
                       <span
                         className={`${notifications ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform ${notifications ? (theme === 'dark' ? 'bg-gray-900' : 'bg-white') : (theme === 'dark' && !notifications ? 'bg-gray-800' : 'bg-white')} rounded-full transition`}
